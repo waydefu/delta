@@ -81,3 +81,11 @@ node --check src/engine.mjs
 - `src/attachment-graph.mjs` 支援資料驅動的父配件 `providesSlots`、多層掛載、拆除父配件後清理失效子配件；有自動測試。
 - **注意**：AKM 現行配件資料未提供已實機驗證的子槽位屬性，因此不會憑空讓前握把或瞄具變成可裝；加入有來源的 `providesSlots` 與配件資料後，系統會自動啟用。
 - 圖表是恆速飛行假設，不是實機彈道或後座力落點；後座力貢獻視覺基於當前社群面板數值。
+
+## 動效／設計／比例校準（2026-10-23）
+
+- AKM 側視圖已按使用者提供的實機畫面重新構建前段、機匣、槍托比例，並保持 SVG 長寬比；詳見 DESIGN.md 及 data/weapons/akm-geometry.json。
+- 配件選單包含切換預覽、進退場、鍵盤 Esc、手機下滑關閉、已安裝槽位強調、數值圖表動效與手動關閉動效。
+- 設計與動效規則分別存放 DESIGN.md、docs/MOTION.md。相關 Skill 來源與安裝腳本 scripts/install-agent-skills.sh 可供自行檢視。
+- **限制**：未安裝第三方 Skills 到使用者本機 Agent；亦未導入 GSAP / Motion / Three.js 到網站 runtime。獨立網站目前使用原生 Web Animations API。
+- 真正原生 3D 槍械模型、實際彈道／後座力曲線仍須合法素材與遊戲實測。
