@@ -33,7 +33,8 @@
       "reference": "https://gamegrids.io/delta-force/zh/attachments/akm-performance-barrel-assembly/",
       "asOf": "2026-09-23",
       "formulaValidated": false
-    }
+    },
+    "parameterValidated": false
   },
   {
     "id": "akm-standard-barrel",
@@ -67,7 +68,8 @@
       "reference": "https://gamegrids.io/delta-force/zh/attachments/akm-practical-standard-barrel-assembly/",
       "asOf": "2026-09-23",
       "formulaValidated": false
-    }
+    },
+    "parameterValidated": false
   },
   {
     "id": "akm-long-barrel",
@@ -114,7 +116,8 @@
       "reference": "https://gamegrids.io/delta-force/zh/attachments/akm-practical-long-barrel-assembly/",
       "asOf": "2026-09-23",
       "formulaValidated": false
-    }
+    },
+    "parameterValidated": false
   },
   {
     "id": "akm-transcendent-barrel",
@@ -147,7 +150,8 @@
       "reference": "https://gamegrids.io/delta-force/zh/attachments/akm-transcendent-long-barrel-assembly/",
       "asOf": "2026-09-23",
       "formulaValidated": false
-    }
+    },
+    "parameterValidated": false
   },
   {
     "id": "ak-compensator",
@@ -179,7 +183,8 @@
       "reference": "https://gamegrids.io/delta-force/zh/attachments/ak-practical-compensator/",
       "asOf": "2026-09-23",
       "formulaValidated": false
-    }
+    },
+    "parameterValidated": false
   },
   {
     "id": "ak-suppressor",
@@ -225,7 +230,8 @@
       "reference": "https://gamegrids.io/delta-force/zh/attachments/ak-valor-flame-suppressor/",
       "asOf": "2026-09-23",
       "formulaValidated": false
-    }
+    },
+    "parameterValidated": false
   },
   {
     "id": "ak-polymer-stock",
@@ -257,7 +263,8 @@
       "reference": "https://gamegrids.io/delta-force/zh/attachments/ak-polymer-stock/",
       "asOf": "2026-09-23",
       "formulaValidated": false
-    }
+    },
+    "parameterValidated": false
   },
   {
     "id": "ak-folding-stock",
@@ -288,7 +295,8 @@
       "reference": "https://gamegrids.io/delta-force/zh/attachments/ak-folding-stock/",
       "asOf": "2026-09-23",
       "formulaValidated": false
-    }
+    },
+    "parameterValidated": false
   },
   {
     "id": "ak-skeleton-stock",
@@ -321,7 +329,8 @@
       "reference": "https://gamegrids.io/delta-force/zh/attachments/ak-skeleton-stock/",
       "asOf": "2026-09-23",
       "formulaValidated": false
-    }
+    },
+    "parameterValidated": false
   },
   {
     "id": "akm-polymer-30-mag",
@@ -353,7 +362,8 @@
       "reference": "https://github.com/jiansenc/DeltaForceData/blob/main/public/json/acc/accMagazine.json",
       "asOf": "2024-12-21",
       "formulaValidated": false
-    }
+    },
+    "parameterValidated": false
   },
   {
     "id": "akm-40-mag",
@@ -388,7 +398,8 @@
       "reference": "https://github.com/jiansenc/DeltaForceData/blob/main/public/json/acc/accMagazine.json",
       "asOf": "2024-12-21",
       "formulaValidated": false
-    }
+    },
+    "parameterValidated": false
   },
   {
     "id": "akm-70-drum",
@@ -423,7 +434,8 @@
       "reference": "https://github.com/jiansenc/DeltaForceData/blob/main/public/json/acc/accMagazine.json",
       "asOf": "2024-12-21",
       "formulaValidated": false
-    }
+    },
+    "parameterValidated": false
   },
   {
     "id": "ak-heavy-tower-grip",
@@ -457,7 +469,8 @@
       "reference": "https://github.com/jiansenc/DeltaForceData/blob/main/public/json/acc/accBackGrip.json",
       "asOf": "2024-12-21",
       "formulaValidated": false
-    }
+    },
+    "parameterValidated": false
   },
   {
     "id": "ak-openwork-grip",
@@ -490,7 +503,8 @@
       "reference": "https://github.com/jiansenc/DeltaForceData/blob/main/public/json/acc/accBackGrip.json",
       "asOf": "2024-12-21",
       "formulaValidated": false
-    }
+    },
+    "parameterValidated": false
   },
   {
     "id": "ak-practical-reargrip",
@@ -522,7 +536,8 @@
       "reference": "https://github.com/jiansenc/DeltaForceData/blob/main/public/json/acc/accBackGrip.json",
       "asOf": "2024-12-21",
       "formulaValidated": false
-    }
+    },
+    "parameterValidated": false
   },
   {
     "id": "ak-shooter-reargrip",
@@ -553,7 +568,8 @@
       "reference": "https://github.com/jiansenc/DeltaForceData/blob/main/public/json/acc/accBackGrip.json",
       "asOf": "2024-12-21",
       "formulaValidated": false
-    }
+    },
+    "parameterValidated": false
   },
   {
     "id": "ak-stock-endcap",
@@ -587,7 +603,8 @@
       "reference": "https://github.com/jiansenc/DeltaForceData/blob/main/public/json/acc/accStock.json",
       "asOf": "2024-12-21",
       "formulaValidated": false
-    }
+    },
+    "parameterValidated": false
   },
   {
     "confidence": "weapon-named",
@@ -621,7 +638,8 @@
       "reference": "https://gamegrids.io/delta-force/zh/attachments/akm-beaver-barrel-assembly/",
       "asOf": "2026-09-23",
       "formulaValidated": false
-    }
+    },
+    "parameterValidated": false
   },
   {
     "confidence": "weapon-named",
@@ -657,7 +675,8 @@
       "reference": "https://gamegrids.io/delta-force/zh/attachments/akm-beaver-long-barrel-assembly/",
       "asOf": "2026-09-23",
       "formulaValidated": false
-    }
+    },
+    "parameterValidated": false
   },
   {
     "confidence": "slot-inferred",
@@ -688,7 +707,8 @@
       "reference": "https://gamegrids.io/delta-force/zh/attachments/stable-ak-pistol-grip/",
       "asOf": "2026-09-23",
       "formulaValidated": false
-    }
+    },
+    "parameterValidated": false
   },
   {
     "confidence": "slot-inferred",
@@ -726,6 +746,7 @@
       "reference": "https://gamegrids.io/delta-force/zh/attachments/ak-stock-recoil-pad/",
       "asOf": "2026-09-23",
       "formulaValidated": false
-    }
+    },
+    "parameterValidated": false
   }
 ]

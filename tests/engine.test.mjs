@@ -383,3 +383,30 @@ test("P0 候選依附關係不會冒充有證據的正式子槽",()=>{
   assert.ok(["may-provide","may-block","paired-with","may-fit"].includes(row.relationship));
  }
 });
+
+test("P0：確認可裝不代表參數已核實；嚴格模式同時要求兩套證據",async()=>{
+ const {assessAttachment,isVerifiedParameters,auditAttachments}=await import("../src/data-governance.mjs");
+ const attachment=structuredClone(attachments.find(p=>p.id==="akm-beaver-long-barrel"));
+ const proof={type:"in-game-screenshot",reference:"TEST-CASE-NO-PERSONAL-UID",checkedAt:"2026-10-24",platform:"mobile"};
+ attachment.mountValidation="verified";attachment.platformValidated=true;attachment.fitmentEvidence=proof;
+ assert.equal(assessAttachment(attachment,"akm").verified,false);
+ assert.equal(isVerifiedParameters(attachment),false);
+ attachment.parameterValidated=true;
+ assert.equal(assessAttachment(attachment,"akm").verified,false);
+ attachment.effectEvidence.status="verified";attachment.parameterEvidence=proof;
+ assert.equal(assessAttachment(attachment,"akm").verified,true);
+ const result=resolveBuild(weapon,[attachment],{barrel:attachment.id},{mode:"verified"});
+ assert.equal(result.verified,true);
+ const all=auditAttachments(weapon,attachments);
+ assert.equal(all.counts.verified,0);
+});
+test("P0：實機嚴格模式接入手機 UI 與改槍台預覽",()=>{
+ const html=readFileSync(new URL("../index.html",import.meta.url),"utf8");
+ const app=readFileSync(new URL("../src/app.mjs",import.meta.url),"utf8");
+ const gun=readFileSync(new URL("../src/gunsmith.mjs",import.meta.url),"utf8");
+ assert.match(html,/id="verified-only"/);
+ assert.match(html,/id="mode-description"/);
+ assert.match(app,/mode:buildMode/);
+ assert.match(app,/option\.disabled=buildMode==="verified"/);
+ assert.match(gun,/getMode\(\)==="research"/);
+});

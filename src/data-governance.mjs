@@ -20,6 +20,11 @@ export function isVerifiedFitment(part,weaponId){
  return Boolean(part && part.platformValidated===true && part.mountValidation==="verified" &&
   part.compatibleWeapons?.includes(weaponId) && isVerifiedEvidence(part.fitmentEvidence));
 }
+export function isVerifiedParameters(part){
+ return Boolean(part && part.parameterValidated===true &&
+  part.effectEvidence?.status==="verified" &&
+  isVerifiedEvidence(part.parameterEvidence));
+}
 export function canProvideSlot(part,child,weaponId){
  if(!isVerifiedFitment(part,weaponId) || !child || typeof child!=="object")return false;
  const evidence=child.evidence;
@@ -52,7 +57,8 @@ export function auditAttachments(weapon,attachments){
   else for(const [key,value] of Object.entries(part.effects)){
    if(!MODIFIER_KEYS.has(key)||!Number.isFinite(value))issues.push(part.id+" 無效效果："+key);
   }
-  if(part.platformValidated===true && !isVerifiedFitment(part,weapon.id))issues.push(part.id+" 宣稱已實機驗證卻缺少可核對的掛載證據");
+  if(part.platformValidated===true && !isVerifiedFitment(part,weapon.id))issues.push(part.id+" 宣稱掛載已實機驗證卻缺少可核對的證據");
+  if(part.parameterValidated===true && !isVerifiedParameters(part))issues.push(part.id+" 宣稱數值已驗證卻缺少同版遊戲數值證據");
   if(part.providesSlots?.some(child=>!canProvideSlot(part,child,weapon.id)))issues.push(part.id+" 有未核實的子槽宣告");
   if(part.providesSlots)counts.providesVerifiedSlots+=part.providesSlots.filter(child=>canProvideSlot(part,child,weapon.id)).length;
   const assessment=assessAttachment(part,weapon.id);

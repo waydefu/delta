@@ -2,6 +2,7 @@ import { initModelReference } from "./model-reference.mjs";
 import { attachStudioLight } from "./studio-light.mjs";
 import { sheetEntrance, sheetExit, notifySlot, swapContents, shouldAnimate } from "./motion.mjs";
 import { getAvailableSlots } from "./attachment-graph.mjs";
+import {assessAttachment} from "./data-governance.mjs";
 import { resolveBuild } from "./engine.mjs";
 const SLOTS=[
  ["muzzle","槍口",9,32,8,49],
@@ -19,8 +20,9 @@ const SLOTS=[
 const ENABLED=new Set(["muzzle","barrel","stock"]);
 
 const node=(tag,cls,text)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(text!==undefined)e.textContent=text;return e;};
-export function initGunsmith(mount,selections,attachments,onPick,weapon){
- const resolveBuildPreview=value=>resolveBuild(weapon,attachments,value);
+export function initGunsmith(mount,selections,attachments,onPick,weapon,options={}){
+ const getMode=options.getMode||(()=> "research");
+ const resolveBuildPreview=value=>resolveBuild(weapon,attachments,value,{mode:getMode()});
  const stage=node("div","bench-canvas");
  const grid=node("div","bench-grid");
  const img=node("img","bench-gun");img.src="./assets/akm-side.svg";img.alt="AKM 側面示意（彈匣已獨立分件）";img.draggable=false;
@@ -91,7 +93,7 @@ export function initGunsmith(mount,selections,attachments,onPick,weapon){
  function open(id){if(closing||active===id)return;opener=buttons.get(id)?.button;active=id;shade.hidden=false;drawer.hidden=false;renderDrawer();refresh();sheetEntrance(drawer);drawer.querySelector(".drawer-close")?.focus({preventScroll:true});}
  function renderDrawer(){
   if(!active)return;
-  const slot=SLOTS.find(s=>s[0]===active),choices=attachments.filter(a=>a.slot===active&&a.researchOnly!==true&&a.compatibleWeapons?.includes("akm"));
+  const slot=SLOTS.find(s=>s[0]===active),choices=attachments.filter(a=>a.slot===active&&a.researchOnly!==true&&a.compatibleWeapons?.includes(weapon.id)&&(getMode()==="research"||assessAttachment(a,weapon.id).verified));
   drawer.replaceChildren();
   const handle=node("div","drawer-grip");handle.setAttribute("aria-hidden","true");drawer.append(handle);
   const head=node("div","bench-drawer-head"),heading=node("div"),small=node("small","", "ATTACHMENT / "+slot[0].toUpperCase()),h=node("h3","",slot[1]),x=node("button","drawer-close","✕");
@@ -155,7 +157,7 @@ export function initGunsmith(mount,selections,attachments,onPick,weapon){
   const open=getAvailableSlots(weapon,attachments,selections);
   for(const [id,label] of SLOTS){
    const {button,status}=buttons.get(id),installed=attachments.find(a=>a.id===selections[id]);
-   const ready=open.has(id)&&attachments.some(a=>a.slot===id&&a.researchOnly!==true&&a.compatibleWeapons?.includes(weapon.id));
+   const ready=open.has(id)&&attachments.some(a=>a.slot===id&&a.researchOnly!==true&&a.compatibleWeapons?.includes(weapon.id)&&(getMode()==="research"||assessAttachment(a,weapon.id).verified));
    button.classList.toggle("installed",!!installed);button.classList.toggle("active",active===id);
    button.classList.toggle("not-ready",!ready);
    button.setAttribute("aria-pressed",String(active===id));

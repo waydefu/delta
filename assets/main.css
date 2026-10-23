@@ -673,3 +673,8 @@ body {
 .conflict-scenarios a{color:#d1dabd;text-decoration:underline}
 .conflict-scenarios .scenario-range{font:12px/1.6 monospace;color:#e4e3ca}
 @media(max-width:530px){.p0-evidence-counts{gap:5px}.p0-evidence-counts>div{padding:10px 5px}.p0-evidence-counts strong{font-size:21px}.p0-evidence-counts span{font-size:9px}}
+
+/* Clearly distinguished verified-only mode */
+.p0-mode-switch{display:flex;align-items:center;gap:9px;color:#dce7d9;font:600 12px system-ui;margin:12px 0 4px;cursor:pointer}
+.p0-mode-switch input{accent-color:#a9c49d;width:19px;height:19px;flex-shrink:0;cursor:pointer}
+.p0-mode-description{color:#c7b897;font-size:11px;line-height:1.5;margin:3px 0 16px}

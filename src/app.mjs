@@ -1,7 +1,7 @@
 import { initResearchCatalog } from "./research-catalog.mjs";
 import { setupMotionToggle, initializeEntrance, countTo, drawLine, diagramEnter } from "./motion.mjs";
 import { reconcileSelection } from "./attachment-graph.mjs";
-import {auditAttachments} from "./data-governance.mjs";
+import {auditAttachments,assessAttachment} from "./data-governance.mjs";
 import { initGunsmith } from "./gunsmith.mjs";
 import { renderMountGraph, renderContributions, renderFlightChart } from "./visualizations.mjs";
 import { initDetails } from "./details.mjs";
@@ -19,6 +19,7 @@ const statFields = [
 const query = new URLSearchParams(location.search);
 const selections = Object.fromEntries(SLOTS.map(slot => [slot, query.get(slot) || ""]));
 let distance = Math.min(200, Math.max(10, Number(query.get("distance")) || 80));
+let buildMode="research";
 const el = (tag, className, text) => {
   const node = document.createElement(tag);
   if(className) node.className = className;
@@ -70,18 +71,43 @@ async function main() {
       }
       select.value = attachments.some(a=>a.id===selections[slot] && a.slot===slot && a.researchOnly!==true) ? selections[slot] : "";
       selections[slot] = select.value;
-      select.addEventListener("change", () => { const normalized=reconcileSelection(weapon,attachments,{...selections,[slot]:select.value});Object.assign(selections,normalized.selected);for(const key of SLOTS){selections[key]=normalized.selected[key]||"";$("select-"+key).value=selections[key];}update(); });
+      select.addEventListener("change", () => { const normalized=reconcileSelection(weapon,attachments,{...selections,[slot]:select.value},{mode:buildMode});Object.assign(selections,normalized.selected);for(const key of SLOTS){selections[key]=normalized.selected[key]||"";$("select-"+key).value=selections[key];}update(); });
       panel.append(label, select);
       controlWrap.append(panel);
     }
     const bench = initGunsmith($("gunsmith-workbench"), selections, attachments, (slot, id) => {
       const proposed={...selections,[slot]:id};
-      const result=reconcileSelection(weapon,attachments,proposed);
+      const result=reconcileSelection(weapon,attachments,proposed,{mode:buildMode});
       for(const key of Object.keys(selections))delete selections[key];
       Object.assign(selections,result.selected);
       for(const key of SLOTS) $("select-" + key).value = selections[key]||"";
       update();
-    },weapon);
+    },weapon,{getMode:()=>buildMode});
+    function refreshMode(){
+      for(const slot of SLOTS){
+        const select=$("select-"+slot);
+        for(const option of select.options){
+          if(!option.value)continue;
+          const part=attachments.find(p=>p.id===option.value);
+          option.disabled=buildMode==="verified"&&!assessAttachment(part,weapon.id).verified;
+        }
+        select.setAttribute("aria-label",slotNames[slot]+(buildMode==="verified"?"，只顯示已驗證配件":"，研究試算配件"));
+      }
+      $("mode-description").textContent=buildMode==="verified"?
+        "嚴格模式：只允許有同版手遊掛載與參數證據的配件。當前 0 件；可切回研究試算。":
+        "研究模式：可試算尚未實機核實的 20 件候選，可能與正式遊戲不同。";
+      bench.refresh();
+    }
+    $("verified-only").addEventListener("change",event=>{
+      buildMode=event.target.checked?"verified":"research";
+      const checked=reconcileSelection(weapon,attachments,selections,{mode:buildMode});
+      for(const slot of SLOTS){
+        selections[slot]=checked.selected[slot]||"";
+        $("select-"+slot).value=selections[slot];
+      }
+      refreshMode();update();
+    });
+    refreshMode();
     await initDetails($("detail-explorer"));
     $("distance").value = distance;
     $("distance").addEventListener("input", event => { distance = Number(event.target.value); update(false); });
@@ -94,7 +120,7 @@ async function main() {
       catch { setText("copy","複製失敗，請使用網址列"); }
     });
     function update(buildChanged = true) {
-      const result = resolveBuild(weapon,attachments,selections);
+      const result = resolveBuild(weapon,attachments,selections,{mode:buildMode});
       if(!buildChanged){
         setText("distance-label",distance+" m");
         setText("flight-time",format(idealFlightTimeMs(distance,result.stats.muzzleVelocityMps))+" ms");
