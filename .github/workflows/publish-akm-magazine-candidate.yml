@@ -1,0 +1,85 @@
+name: Publish draft AKM magazine segment for visual review
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - .github/workflows/publish-akm-magazine-candidate.yml
+
+permissions:
+  actions: read
+  contents: write
+
+jobs:
+  optimize-draft:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - uses: actions/download-artifact@v4
+        with:
+          name: akm-cc0-glb-unreviewed
+          run-id: 40026606857
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: input
+      - name: Validate part extraction and provenance
+        run: |
+          python3 - <<'PY'
+          import pathlib,json,struct
+          d=json.loads(pathlib.Path("input/magazine-segmentation.json").read_text())
+          r=json.loads(pathlib.Path("input/inspection.json").read_text())
+          p=pathlib.Path("input/akm-segmented-unreviewed.glb")
+          assert r["license"]=="CC0 1.0 Universal"
+          assert d["sceneMeshNames"]==["AKM_Body","AKM_Magazine"]
+          assert d["vertices"]==80 and d["polygons"]==150 and d["originalIslandCount"]==28
+          assert d["mountSocketValidated"] is False and d["realMobileFitmentValidated"] is False
+          header=p.read_bytes()[:12]
+          assert header[:4]==b"glTF" and struct.unpack_from("<I",header,8)[0]==p.stat().st_size
+          print("MAGAZINE_DRAFT_VALID",d)
+          PY
+      - name: Produce lightweight two-node glTF without merging parts
+        run: |
+          mkdir -p assets/models
+          npm exec --yes --package=@gltf-transform/cli@4.5.1 -- \
+            gltf-transform optimize input/akm-segmented-unreviewed.glb assets/models/akm-parts-candidate.glb \
+            --compress false --texture-compress webp --texture-size 2048 \
+            --flatten false --join false
+      - name: Validate actual GLB contains separate named magazine and body
+        run: |
+          python3 - <<'PY'
+          import pathlib,json,struct,hashlib
+          p=pathlib.Path("assets/models/akm-parts-candidate.glb");raw=p.read_bytes()
+          assert raw[:4]==b"glTF" and struct.unpack_from("<I",raw,8)[0]==len(raw)
+          chunk_size=struct.unpack_from("<I",raw,12)[0]
+          doc=json.loads(raw[20:20+chunk_size])
+          names=[x.get("name","") for x in doc.get("nodes",[])]
+          meshes=[x.get("name","") for x in doc["meshes"]]
+          print("SEGMENTED_GLB_NODES",names,meshes)
+          assert len(doc["meshes"])==2, "Part identities unexpectedly merged"
+          assert any("Magazine" in x for x in names+meshes)
+          assert any("Body" in x for x in names+meshes)
+          assert 0<len(raw)<4_000_000
+          provenance={
+            "status":"candidate-needs-visual-review",
+            "model":"Weathered AKM experimental magazine segment",
+            "source":"https://opengameart.org/content/weathered-akm-rifle",
+            "creator":"LonesomeDucky","license":"CC0 1.0 Universal",
+            "bytes":len(raw),"webSha256":hashlib.sha256(raw).hexdigest(),
+            "meshCount":len(doc["meshes"]),"nodeNames":names,
+            "separablePartsCandidate":1,"gameMountVerified":False,
+            "restriction":"Never assume geometry split proves real AKM attachment compatibility",
+            "originalJob":40026606857
+          }
+          pathlib.Path("assets/models/akm-parts-candidate.json").write_text(json.dumps(provenance,indent=2)+"\n")
+          print("DRAFT_SEGMENT_PROVENANCE",provenance)
+          PY
+      - name: Commit candidate files only, do not switch production viewer
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/models/akm-parts-candidate.glb assets/models/akm-parts-candidate.json
+          git diff --cached --quiet && exit 0
+          git commit -m "assets(p1): stage provisional segmented AKM magazine for visual QA"
+          git push origin HEAD:main
