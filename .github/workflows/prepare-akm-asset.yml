@@ -24,7 +24,7 @@ jobs:
           mkdir -p .model-work model-output
           curl --fail --location --retry 3 --max-time 240 \
             --proto '=https' --tlsv1.2 \
-            --output .model-work/akm54.blend \
+            -o .model-work/akm54.blend \
             https://opengameart.org/sites/default/files/akm54.blend
           file .model-work/akm54.blend
           # The artist's .blend download is wrapped in a Zstd stream.
