@@ -266,3 +266,18 @@ test("偵測到兩件跨來源數值衝突且保存完整證據",()=>{
   assert.equal(item.platformValidated,false);
  }
 });
+
+test("全量配件僅作研究索引，不會冒充 AKM 已確認相容",async()=>{
+ const {inspectExternalPart,normalizeResearchCatalog,UPSTREAM}=await import("../src/research-catalog.mjs");
+ const part=inspectExternalPart({id:"optic_test",name:"瞄準鏡",slot:"瞄准镜",tier:4,addedHandling:-3,addedAimStability:2});
+ assert.equal(part.slot,"瞄具");
+ assert.equal(part.flags.compatibleWithAkm,false);
+ assert.equal(part.flags.valuesVerified,false);
+ assert.equal(part.stats.length,2);
+ const unknown=inspectExternalPart({id:"x",name:"測試",slot:"前握把"});
+ assert.equal(unknown.flags.noKnownNumericModifiers,true);
+ assert.equal(normalizeResearchCatalog([{id:"x",name:"測試",slot:"前握把"},{id:"x",name:"測試",slot:"前握把"}]).length,1);
+ assert.match(UPSTREAM.module,/0\.8\.0/);
+ const html=readFileSync(new URL("../index.html",import.meta.url),"utf8");
+ assert.match(html,/id="research-directory"/);
+});

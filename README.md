@@ -112,3 +112,9 @@ node --check src/engine.mjs
 - 作者與授權：GAMICO AKM（CC BY、約 10,100 triangles，作者稱有分件彈匣等）；kennethtzh AKM（CC BY、約 16,200 triangles，已安裝瞄具與側導軌）。介面保留原作者來源及授權連結。
 - **重要**：Sketchfab 嵌入不代表本專案擁有模型檔或可控制其網格；配件槽與 3D 模型不連動，不能把這當作已完成的 Three.js 模組化改槍。
 - 研究用本機 GLB 首選：LonesomeDucky CC0 [Weathered AKM](https://opengameart.org/content/weathered-akm-rifle)，原始 42.5 MB Blender 檔，須合法取得並檢查節點、轉檔後才可獨立渲染與換件。
+
+## 2026 新配件研究索引
+- 新增「配件候選資料庫」：本機可查 17 個 AKM 研究樣本；自願點選才透過 npm CDN 載入 `delta-force-core@0.8.0` 約 564 件**全武器**候選。可搜尋、分類與檢視來源有提供的原始面板欄位；不保證該源對當前手遊版本正確。
+- 作者在該版 README 明確表示『配件與武器相容關係』仍是 roadmap，因此任何上游候選都不會自動開啟 AKM 配件槽、改動計算結果或假冒已證實能安裝。
+- 外部 CDN 無法讀取時保留本機 AKM 17 件樣本。GitHub 倉庫不複製完整 564 件第三方資料。
+- 來源：[delta-force-core](https://github.com/Zhoyi011/delta-force-core)（0.8.0，package.json 宣告 MIT，來源內容應自行核對）。

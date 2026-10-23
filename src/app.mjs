@@ -1,3 +1,4 @@
+import { initResearchCatalog } from "./research-catalog.mjs";
 import { setupMotionToggle, initializeEntrance, countTo, drawLine, diagramEnter } from "./motion.mjs";
 import { reconcileSelection } from "./attachment-graph.mjs";
 import { initGunsmith } from "./gunsmith.mjs";
@@ -35,6 +36,7 @@ async function main() {
     if(!wr.ok || !ar.ok) throw new Error("資料載入失敗（需透過 HTTP 伺服器開啟）");
     const weapon = await wr.json();
     const attachments = await ar.json();
+    initResearchCatalog($("research-directory"),attachments);
     setText("weapon-subtitle", weapon.caliber + " · 600 RPM · 30 發");
     setText("snapshot", "裸槍實機值已核對 · 部分配件僅有 2024 歷史值，均未經 2026 手遊核對");
     setText("ammo-text", weapon.ammo.join(" · "));
