@@ -378,3 +378,177 @@ footer{border-top:1px solid #263a35;padding-top:24px;margin-top:22px;color:#7c98
 }
 @media(prefers-reduced-motion:reduce){.detail-tab,.timing-bar{transition:none!important}}
 
+
+
+/* === DELTA LAB v0.7 — MATTE MATERIAL SYSTEM ==========================
+ * Anti-gloss pass: muted phosphated metal, uncoated wood, charcoal surfaces.
+ * A single stylesheet is used by the app; no new CSS link or runtime library.
+ * Preserve visible focus, active state and status contrast.
+ * ================================================================ */
+:root {
+  --canvas:#0e1316;
+  --surface:#171e21;
+  --surface2:#1c2427;
+  --rim:#34403f;
+  --ink:#e2e6df;
+  --fog:#98a7a0;
+  --gold:#c2ae8a;
+  --lime:#bdc9aa;
+  --cyan:#8da9a3;
+  --red:#dc9993;
+}
+html { background:#0e1316 }
+body {
+  background:#0e1316;
+  color:var(--ink);
+}
+.site-header { background:#11171a; border-color:#313b39 }
+.site-header:before { background:#9aa995 }
+.brand-symbol,.brand-accent,.breadcrumb span,.eyebrow { color:var(--lime) }
+.beta-pill,.motion-toggle {
+  background:#20292a;
+  color:#d1d9d1;
+  border:1px solid #495750;
+  box-shadow:none;
+}
+.motion-toggle:hover,.motion-toggle:focus-visible { background:#28322f; border-color:#a9bba2 }
+.snapshot { color:#a2b4a6; background:none; border:0; box-shadow:none }
+.hero.hero-editorial { background:none }
+.hero-action {
+  color:#12191a;
+  background:#bfcbb1;
+  box-shadow:none;
+}
+.hero-action:hover { background:#d2dec5; transform:none }
+.hero-status span,.signal { box-shadow:none; background:#bdc9aa }
+.hero-metadata { border-color:#36423e }
+.panel,
+.summary-card,
+.analysis-card,
+.gunsmith-section,
+.details-panel,
+.detail-copy,
+.graphic-card,
+.graphic-wide,
+.graphic-card.graphic-wide {
+  background:#171e22;
+  border-color:#33403e;
+  box-shadow:none;
+  backdrop-filter:none;
+}
+.details-panel,.graphic-card,.detail-copy { background:#171e22 }
+.panel:before,.analysis-card:before,
+.gunsmith-section:before,.details-panel:before { opacity:.55 }
+.gunsmith-intro {
+  background:#1b2527;
+  border-bottom:1px solid #35413e;
+}
+.bench-canvas {
+  background:#11191c;
+  box-shadow:inset 0 -30px 36px -48px #000;
+}
+.bench-canvas:before { box-shadow:none; background:#34443e44 }
+.bench-grid {
+  background:linear-gradient(#8c9c900b 1px,transparent 1px),
+             linear-gradient(90deg,#8c9c900b 1px,transparent 1px);
+  background-size:48px 48px;
+}
+.bench-gun {
+  filter:drop-shadow(0 10px 10px rgba(0,0,0,.35))!important;
+  backface-visibility:visible;
+}
+.bench-slot {
+  background:#202b2d;
+  color:#e2e8df;
+  box-shadow:none;
+  border-color:#4a5b54;
+  backdrop-filter:none;
+}
+.bench-slot:hover {
+  background:#293630;
+  box-shadow:none;
+  border-color:#b4c2a7;
+}
+.bench-slot.active,.bench-slot.installed {
+  background:#29362d;
+  box-shadow:inset 3px 0 #a4bb97;
+  border-color:#829885;
+}
+.bench-slot.not-ready { background:#1b2428 }
+.bench-slot:before { background:#788c7c }
+.bench-slot.installed:before { background:#a4bb97 }
+.bench-footer,.workbench-badge { background:#161e21; border-color:#3d4b46 }
+.bench-drawer {
+  background:#171f22;
+  border-color:#a7b79d;
+  box-shadow:-12px 0 22px rgba(0,0,0,.28);
+  backdrop-filter:none;
+}
+.bench-shade { background:#080e10bd; backdrop-filter:none }
+.drawer-close,.ghost-button { background:#202a2c; color:#d5ddd5; border-color:#52615a }
+.drawer-hint,.muted { color:#a0aea7 }
+.bench-option,.bench-option.selected {
+  background:#202b2d;
+  border-color:#465750;
+  box-shadow:none;
+}
+.bench-option.selected { border-color:#9cab93; box-shadow:inset 3px 0 #a6b997 }
+.bench-option:hover { background:#293630; transform:none; border-color:#b4c2a7 }
+.candidate-preview {
+  background:#1d2928;
+  border-color:#47594e;
+  box-shadow:none;
+}
+.candidate-metric strong.positive,.stat-positive { color:#bacda9 }
+.candidate-metric strong.negative,.stat-negative { color:#e7a7a1 }
+.summary-card { transition:border-color .15s }
+.summary-card:hover { transform:none; border-color:#63766c }
+.summary-card:before { background:#b6c3a5 }
+.stat-bar { background:#aab9a1 }
+.stat-track,.timing-track,.contrib-bar { background:#2a3533 }
+.timing-bar { background:#a9b9a0 }
+.accent-button { background:#bdc9aa; color:#15201b; border-color:#bdc9aa }
+.accent-button:hover { background:#d1ddbf }
+.subtle-tag,.model-tag,.workbench-badge.badge-live {
+  background:#27312d;
+  border-color:#53675a;
+  color:#c3d1bb;
+}
+.base-grid>div,.source-link,.flight-chart-panel,.sim-results>div,
+.ammo-banner,.contrib-item,.mount-root,.mount-node {
+  background:#1b2527;
+  box-shadow:none;
+  border-color:#354640;
+}
+.detail-tab {
+  background:#1b2527;
+  color:#b2c0b6;
+  border-color:#3d4f46;
+}
+.detail-tab.active,.detail-tab:hover {
+  background:#2b382e;
+  color:#e4ebdf;
+  border-color:#a2b399;
+}
+.detail-visuals .graphic-card { background:#182125; border-color:#35443e }
+.detail-visuals .graphic-card:before { display:none }
+.detail-source,.graphic-kicker,.chart-header { color:#b8c7b8 }
+.detail-score strong { color:#d1dcc4 }
+.detail-caution,.disclaimer {
+  background:#292c25;
+  color:#c9cdbb;
+  border-color:#a4a991;
+}
+.graphic-overlay-note {
+  background:#141d20f0;
+  border-color:#8e9d90;
+  color:#c9d8cd;
+}
+@media(max-width:530px) {
+  .bench-drawer { background:#182123; box-shadow:0 -12px 28px #0007 }
+  .bench-slot:hover { transform:none!important }
+}
+@media(prefers-reduced-motion:reduce) {
+  .bench-slot,.summary-card,.bench-option,.detail-tab,
+  .hero-action { transition:none!important; transform:none!important }
+}

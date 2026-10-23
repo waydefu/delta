@@ -145,3 +145,16 @@ test("網站只載入單一整合樣式，防止多層覆寫失控",()=>{
  assert.match(css,/\.detail-layout/);
  assert.match(css,/\.candidate-preview/);
 });
+
+test("霧面材質維持槍械幾何與單一生產樣式來源",()=>{
+ const html=readFileSync(new URL("../index.html",import.meta.url),"utf8");
+ const svg=readFileSync(new URL("../assets/akm-side.svg",import.meta.url),"utf8");
+ const css=readFileSync(new URL("../assets/main.css",import.meta.url),"utf8");
+ assert.match(svg,/id="woodFiber"/);
+ assert.match(svg,/id="steelBrushing"/);
+ assert.match(svg,/viewBox="0 0 1000 420"/);
+ assert.match(css,/MATTE MATERIAL SYSTEM/);
+ assert.match(css,/\.bench-gun\s*\{[\s\S]*?filter:drop-shadow/);
+ assert.match(html,/href="\.\/assets\/main\.css"/);
+ assert.equal((html.match(/rel="stylesheet"/g)||[]).length,1);
+});

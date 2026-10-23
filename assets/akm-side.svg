@@ -2,10 +2,12 @@
 <title id="title">AKM 槍械比例校準側面示意</title>
 <desc id="desc">依據實機畫面校準前段、機匣與固定槍托比例的 AKM 研究用側視向量圖；非官方 3D 槍模。</desc>
 <defs>
-<linearGradient id="metal" x1="0" y1="0" x2="0.3" y2="1"><stop stop-color="#9ca6a0"/><stop offset=".22" stop-color="#535f5b"/><stop offset=".62" stop-color="#232b30"/><stop offset="1" stop-color="#536160"/></linearGradient>
-<linearGradient id="wood" x1="0" y1="0" x2=".78" y2="1"><stop stop-color="#b59066"/><stop offset=".42" stop-color="#895e40"/><stop offset="1" stop-color="#3b2b26"/></linearGradient>
-<linearGradient id="mag" x1="0" y1="0" x2=".85" y2="1"><stop stop-color="#586366"/><stop offset=".46" stop-color="#22292d"/><stop offset="1" stop-color="#4c575a"/></linearGradient>
-<filter id="ground"><feDropShadow dx="0" dy="12" stdDeviation="10" flood-color="#000" flood-opacity=".6"/></filter>
+<linearGradient id="metal" x1="0" y1="0" x2=".12" y2="1"><stop stop-color="#59605b"/><stop offset=".49" stop-color="#414b48"/><stop offset="1" stop-color="#343d3b"/></linearGradient>
+<linearGradient id="wood" x1="0" y1="0" x2=".18" y2="1"><stop stop-color="#8b6446"/><stop offset=".55" stop-color="#725039"/><stop offset="1" stop-color="#593f30"/></linearGradient>
+<linearGradient id="mag" x1="0" y1="0" x2=".2" y2="1"><stop stop-color="#444d4b"/><stop offset=".52" stop-color="#343c3c"/><stop offset="1" stop-color="#293234"/></linearGradient>
+<filter id="ground"><feDropShadow dx="0" dy="6" stdDeviation="5" flood-color="#000" flood-opacity=".35"/></filter>
+<pattern id="woodFiber" width="96" height="18" patternUnits="userSpaceOnUse"><path d="M-5 5 Q20 1 47 5 T101 4 M-3 12 Q29 9 57 13 T99 11" fill="none" stroke="#d0a581" stroke-width=".7" opacity=".13"/><path d="M0 8 Q30 11 62 7 T100 9" fill="none" stroke="#261f1b" stroke-width=".6" opacity=".22"/></pattern>
+<pattern id="steelBrushing" width="9" height="11" patternUnits="userSpaceOnUse"><path d="M0 4 H9 M1 9 H7" fill="none" stroke="#b3beb4" stroke-width=".55" opacity=".09"/></pattern>
 </defs>
 <g filter="url(#ground)" stroke="#172025" stroke-width="2.8" stroke-linejoin="round">
 <!-- front assembly: muzzle to receiver ≈35% of total reference silhouette -->
@@ -17,14 +19,14 @@
 <path d="M144 142V130 H153 V142" fill="none" stroke="#b7b3a6" stroke-width="4"/>
 <path d="M170 151 H356 L362 164 H165Z" fill="#536065"/>
 <path d="M172 142 H352 L360 151 H170Z" fill="#303a3c"/>
-<path d="M191 164 H349 L366 184 L352 228 H211 L190 215Z" fill="url(#wood)"/>
-<path d="M193 177 Q273 170 357 184 M197 196 Q270 192 358 203 M210 216 Q284 217 349 218" fill="none" stroke="#d4b48b" stroke-opacity=".35" stroke-width="2"/>
+<path d="M191 164 H349 L366 184 L352 228 H211 L190 215Z" fill="url(#wood)"/><path d="M191 164 H349 L366 184 L352 228 H211 L190 215Z" fill="url(#woodFiber)" stroke="none"/>
+<path d="M193 177 Q273 170 357 184 M197 196 Q270 192 358 203 M210 216 Q284 217 349 218" fill="none" stroke="#aa8468" stroke-opacity=".24" stroke-width="2"/>
 <path d="M215 228 H355" fill="none" stroke="#293034" stroke-width="5"/>
 <path d="M255 229 V240 H320 V229" fill="#353d40"/>
 </g>
 <!-- receiver: 35–69.5% of silhouette, matching user's screenshot's large receiver -->
 <g id="receiver-assembly">
-<path d="M349 163 L657 158 L687 177 L687 236 L652 248 L365 239 L347 215Z" fill="url(#metal)"/>
+<path d="M349 163 L657 158 L687 177 L687 236 L652 248 L365 239 L347 215Z" fill="url(#metal)"/><path d="M349 163 L657 158 L687 177 L687 236 L652 248 L365 239 L347 215Z" fill="url(#steelBrushing)" stroke="none"/>
 <path d="M355 164 L380 143 H640 L666 160 V178 H354Z" fill="#75847f"/>
 <path d="M371 147 V126 H380 V146" stroke="#c4bcaa" stroke-width="5" fill="none"/>
 <path d="M412 144 H460 L469 133 H516 L530 144 H580" fill="none" stroke="#b8b9ab" stroke-width="4"/>
@@ -38,14 +40,14 @@
 <path d="M481 238 L580 242 Q575 330 483 406 L454 387 Q499 335 481 238Z" fill="url(#mag)"/>
 <path d="M504 256 Q509 335 465 384 M529 258 Q526 338 481 397 M552 263 Q544 344 496 397" stroke="#87958e" stroke-opacity=".45" stroke-width="2" fill="none"/>
 <path d="M594 234 H662 Q678 271 638 285 H616 L597 254" fill="none" stroke="#bdaa84" stroke-width="4"/>
-<path d="M628 244 L674 246 L720 345 Q710 364 670 359 L613 274Z" fill="url(#wood)"/>
-<path d="M648 259 L684 343" stroke="#d8b487" stroke-opacity=".5" stroke-width="3"/>
+<path d="M628 244 L674 246 L720 345 Q710 364 670 359 L613 274Z" fill="url(#wood)"/><path d="M628 244 L674 246 L720 345 Q710 364 670 359 L613 274Z" fill="url(#woodFiber)" stroke="none"/>
+<path d="M648 259 L684 343" stroke="#9d785b" stroke-opacity=".28" stroke-width="3"/>
 <path d="M620 244 V265" stroke="#b4a18a" stroke-width="4"/>
 </g>
 <!-- buttstock: ~30.5% of silhouette, no arbitrary horizontal stretching -->
 <g id="stock-assembly">
-<path d="M683 166 Q731 171 764 190 Q812 184 858 186 L961 177 L986 182 L989 278 L960 289 L853 287 Q809 275 767 250 L703 238 L687 231Z" fill="url(#wood)"/>
-<path d="M702 190 Q806 198 977 196 M749 214 Q856 234 980 248 M770 244 Q852 255 978 269" fill="none" stroke="#e0b88a" stroke-width="2" stroke-opacity=".35"/>
+<path d="M683 166 Q731 171 764 190 Q812 184 858 186 L961 177 L986 182 L989 278 L960 289 L853 287 Q809 275 767 250 L703 238 L687 231Z" fill="url(#wood)"/><path d="M683 166 Q731 171 764 190 Q812 184 858 186 L961 177 L986 182 L989 278 L960 289 L853 287 Q809 275 767 250 L703 238 L687 231Z" fill="url(#woodFiber)" stroke="none"/>
+<path d="M702 190 Q806 198 977 196 M749 214 Q856 234 980 248 M770 244 Q852 255 978 269" fill="none" stroke="#a17c63" stroke-width="1.4" stroke-opacity=".2"/>
 <path d="M857 219 Q900 211 958 220 Q947 238 855 240Z" fill="#322923" opacity=".7"/>
 <path d="M985 178 H996 V282 H985Z" fill="#394445"/>
 <path d="M994 184 V278" stroke="#94a29b" stroke-width="3"/>

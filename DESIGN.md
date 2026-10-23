@@ -19,3 +19,13 @@ Editorial military engineering. Night graphite #090e13, dark slate #151e26, pale
 - Parent attachment can unlock children only if source data explicitly declares that relationship.
 - Explain before/after stats; clearly mark calculations with uncertain game formulas.
 - Always support keyboard, Escape, touch, and reduced-motion users.
+
+## Matte material fidelity (mandatory, 2026-10-23)
+
+- Primary reference: original mobile game's dim armory lighting. Phosphated/oxidized steel, subtle brushed grain and uncoated aged wood; never synthetic showroom gloss.
+- Restrict metallic highlight to very narrow, low-intensity edge definition; wood needs muted low-frequency grain, not a bright plastic-to-brown gradient.
+- Avoid glassmorphism, large radial halos, perpetual glows, excessive drop shadows, glossy hero CTA styling and multiple reflections.
+- The weapon should remain the strongest contrast object, controls clearly readable but visually subordinate.
+- Charts rely on line weight and geometry, not shiny fills. Reserve high-contrast accent only for selected, valid, and warning states.
+- Motion changes state, not materials: do not animate specular brightness or add reflective sweeps.
+- `assets/main.css` is the production CSS; keep one source of truth and avoid adding another external stylesheet.
