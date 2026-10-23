@@ -1,4 +1,5 @@
 import { initGunsmith } from "./gunsmith.mjs";
+import { renderMountGraph, renderContributions, renderFlightChart } from "./visualizations.mjs";
 import { initDetails } from "./details.mjs";
 import { resolveBuild, idealFlightTimeMs, idealUnarmoredTtkMs, SLOTS } from "./engine.mjs";
 const $ = id => document.getElementById(id);
@@ -76,6 +77,9 @@ async function main() {
     function update() {
       const result = resolveBuild(weapon,attachments,selections);
       bench.refresh();
+      renderMountGraph($("mount-graph"), result.equipped.find(x=>x.slot==="barrel"));
+      renderContributions($("contribution-viz"),weapon,result);
+      renderFlightChart($("flight-chart"),weapon.base.muzzleVelocityMps,result.stats.muzzleVelocityMps);
       const stats = result.stats;
       setText("distance-label", distance + " m");
       setText("flight-time", format(idealFlightTimeMs(distance,stats.muzzleVelocityMps)) + " ms");

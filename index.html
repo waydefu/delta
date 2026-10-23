@@ -7,6 +7,7 @@
   <meta name="description" content="三角洲行動 AKM 槍械資料庫、配件屬性試算與理想飛行時間研究原型。">
   <title>AKM 槍械實驗室 | DELTA LAB</title>
   <link rel="stylesheet" href="./assets/styles.css">
+  <link rel="stylesheet" href="./assets/premium.css">
 </head>
 <body>
   <div class="page-shell">
@@ -16,42 +17,28 @@
     </header>
     <main>
       <div class="breadcrumb">武器資料庫 <span>/</span> 突擊步槍 <span>/</span> AKM</div>
-      <section class="hero">
+      <section class="hero hero-editorial">
         <div class="hero-content">
-          <div class="overline"><span class="signal"></span> OPERATIONS / AK PLATFORM</div>
-          <h1>AKM <em>槍械實驗室</em></h1>
-          <p id="weapon-subtitle" class="hero-sub">資料載入中…</p>
-          <p class="hero-description">從裸槍面板、配件修正到飛行時間。每筆數值保留來源，將「已知資料」與「推估模型」清楚分開。</p>
-          <div id="snapshot" class="snapshot">正在載入版本資料</div>
+          <div class="overline"><span class="signal"></span> TACTICAL SYSTEMS <span class="overline-div">/</span> WEAPON ENGINEERING</div>
+          <div class="hero-eyebrow-row"><span class="micro-rule"></span> LOADOUT 001 <span class="hero-status"><span></span> SYSTEM ONLINE</span></div>
+          <h1>AKM<span class="hero-period">.</span><em>模組化槍械實驗室</em></h1>
+          <p id="weapon-subtitle" class="hero-sub">7.62 × 39 mm · ASSAULT RIFLE</p>
+          <p class="hero-description">不只是一組改槍數值。選擇零件、拆解性能差異，探索每個配置背後的取捨。</p>
+          <div class="hero-cta-line"><a href="#gunsmith" class="hero-action">進入改槍工作台 <span aria-hidden="true">↗</span></a><span id="snapshot" class="snapshot">正在讀取資料版本…</span></div>
         </div>
-        <div class="hero-visual" aria-hidden="true">
-          <div class="scope-ring"></div>
-          <svg class="weapon-silhouette" viewBox="0 0 670 255" xmlns="http://www.w3.org/2000/svg">
-            <g fill="#98acba" stroke="#202f3a" stroke-width="3" stroke-linejoin="round">
-              <path d="M36 130 L148 126 L162 108 L213 108 L220 142 L153 154 L133 178 L36 181 L30 165 Z"/>
-              <path d="M166 111 L320 108 L343 117 L370 117 L390 132 L384 166 L277 171 L244 150 L170 148 Z" fill="#c0c9c6"/>
-              <path d="M375 126 L574 124 L574 135 L375 143 Z" fill="#687f87"/>
-              <path d="M568 118 L621 118 L621 141 L568 141 Z" fill="#c0c9c6"/>
-              <path d="M280 165 L335 176 L322 245 L276 246 L250 191 Z" fill="#708893"/>
-              <path d="M203 155 L225 151 L224 195 L205 203 L193 186 Z"/>
-              <path d="M169 98 L214 91 L322 93 L341 101 L341 111 L166 111 Z" fill="#617780"/>
-              <path d="M300 91 L317 80 L355 80 L356 87 L335 98 Z"/>
-            </g>
-            <g stroke="#e7ab54" stroke-width="2" fill="none" opacity=".76"><path d="M374 105 H619"/><path d="M616 102 V109"/><path d="M31 192 H130"/><path d="M31 189 V195"/></g>
-          </svg>
-          <span class="visual-label">SCHEMATIC / NOT TO SCALE</span>
-        </div>
+        <div class="hero-metadata" aria-hidden="true"><span>WEAPON CLASS  /  AR</span><span>CARTRIDGE  /  7.62 × 39</span><span>PLATFORM  /  MOBILE</span><span>RESEARCH BUILD  /  0.3</span></div>
       </section>
-      <section class="panel gunsmith-section" aria-label="AKM 互動改槍台">
+      <section id="gunsmith" class="panel gunsmith-section" aria-label="AKM 互動改槍台">
         <div class="gunsmith-intro">
-          <div><span class="eyebrow">00 / GUNSMITH WORKBENCH</span><h2>AKM 改槍台</h2></div>
-          <span class="bench-legend">點擊槍械周圍的配件槽 · 已開放槍管、槍口、槍托</span>
+          <div class="gunsmith-heading"><span class="eyebrow">01 — MODULAR CONFIGURATION</span><h2>改槍工作台<span class="slash-title"> / </span><span class="dim-title">AKM</span></h2><p>點擊槍械周圍的部件槽位，選擇配件並即時查看配置影響。</p></div>
+          <div class="workbench-badges"><span class="workbench-badge badge-live"><span></span> LIVE ANALYSIS</span><span class="workbench-badge">11 SLOTS MAPPED</span></div>
         </div>
         <div class="bench-scroll" tabindex="0" aria-label="槍械與配件槽，可左右滑動">
           <div id="gunsmith-workbench" class="bench-mount"></div>
         </div>
-        <div class="bench-footer"><span>◇ 灰色槽位：已確認位置，配件尚未建檔</span><span>手機可左右滑動 · 槍械為向量示意</span></div>
+        <div class="bench-footer"><span><span class="legend-dot live"></span>可選配件 <span class="legend-dot installed"></span>已安裝 <span class="legend-dot pending"></span>待建檔</span><span>AKM SIDE PROFILE <span class="footer-divider">/</span> SCHEMATIC MODEL, NOT IN-GAME 3D</span></div>
       </section>
+      <div class="section-ribbon"><span>02 / PERFORMANCE OVERVIEW</span><span>BASELINE <span class="ribbon-arrow">↔</span> CURRENT BUILD</span></div>
       <section class="summary-grid" aria-label="主要改裝數值">
         <div class="summary-card"><span>後座力控制</span><strong id="recoil-summary">—</strong><small>基準 39</small></div>
         <div class="summary-card"><span>操控速度</span><strong id="handling-summary">—</strong><small>基準 54</small></div>
@@ -84,8 +71,20 @@
           </div>
         </section>
       </div>
+      <div class="analysis-row">
+        <section class="panel analysis-card">
+          <div class="analysis-topline"><div><span class="eyebrow">03 / MODULAR ARCHITECTURE</span><h2>配件依附關係</h2></div><span class="analysis-icon" aria-hidden="true">⌘</span></div>
+          <p class="muted">槍管／護木變動可能影響掛載位置；目前是研究結構圖，不代表遊戲內所有槍管都會開放相同槽位。</p>
+          <div id="mount-graph" class="mount-graph" aria-live="polite"></div>
+        </section>
+        <section class="panel analysis-card">
+          <div class="analysis-topline"><div><span class="eyebrow">04 / PERFORMANCE DELTA</span><h2>性能變化來源</h2></div><span class="analysis-icon" aria-hidden="true">↗</span></div>
+          <p class="muted">展示後座力控制的來源組成。只計算已有配件欄位，數值仍需版本核驗。</p>
+          <div id="contribution-viz" class="contribution-viz" aria-live="polite"></div>
+        </section>
+      </div>
       <section class="panel simulation">
-        <div class="panel-heading"><div><span class="eyebrow">03 / BALLISTIC RESEARCH</span><h2>理想飛行時間</h2></div><span class="model-tag">⚠ 簡化模型</span></div>
+        <div class="panel-heading"><div><span class="eyebrow">05 / FLIGHT MODEL</span><h2>理想飛行時間</h2></div><span class="model-tag">⚠ 簡化模型</span></div>
         <p class="muted">僅用「距離 ÷ 試算初速」估算恆速飛行時間。<strong>這不是實際彈著點、下墜或後座力軌跡。</strong></p>
         <div class="sim-grid">
           <div>
@@ -101,21 +100,21 @@
             <div><span>理論空甲 TTK*</span><strong id="ttk">—</strong></div>
           </div>
         </div>
-        <div class="disclaimer" id="model-note">尚未取得真實彈道參數。</div>
+        <div class="flight-chart-panel"><div class="chart-header"><span>理想飛行時間比較</span><span><i class="chart-legend baseline"></i>裸槍 <i class="chart-legend current"></i>當前配置</span></div><div id="flight-chart" class="flight-chart" role="img" aria-label="不同距離的恆速飛行時間對照折線圖"></div><p class="chart-footnote">0—200 m / 不含重力、阻力、下墜與連射後座力</p></div><div class="disclaimer" id="model-note">尚未取得真實彈道參數。</div>
         <p class="tiny">* TTK 僅假設 100 HP、每發固定 40 傷、全部命中、不考慮護甲、部位倍率、觸發延遲及飛行時間。</p>
       </section>
       <section class="panel details-panel" aria-label="AKM 詳細屬性">
-        <div class="details-header"><span class="eyebrow">04 / ADVANCED ATTRIBUTES</span><h2>AKM 詳細屬性</h2><p class="muted">使用你提供的 2026-10-23 遊戲截圖核對裸槍細項。<strong>配裝後的細項時間、倍率與散布尚未完成公式驗證。</strong></p></div>
+        <div class="details-header"><span class="eyebrow">06 / ADVANCED ATTRIBUTES</span><h2>AKM 詳細屬性</h2><p class="muted">使用你提供的 2026-10-23 遊戲截圖核對裸槍細項。<strong>配裝後的細項時間、倍率與散布尚未完成公式驗證。</strong></p></div>
         <div id="detail-explorer"></div>
       </section>
       <section class="panel source-panel">
-        <div class="panel-heading"><div><span class="eyebrow">05 / DATA PROVENANCE</span><h2>數值來源與研究狀態</h2></div><span class="subtle-tag">可追溯</span></div>
+        <div class="panel-heading"><div><span class="eyebrow">07 / DATA PROVENANCE</span><h2>數值來源與研究狀態</h2></div><span class="subtle-tag">可追溯</span></div>
         <p class="muted">基礎數值來自第三方整理的遊戲面板；配件修正以 2026-09-23 來源快照為主要依據。相容性僅以槽位推導者會在介面註明待核驗。不同平台、版本、精校與特殊效果均未完成確認。</p>
         <div class="source-links" id="sources"></div>
         <p class="tiny">非《三角洲行動》官方網站。資料及介面僅供研究、測試與比較。</p>
       </section>
     </main>
-    <footer><span>DELTA LAB · BUILD 0.1</span><span>DATA FIRST. VERIFY EVERYTHING.</span></footer>
+    <footer><span>DELTA LAB · BUILD 0.3</span><span>DATA FIRST. VERIFY EVERYTHING.</span></footer>
   </div>
   <script type="module" src="./src/app.mjs"></script>
 </body>
