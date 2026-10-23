@@ -25,6 +25,7 @@ export function resolveBuild(weapon,attachments,selected={}){
     const item=known.get(id);
     if(!item||item.slot!==slot||!item.compatibleWeapons?.includes(weapon.id))
       throw new Error("不相容或不存在的配件："+id);
+    if(item.researchOnly===true)throw new Error("配件僅供研究，尚未確認可裝配："+id);
     if(!weapon.openSlots?.includes(slot) && !(item.verifiedMount===true))
       throw new Error("此配件槽未確認可直接掛載："+slot);
     const effects=item.effects||{};

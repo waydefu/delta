@@ -41,7 +41,7 @@ test("資料符合唯一 id 與每個效果皆可計算", () => {
  for(const a of attachments){
   assert.ok(a.source.startsWith("https://"));
   assert.ok(a.compatibleWeapons.includes("akm"));
-  resolveBuild(weapon,attachments,{[a.slot]:a.id});
+  if(a.researchOnly!==true)resolveBuild(weapon,attachments,{[a.slot]:a.id});
  }
 });
 
@@ -245,7 +245,7 @@ test("歷史配件清單與已研究數值必須明示來源、日期與驗證�
   assert.ok(x.dataAsOf);
   assert.equal(x.platformValidated,false);
   assert.ok(x.dataStatus);
-  resolveBuild(weapon,attachments,{[x.slot]:x.id});
+  if(x.researchOnly!==true)resolveBuild(weapon,attachments,{[x.slot]:x.id});
  }
 });
 test("不能用未確認的掛載槽位或未知效果偷渡配件",()=>{
@@ -290,7 +290,20 @@ test("2026 AKM 新配件須有來源與未驗證標記",()=>{
    assert.equal(item.dataAsOf,"2026-09-23");
    assert.equal(item.platformValidated,false);
    assert.ok(item.source.startsWith("https://gamegrids.io"));
-   resolveBuild(weapon,attachments,{[item.slot]:item.id});
+   if(item.researchOnly!==true)resolveBuild(weapon,attachments,{[item.slot]:item.id});
  }
  assert.equal(resolveBuild(weapon,attachments,{barrel:"akm-beaver-long-barrel"}).stats.muzzleVelocityMps,682.5);
+});
+
+test("2026 槍托緩衝墊分類模糊，不能直接當作 AKM 可裝配件",async()=>{
+ const pad=attachments.find(x=>x.objectId===13240000006);
+ assert.equal(pad.sourceCategory,"stock");
+ assert.equal(pad.researchOnly,true);
+ assert.equal(pad.mountValidation,"unresolved");
+ assert.throws(()=>resolveBuild(weapon,attachments,{buttpad:pad.id}),/僅供研究/);
+ const {reconcileSelection}=await import("../src/attachment-graph.mjs");
+ const result=reconcileSelection(weapon,attachments,{stock:"ak-polymer-stock",buttpad:pad.id});
+ assert.equal(result.selected.stock,"ak-polymer-stock");
+ assert.equal(result.selected.buttpad,undefined);
+ assert.ok(readFileSync(new URL("../src/gunsmith.mjs",import.meta.url),"utf8").includes("a.researchOnly!==true"));
 });

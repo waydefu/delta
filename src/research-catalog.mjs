@@ -75,7 +75,7 @@ export function initResearchCatalog(host,curated){
   id:p.id,name:p.name,slot:p.slot,
   tier:null,
   stats:Object.entries(p.effects||{}).map(([key,value])=>key+" "+(value>0?"+":"")+value),
-  description:p.dataStatus==="source-conflict"?"來源有衝突":"資料仍待實機核驗",
+  description:p.researchOnly===true?"研究專用：掛載槽未驗證，禁止套入改槍":p.dataStatus==="source-conflict"?"來源有衝突":"資料仍待實機核驗",
   effects:[],source:p.source,
   flags:{compatibleWithAkm:false,currentMobileVerified:false,valuesVerified:false,noKnownNumericModifiers:false}
  }));

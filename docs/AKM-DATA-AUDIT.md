@@ -35,3 +35,13 @@
 - AK 槍托緩衝墊（ID 13240000006）：後座 +3、操控 -3、穩定 +1；實際是否屬 AKM 直接槍托墊掛載未驗證。
 
 四件數值均來自各個 2026 年 GameGrids 配件頁，不等於手遊實測確認。
+
+
+## 2026-10-24 再核對：最新來源與修正
+- 官方近期可核對的 10/10、10/15、10/22 更新無明確 AKM 基礎數值調整紀錄；未公告不代表絕無熱修。
+- [GameGrids 2026-09-23](https://gamegrids.io/delta-force/zh/attachments/akm-beaver-long-barrel-assembly/) 與 [DeltaForceTools 2026-07-04](https://deltaforcetools.gg/tw/wiki/attachment) 都支持 AKM 海狸長槍管後座 +9、穩定 +4、操控 -7、腰射 -12、射程/初速 +30%。仍非 2026-10-24 實機驗證。
+- AKM 實用長槍管：2026-10-02 的 [DeltaForceTools](https://deltaforcetools.gg/wiki/attachment/AKM%2520Practical%2520Long%2520Barrel%2520Combo) 仍顯示後座 +6，而 2026-09-23 的 [GameGrids](https://gamegrids.io/delta-force/zh/attachments/akm-practical-long-barrel-assembly/) 顯示後座 +8、射程/初速 +30%。衝突不限於 2024 舊資料。
+- AK 勇火消音器：2026-09-09 的 [DeltaForceTools](https://deltaforcetools.gg/wiki/attachment/AK%2520Bravefire%2520Suppressor) 顯示操控 -10、穩定 +4；2026-09-23 [GameGrids](https://gamegrids.io/delta-force/zh/attachments/ak-valor-flame-suppressor/) 顯示操控 -4、穩定 +3。同年資料仍存在衝突。
+- AK 槍托緩衝墊 (13240000006) 在 [GameGrids](https://gamegrids.io/delta-force/zh/attachments/ak-stock-recoil-pad/) 與 [零號站](https://sjz.jbskins.com/Item/index/category_id/2) 都歸為「槍托」，不代表可以裝在 AKM「槍托墊」槽。本項標記 `researchOnly:true` 並拒絕直接套用改槍計算。
+- GameGrids 的武器兼容清單按「相同槽位」推導，曾將 AKM 特定槍管列為多種手槍的兼容候選；此推導不能當作實際可安裝證據。
+- AKM 本地研究條目共 21 件，其中 1 件因掛載關係未明禁用，20 件仍僅供研究試算；沒有 2026 年手機版完整實機驗證的 AKM 配件。

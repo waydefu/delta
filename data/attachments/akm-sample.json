@@ -74,7 +74,8 @@
       },
       "source": "https://github.com/jiansenc/DeltaForceData/blob/main/public/json/acc/accBarrel.json"
     },
-    "reviewNote": "2024 舊資料與研究樣本有數值差異；尚未取得 2026 手遊實機證據。"
+    "reviewNote": "2024 舊資料與研究樣本有數值差異；尚未取得 2026 手遊實機證據。",
+    "lastChecked": "2026-10-24"
   },
   {
     "id": "akm-transcendent-barrel",
@@ -145,7 +146,8 @@
       },
       "source": "https://github.com/jiansenc/DeltaForceData/blob/main/public/json/acc/accMuzzle.json"
     },
-    "reviewNote": "2024 舊資料與研究樣本有數值差異；尚未取得 2026 手遊實機證據。"
+    "reviewNote": "2024 舊資料與研究樣本有數值差異；尚未取得 2026 手遊實機證據。",
+    "lastChecked": "2026-10-24"
   },
   {
     "id": "ak-polymer-stock",
@@ -447,6 +449,10 @@
       "aimStability": 1
     },
     "source": "https://gamegrids.io/delta-force/zh/attachments/ak-stock-recoil-pad/",
-    "reviewNote": "須實機確認槍托墊掛載關係"
+    "reviewNote": "兩個資料站都將此物件分類為「槍托」；但遊戲 AKM 截圖有獨立的「槍托墊」槽，無法判定此物是否可裝於該槽或會與主槍托互斥。研究專用、禁止試算。",
+    "researchOnly": true,
+    "sourceCategory": "stock",
+    "mountValidation": "unresolved",
+    "lastChecked": "2026-10-24"
   }
 ]

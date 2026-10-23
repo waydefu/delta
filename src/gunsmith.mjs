@@ -91,7 +91,7 @@ export function initGunsmith(mount,selections,attachments,onPick,weapon){
  function open(id){if(closing||active===id)return;opener=buttons.get(id)?.button;active=id;shade.hidden=false;drawer.hidden=false;renderDrawer();refresh();sheetEntrance(drawer);drawer.querySelector(".drawer-close")?.focus({preventScroll:true});}
  function renderDrawer(){
   if(!active)return;
-  const slot=SLOTS.find(s=>s[0]===active),choices=attachments.filter(a=>a.slot===active&&a.compatibleWeapons?.includes("akm"));
+  const slot=SLOTS.find(s=>s[0]===active),choices=attachments.filter(a=>a.slot===active&&a.researchOnly!==true&&a.compatibleWeapons?.includes("akm"));
   drawer.replaceChildren();
   const handle=node("div","drawer-grip");handle.setAttribute("aria-hidden","true");drawer.append(handle);
   const head=node("div","bench-drawer-head"),heading=node("div"),small=node("small","", "ATTACHMENT / "+slot[0].toUpperCase()),h=node("h3","",slot[1]),x=node("button","drawer-close","✕");
@@ -155,7 +155,7 @@ export function initGunsmith(mount,selections,attachments,onPick,weapon){
   const open=getAvailableSlots(weapon,attachments,selections);
   for(const [id,label] of SLOTS){
    const {button,status}=buttons.get(id),installed=attachments.find(a=>a.id===selections[id]);
-   const ready=open.has(id)&&attachments.some(a=>a.slot===id&&a.compatibleWeapons?.includes(weapon.id));
+   const ready=open.has(id)&&attachments.some(a=>a.slot===id&&a.researchOnly!==true&&a.compatibleWeapons?.includes(weapon.id));
    button.classList.toggle("installed",!!installed);button.classList.toggle("active",active===id);
    button.classList.toggle("not-ready",!ready);
    button.setAttribute("aria-pressed",String(active===id));

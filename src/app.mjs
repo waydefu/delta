@@ -54,10 +54,10 @@ async function main() {
       const select = el("select", "slot-select");
       select.id = "select-" + slot;
       select.append(new Option("未安裝（裸槍基準）", ""));
-      for(const part of attachments.filter(a => a.slot === slot)) {
+      for(const part of attachments.filter(a => a.slot === slot && a.researchOnly!==true)) {
         select.append(new Option(part.name + (part.dataStatus==="source-conflict"?" · ⚠ 來源衝突":part.dataStatus==="historical-unverified"?" · 2024 歷史": " · 待核驗"), part.id));
       }
-      select.value = attachments.some(a=>a.id===selections[slot] && a.slot===slot) ? selections[slot] : "";
+      select.value = attachments.some(a=>a.id===selections[slot] && a.slot===slot && a.researchOnly!==true) ? selections[slot] : "";
       selections[slot] = select.value;
       select.addEventListener("change", () => { const normalized=reconcileSelection(weapon,attachments,{...selections,[slot]:select.value});Object.assign(selections,normalized.selected);for(const key of SLOTS){selections[key]=normalized.selected[key]||"";$("select-"+key).value=selections[key];}update(); });
       panel.append(label, select);

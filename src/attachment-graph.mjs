@@ -18,7 +18,7 @@ export function getAvailableSlots(weapon, attachments, selected = {}) {
     for(const [slot,id] of Object.entries(selected)){
       if(!id || !slots.has(slot))continue;
       const part=known.get(id);
-      if(!part || part.slot!==slot || !part.compatibleWeapons?.includes(weapon.id))continue;
+      if(!part || part.researchOnly===true || part.slot!==slot || !part.compatibleWeapons?.includes(weapon.id))continue;
       for(const child of part.providesSlots||[]){
         const name=typeof child==="string"?child:child?.slot;
         if(typeof name!=="string"||!name)throw new Error("子槽位格式不正確");
@@ -41,6 +41,7 @@ export function reconcileSelection(weapon, attachments, proposed={}) {
       if(!id)continue;
       const part=known.get(id);
       const valid=open.has(slot) &&
+        part?.researchOnly!==true &&
         part?.slot===slot &&
         part?.compatibleWeapons?.includes(weapon.id);
       if(!valid){
