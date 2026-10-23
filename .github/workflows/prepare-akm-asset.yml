@@ -1,0 +1,60 @@
+name: Research AKM model conversion
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - .github/workflows/prepare-akm-asset.yml
+      - scripts/inspect-export-akm.py
+
+permissions:
+  contents: read
+
+jobs:
+  prepare:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Blender
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends blender
+      - name: Download source from the author's CC0 OpenGameArt page
+        run: |
+          mkdir -p .model-work model-output
+          curl --fail --location --retry 3 --max-time 240 \
+            --proto '=https' --tlsv1.2 \
+            --output .model-work/akm54.blend \
+            https://opengameart.org/sites/default/files/akm54.blend
+          test "$(head -c 7 .model-work/akm54.blend)" = "BLENDER"
+          test "$(stat -c %s .model-work/akm54.blend)" -le 65000000
+          sha256sum .model-work/akm54.blend | tee model-output/source-sha256.txt
+      - name: Inspect meshes and export glTF
+        run: |
+          AKM_OUTPUT="$GITHUB_WORKSPACE/model-output" \
+          blender --background --disable-autoexec .model-work/akm54.blend \
+            --python scripts/inspect-export-akm.py
+      - name: Check output is a real GLB
+        run: |
+          python3 - <<'PY'
+          import json, pathlib, struct
+          path=pathlib.Path("model-output/akm.glb")
+          raw=path.read_bytes()
+          assert raw[:4] == b"glTF", "not a GLB"
+          assert struct.unpack_from("<I",raw,8)[0] == len(raw), "GLB byte count mismatch"
+          report=json.loads(pathlib.Path("model-output/inspection.json").read_text())
+          assert report["meshes"], "no meshes"
+          assert path.stat().st_size < 100_000_000, "too large"
+          print("GLB size:",path.stat().st_size,"mesh count:",len(report["meshes"]))
+          print("Found detachable candidates:",report["part_candidates"])
+          PY
+      - name: Upload reviewed-source conversion and report
+        uses: actions/upload-artifact@v4
+        with:
+          name: akm-cc0-glb-unreviewed
+          path: |
+            model-output/akm.glb
+            model-output/inspection.json
+            model-output/source-sha256.txt
+          if-no-files-found: error
+          retention-days: 7
