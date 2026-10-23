@@ -1,3 +1,4 @@
+import {shouldAnimate} from "./motion.mjs";
 /**
  * Lazy Three.js renderer for a locally reviewed, properly licensed AKM GLB.
  * Does not run until assets/models/akm.glb exists AND the user selects local 3D.
@@ -21,7 +22,7 @@ export function findPartNodes(names) {
 export async function mountLocalGLB(host,{url="./assets/models/akm.glb",onStatus=()=>{}}={}){
  if(!host)throw new TypeError("Missing 3D viewport");
  let renderer,controls,scene,asset,roomTarget,resizeObserver,disposed=false;
- let rootGroup=null;
+ let rootGroup=null,magazineFrame=0,magazineAnimating=false;
  const documentWindow=host.ownerDocument.defaultView || window;
  const [THREE,{GLTFLoader},{OrbitControls},{RoomEnvironment}]=await Promise.all([
   import("three"),
@@ -100,6 +101,43 @@ export async function mountLocalGLB(host,{url="./assets/models/akm.glb",onStatus
    }
   });
   const parts=findPartNodes(names);
+  async function animateMagazine(){
+    const mag=meshes.find(obj=>obj.name==="AKM_Magazine");
+    // A model-topology inspection cue, not a real inventory interaction.
+    if(!mag||magazineAnimating||disposed||!mag.visible)return false;
+    if(!shouldAnimate()||documentWindow.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches){
+      mag.visible=false;render();mag.visible=true;render();return true;
+    }
+    magazineAnimating=true;
+    mag.parent?.updateWorldMatrix(true,false);
+    const parentOrientation=new THREE.Quaternion();
+    mag.parent?.getWorldQuaternion(parentOrientation);
+    const direction=new THREE.Vector3(0,-1,0)
+      .applyQuaternion(parentOrientation.invert())
+      .normalize().multiplyScalar(maxDim*.17);
+    const origin=mag.position.clone(),started=performance.now();
+    const ease=t=>1-Math.pow(1-t,3);
+    return await new Promise(resolve=>{
+      function finish(ok){
+        if(magazineFrame)documentWindow.cancelAnimationFrame(magazineFrame);
+        magazineFrame=0;
+        mag.position.copy(origin);
+        if(!disposed)render();
+        magazineAnimating=false;
+        resolve(ok);
+      }
+      const tick=now=>{
+        if(disposed){finish(false);return;}
+        const t=Math.min(1,(now-started)/960);
+        const progress=t<.40?ease(t/.40):t<.58?1:1-ease((t-.58)/.42);
+        mag.position.copy(origin).addScaledVector(direction,progress);
+        render();
+        if(t<1)magazineFrame=documentWindow.requestAnimationFrame(tick);
+        else finish(true);
+      };
+      magazineFrame=documentWindow.requestAnimationFrame(tick);
+    });
+  }
   function setPartVisible(name,visible){
     // Research inspection: independently hidden mesh must not hide the rest.
     const matches=meshes.filter(obj=>obj.name===name);
@@ -133,9 +171,11 @@ export async function mountLocalGLB(host,{url="./assets/models/akm.glb",onStatus
   onStatus("載入完成："+meshes.length+" 個網格、"+materials.size+" 種材質。已辨識彈匣節點："+parts.magazine.length+" 個；無法僅依名稱保證可拆件。");
   return {
    root:rootGroup,parts,meshCount:meshes.length,materialCount:materials.size,
-   setPartVisible,setWireframe,resetCamera,render,resize,
+   setPartVisible,animateMagazine,setWireframe,resetCamera,render,resize,
    dispose(){
-    disposed=true;resizeObserver?.disconnect();
+    disposed=true;
+    if(magazineFrame)documentWindow.cancelAnimationFrame(magazineFrame);
+    magazineFrame=0;resizeObserver?.disconnect();
     controls?.dispose();
     if(asset){
      const materialsToDispose=new Set();

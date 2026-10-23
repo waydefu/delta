@@ -19,3 +19,8 @@
 
 ## 分件候選（2026-10-24）
 原始 AKM mesh 具有 28 個彼此不連通的幾何島。依原始 Blender 座標，其中一個島有約 80 頂點、150 個面、約 0.160 × 0.201 m 的 X/Z 外形，位於機匣下方；它可能是完整彈匣。新增嚴格幾何範圍檢查，只在唯一候選吻合時，從原網格拆成 **AKM_Body + AKM_Magazine** 兩個物件，匯出另一個 `akm-segmented-unreviewed.glb` 以及 `magazine-segmentation.json`。這個分件尚未驗收，不會自動取代網站已發布的模型。
+
+## 雙網格幾何視覺驗收與展示（2026-10-24）
+- 2026-10-24 Chromium 對照圖片：`draft-parts-3d.png` vs `draft-mag-hidden.png`，只消失完整彎曲彈匣，機匣／扳機／槍托仍完整。GitHub Actions [影像驗收](https://github.com/waydefu/delta/actions/runs/40026932830) 成功；原始分件 [Blender](https://github.com/waydefu/delta/actions/runs/40026606857)。
+- 已改以來源清楚的 `assets/models/akm-parts-candidate.glb` 兩網格模型做常規 3D 展示；有一個 960ms 非循環、可取消的 3D 彈匣退出復位示範，使用真實 GLB 節點平移，不動改槍數值。
+- 這是**幾何上的分件已驗證**，但遊戲內配件裝卸軸、掛載點、槍托／槍管更換能力和所有數值仍不具備驗證；不可視為正式模組化遊戲槍模。

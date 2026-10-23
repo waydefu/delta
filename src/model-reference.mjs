@@ -28,7 +28,7 @@ export function initModelReference(stage){
  bar.append(schematic,modelButton,nativeButton);stage.append(bar);
  const layer=el("div","model-reference-layer");layer.hidden=true;stage.append(layer);
  let showing=false,mode="2d",choice=MODELS[0],localViewer=null,loadGeneration=0;
- const assetUrl=partReview?"./assets/models/akm-parts-candidate.glb":"./assets/models/akm.glb";
+ const assetUrl="./assets/models/akm-parts-candidate.glb"; // mesh separation visually confirmed, game fitment still unverified
  function sync(){
   schematic.classList.toggle("selected",!showing);
   modelButton.classList.toggle("selected",showing&&mode==="remote");
@@ -109,6 +109,17 @@ export function initModelReference(stage){
     "CC0 真實 3D · "+instance.meshCount+" 個網格 · "+instance.materialCount+
     " 種材質 · 不支援 3D 配件替換，遊戲內比例仍需對照");
    controls.append(reset,wireframe,warning);
+   if(instance.meshCount===2&&instance.parts.magazine.includes("AKM_Magazine")){
+      const inspect=el("button","local-viewer-action","3D 彈匣裝卸示範");
+      inspect.type="button";
+      inspect.addEventListener("click",async()=>{
+       inspect.disabled=true;
+       try{await instance.animateMagazine();}finally{inspect.disabled=false;}
+      });
+      const inspectNote=el("p","local-viewer-caveat",
+       "已確認是獨立彈匣幾何，動畫僅供檢視。不代表已核實遊戲的裝配、彈容量或換件效果。");
+      controls.append(inspect,inspectNote);
+   }
    if(partReview&&instance.parts.magazine.includes("AKM_Magazine")){
       const mag=el("button","local-viewer-action","隱藏候選彈匣");
       mag.type="button";let visible=true;

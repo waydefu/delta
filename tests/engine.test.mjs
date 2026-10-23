@@ -454,7 +454,7 @@ test("P1：實際 GLB 檔頭、網格、材質與來源 SHA256 要全數一致",
  assert.throws(()=>inspectGLB(Buffer.from("glTFhello")),/Invalid GLB/);
 });
 
-test("P1 分件 AKM 候選必須另行 QA，正式主槍模不會預設換成研究版",()=>{
+test("P1 雙網格 AKM 經視覺驗收後可作預設3D彈匣展示，仍保留獨立 QA 開關",()=>{
  const ui=readFileSync(new URL("../src/model-reference.mjs",import.meta.url),"utf8");
  const viewer=readFileSync(new URL("../src/local-viewer.mjs",import.meta.url),"utf8");
  assert.ok(ui.includes('get("partReview")==="1"'));
@@ -462,4 +462,16 @@ test("P1 分件 AKM 候選必須另行 QA，正式主槍模不會預設換成研
  assert.ok(ui.includes("instance.setPartVisible"));
  assert.ok(viewer.includes("function setPartVisible(name,visible)"));
  assert.ok(ui.includes("並未確認遊戲裝配位置與動畫"));
+});
+
+test("P1 可控制真實 AKM 雙網格彈匣退出與復位，不更動遊戲裝備",()=>{
+ const viewer=readFileSync(new URL("../src/local-viewer.mjs",import.meta.url),"utf8");
+ const ui=readFileSync(new URL("../src/model-reference.mjs",import.meta.url),"utf8");
+ assert.match(viewer,/async function animateMagazine\(\)/);
+ assert.match(viewer,/mag\.position\.copy\(origin\)\.addScaledVector\(direction,progress\)/);
+ assert.match(viewer,/mag\.position\.copy\(origin\)/);
+ assert.match(viewer,/if\(magazineFrame\)documentWindow\.cancelAnimationFrame/);
+ assert.match(ui,/3D 彈匣裝卸示範/);
+ assert.match(ui,/const assetUrl="\.\/assets\/models\/akm-parts-candidate\.glb"/);
+ assert.match(ui,/不代表已核實遊戲的裝配/);
 });

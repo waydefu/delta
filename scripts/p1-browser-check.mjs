@@ -50,10 +50,17 @@ try{
     result.loaded=result.glbStatus.includes("載入完成");
     const canvas=page.locator(".local-glb-canvas");
     if(result.loaded){
+     if(!result.glbStatus.includes("2 個網格"))errors.push("Expected the visually reviewed body and magazine two-node model");
      const rect=await canvas.boundingBox();result.canvasBounds=rect;
      await page.getByRole("button",{name:"查看網格"}).click();
      await page.getByRole("button",{name:"查看材質"}).click();
      await page.getByRole("button",{name:"重設視角"}).click();
+     const animate=page.getByRole("button",{name:"3D 彈匣裝卸示範"});
+     await animate.click();
+     await page.waitForTimeout(330);
+     await page.screenshot({path:resolve(out,config.name+"-magazine-moving.png"),fullPage:false});
+     await animate.waitFor({state:"visible",timeout:6000});
+     await page.waitForFunction(()=>!document.querySelector(".local-viewer-toolbar button[disabled]"),{timeout:6000});
      if(config.draft){
        if(!result.glbStatus.includes("2 個網格"))errors.push("Expected two independently separated meshes");
        await page.getByRole("button",{name:"隱藏候選彈匣"}).click();
