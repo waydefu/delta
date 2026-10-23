@@ -40,7 +40,7 @@ jobs:
             mv .model-work/akm54.blend .model-work/akm54.blend.zst
             sha256sum .model-work/akm54.blend.zst | tee model-output/download-sha256.txt
             zstd --decompress --force .model-work/akm54.blend.zst \
-              --output .model-work/akm54.blend
+              -o .model-work/akm54.blend
           fi
           test "$(head -c 7 .model-work/akm54.blend)" = "BLENDER"
           test "$(stat -c %s .model-work/akm54.blend)" -le 300000000
