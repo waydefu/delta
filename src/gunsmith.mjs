@@ -1,4 +1,6 @@
+import { sheetEntrance, sheetExit, notifySlot, swapContents } from "./motion.mjs";
 import { getAvailableSlots } from "./attachment-graph.mjs";
+import { resolveBuild } from "./engine.mjs";
 const SLOTS=[
  ["muzzle","槍口",9,32,8,49],
  ["barrel","槍管",24,12,30,49],
@@ -13,8 +15,10 @@ const SLOTS=[
  ["foregrip","前握把",17,78,28,59]
 ];
 const ENABLED=new Set(["muzzle","barrel","stock"]);
+
 const node=(tag,cls,text)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(text!==undefined)e.textContent=text;return e;};
 export function initGunsmith(mount,selections,attachments,onPick,weapon){
+ const resolveBuildPreview=value=>resolveBuild(weapon,attachments,value);
  const stage=node("div","bench-canvas");
  const grid=node("div","bench-grid");
  const img=node("img","bench-gun");img.src="./assets/akm-side.svg";img.alt="AKM 側面槍械示意圖，非原生遊戲貼圖";img.draggable=false;
@@ -32,18 +36,39 @@ export function initGunsmith(mount,selections,attachments,onPick,weapon){
   const status=node("span","bench-slot-state");button.append(title,icon,status);
   button.addEventListener("click",()=>open(id));stage.append(button);buttons.set(id,{button,status});
  }
- stage.append(node("span","bench-watermark","AKM / CONFIGURATION"));
+ const overlay=node("div","bench-overlay");
+ overlay.append(node("span","bench-model-kind","AKM SIDE PROFILE / CALIBRATED"),node("span","bench-model-measure","880 mm PHYSICAL REFERENCE"));
+ stage.append(overlay,node("span","bench-watermark","AKM / CALIBRATED PROFILE"));
  const shade=node("button","bench-shade");shade.type="button";shade.hidden=true;shade.setAttribute("aria-label","關閉配件選單");
  const drawer=node("aside","bench-drawer");drawer.hidden=true;drawer.setAttribute("aria-label","配件選單");
  mount.append(stage,shade,drawer);
  let active=null;
- const close=()=>{active=null;shade.hidden=true;drawer.hidden=true;refresh();};
+ let closing=false,opener=null;
+ const close=async()=>{if(active===null||closing)return;closing=true;await sheetExit(drawer);active=null;shade.hidden=true;drawer.hidden=true;closing=false;refresh();opener?.focus({preventScroll:true});};
  shade.addEventListener("click",close);
- function open(id){active=id;shade.hidden=false;drawer.hidden=false;renderDrawer();refresh();}
+ document.addEventListener("keydown",event=>{
+   if(active!==null && event.key==="Escape"){event.preventDefault();close();}
+   if(active!==null && event.key==="Tab"){
+     const nodes=[...drawer.querySelectorAll("button:not([disabled])")];
+     if(event.shiftKey&&document.activeElement===nodes[0]){event.preventDefault();nodes.at(-1)?.focus();}
+     else if(!event.shiftKey&&document.activeElement===nodes.at(-1)){event.preventDefault();nodes[0]?.focus();}
+   }
+ });
+ let touchStart=null;
+ drawer.addEventListener("touchstart",event=>{if(event.touches.length===1)touchStart={x:event.touches[0].clientX,y:event.touches[0].clientY};},{passive:true});
+ drawer.addEventListener("touchend",event=>{
+   if(!touchStart||!event.changedTouches.length)return;
+   const dy=event.changedTouches[0].clientY-touchStart.y;
+   const dx=event.changedTouches[0].clientX-touchStart.x;
+   if(dy>90&&dy>Math.abs(dx)*1.3&&drawer.scrollTop<5)close();
+   touchStart=null;
+ },{passive:true});
+ function open(id){if(closing||active===id)return;opener=buttons.get(id)?.button;active=id;shade.hidden=false;drawer.hidden=false;renderDrawer();refresh();sheetEntrance(drawer);drawer.querySelector(".drawer-close")?.focus({preventScroll:true});}
  function renderDrawer(){
   if(!active)return;
   const slot=SLOTS.find(s=>s[0]===active),choices=attachments.filter(a=>a.slot===active&&a.compatibleWeapons?.includes("akm"));
   drawer.replaceChildren();
+  const handle=node("div","drawer-grip");handle.setAttribute("aria-hidden","true");drawer.append(handle);
   const head=node("div","bench-drawer-head"),heading=node("div"),small=node("small","", "ATTACHMENT / "+slot[0].toUpperCase()),h=node("h3","",slot[1]),x=node("button","drawer-close","✕");
   x.type="button";x.setAttribute("aria-label","關閉選單");x.addEventListener("click",close);
   heading.append(small,h);head.append(heading,x);drawer.append(head);
@@ -52,13 +77,39 @@ export function initGunsmith(mount,selections,attachments,onPick,weapon){
     box.append(title,p);drawer.append(box);return;
   }
   drawer.append(node("p","drawer-hint","選擇配件後即時計算面板。部分相容性仍需實機核驗。"));
+  const preview=node("div","candidate-preview");
+  drawer.append(preview);
+  const renderPreview=id=>{
+    const existing=resolveBuildPreview(selections);
+    const proposed=resolveBuildPreview({...selections,[active]:id});
+    preview.replaceChildren(node("small","candidate-caption","相對目前配置的變化"));
+    const metrics=node("div","candidate-metrics");
+    for(const [key,label] of [["recoilControl","後座"],["handling","操控"],["aimStability","穩定"],["hipFireAccuracy","腰射"]]){
+      const amount=Number((proposed.stats[key]-existing.stats[key]).toFixed(2));
+      const cell=node("div","candidate-metric");
+      cell.append(node("span","",label),node("strong",amount>0?"positive":amount<0?"negative":"",amount===0?"—":(amount>0?"+":"")+amount));
+      metrics.append(cell);
+    }
+    preview.append(metrics);
+  };
   const wrap=node("div","bench-options");
   function makeOption(id,label,desc,provisional){
    const item=node("button","bench-option"+(selections[active]===id?" selected":""));item.type="button";
    const name=node("span","option-line"),strong=node("strong","",label);
    name.append(strong,node("small","",provisional?"相容待核驗":"示範資料"));
    item.append(name,node("span","option-effects",desc));
-   item.addEventListener("click",()=>{onPick(active,id);close();});wrap.append(item);
+   item.addEventListener("pointerenter",()=>renderPreview(id));
+   item.addEventListener("focus",()=>renderPreview(id));
+   item.addEventListener("click",()=>{
+     const previous=getAvailableSlots(weapon,attachments,selections);
+     onPick(active,id);
+     const available=getAvailableSlots(weapon,attachments,selections);
+     for(const slot of available)if(!previous.has(slot))notifySlot(buttons.get(slot)?.button);
+     notifySlot(buttons.get(active)?.button);
+     swapContents(img);
+     close();
+   });wrap.append(item);
+   if((selections[active]||"")===id)renderPreview(id);
   }
   makeOption("","不安裝配件","裸槍基準",false);
   const keyName={recoilControl:"後座",handling:"操控",aimStability:"穩定",hipFireAccuracy:"腰射",effectiveRangePct:"射程",muzzleVelocityPct:"初速"};
@@ -76,7 +127,7 @@ export function initGunsmith(mount,selections,attachments,onPick,weapon){
    button.classList.toggle("installed",!!installed);button.classList.toggle("active",active===id);
    button.classList.toggle("not-ready",!ready);
    button.setAttribute("aria-pressed",String(active===id));
-   status.textContent=installed?"已安裝":ready?"可選配件":"待建檔";
+   status.textContent=installed?"已安裝":ready?"可選配件":open.has(id)?"待建檔":"需掛載";
   }
  }
  refresh();return {refresh};
