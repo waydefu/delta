@@ -442,3 +442,14 @@ test("P1 攝影機以兩軸取景，保持 AKM 3D 幾何比例而非沿軸壓縮
  assert.ok(source.includes("camera.position.copy(defaultView)"));
  assert.ok(!source.includes("asset.scale.set("));
 });
+
+test("P1：實際 GLB 檔頭、網格、材質與來源 SHA256 要全數一致",async()=>{
+ const {verifyModelFiles,inspectGLB}=await import("../scripts/check-akm-model.mjs");
+ const {provenance,asset}=verifyModelFiles();
+ assert.equal(asset.meshCount,1);
+ assert.ok(asset.materialCount>=1);
+ assert.ok(asset.byteLength<2_000_000);
+ assert.equal(provenance.separablePartsVerified,0);
+ assert.ok(asset.imageCount>=1);
+ assert.throws(()=>inspectGLB(Buffer.from("glTFhello")),/Invalid GLB/);
+});
