@@ -1,0 +1,93 @@
+name: Publish reviewed CC0 AKM preview
+on:
+  push:
+    paths:
+      - .github/workflows/publish-akm-model.yml
+  workflow_dispatch:
+
+permissions:
+  actions: read
+  contents: write
+
+concurrency:
+  group: akm-reviewed-preview
+  cancel-in-progress: false
+
+jobs:
+  optimize-and-publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Download known successful CC0 GLB and inspection
+        uses: actions/download-artifact@v4
+        with:
+          name: akm-cc0-glb-unreviewed
+          run-id: 40024755786
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: incoming-model
+      - name: Verify source attribution and single-mesh limitation
+        run: |
+          python3 - <<'PY'
+          import json, pathlib, struct
+          report=json.loads(pathlib.Path("incoming-model/inspection.json").read_text())
+          p=pathlib.Path("incoming-model/akm.glb")
+          h=p.read_bytes()[:12]
+          assert report["creator"]=="LonesomeDucky" and report["license"]=="CC0 1.0 Universal"
+          assert report["mesh_count"]==1, "Expected one non-segmented AKM mesh; investigate first"
+          assert all(not v for v in report["part_candidates"].values()), "Unreviewed mesh parts found"
+          assert h[:4]==b"glTF" and struct.unpack_from("<I",h,8)[0]==p.stat().st_size
+          assert 1_000_000<p.stat().st_size<80_000_000
+          print("Original valid GLB:",p.stat().st_size)
+          print("Original mesh info:",report["meshes"][0])
+          PY
+      - name: Prepare browser-sized glTF textures preserving geometry
+        timeout-minutes: 6
+        run: |
+          mkdir -p assets/models
+          npm exec --yes --package=@gltf-transform/cli@4.5.1 -- \
+            gltf-transform optimize incoming-model/akm.glb assets/models/akm.glb \
+              --compress false --texture-compress webp --texture-size 2048 \
+              --flatten false --join false
+      - name: Check optimized GLB and create provenance
+        run: |
+          python3 - <<'PY'
+          import json, pathlib, struct, hashlib
+          inp=pathlib.Path("incoming-model/akm.glb")
+          p=pathlib.Path("assets/models/akm.glb")
+          h=p.read_bytes()[:12]
+          assert h[:4]==b"glTF"
+          assert struct.unpack_from("<I",h,4)[0]==2
+          assert struct.unpack_from("<I",h,8)[0]==p.stat().st_size
+          assert 0<p.stat().st_size<inp.stat().st_size, "optimized asset not smaller"
+          assert p.stat().st_size<25_000_000, "mobile download budget exceeded"
+          report=json.loads(pathlib.Path("incoming-model/inspection.json").read_text())
+          provenance={
+            "model":"Weathered AKM",
+            "source":report["source"],
+            "creator":report["creator"],
+            "license":report["license"],
+            "originalSha256":hashlib.sha256(inp.read_bytes()).hexdigest(),
+            "webSha256":hashlib.sha256(p.read_bytes()).hexdigest(),
+            "bytes":p.stat().st_size,
+            "sourceBytes":inp.stat().st_size,
+            "meshCount":1,
+            "separablePartsVerified":0,
+            "visualAccuracy":"unverified against mobile in-game AKM",
+            "role":"static rotate/zoom PBR reference only",
+            "doesNotSupport":["equip animations","real attachment swapping","game-accurate nodes"]
+          }
+          pathlib.Path("assets/models/akm-provenance.json").write_text(json.dumps(provenance,indent=2)+"\n")
+          print("AKM_MODEL_OPTIMIZED",json.dumps(provenance))
+          PY
+      - name: Commit reviewed static 3D asset (not a modular gunsmith)
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/models/akm.glb assets/models/akm-provenance.json
+          git diff --cached --quiet && exit 0
+          git commit -m "assets(p1): publish optimized CC0 AKM non-modular PBR preview"
+          git push origin HEAD:main
