@@ -34,7 +34,7 @@ export function assessAttachment(part,weaponId){
  if(!part)return {status:"unknown",eligible:false,verified:false,reason:"缺少配件"};
  if(part.researchOnly===true)return {status:"blocked",eligible:false,verified:false,reason:part.reviewNote||"掛載證據不足"};
  if(!part.compatibleWeapons?.includes(weaponId))return {status:"incompatible",eligible:false,verified:false,reason:"未列入此武器候選"};
- const verified=isVerifiedFitment(part,weaponId);
+ const verified=isVerifiedFitment(part,weaponId) && isVerifiedParameters(part);
  if(part.dataStatus==="source-conflict")return {status:"source-conflict",eligible:true,verified:false,reason:"跨來源數值衝突；僅可研究試算"};
  if(part.dataStatus==="historical-unverified")return {status:"historical",eligible:true,verified:false,reason:"2024 歷史快照，未核實 2026 手遊"};
  return {status:verified?"verified":"candidate",eligible:true,verified,reason:verified?"手遊證據已核實":"尚未取得現行手遊逐件相容性與參數證據"};
