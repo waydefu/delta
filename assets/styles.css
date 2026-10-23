@@ -56,3 +56,8 @@
 .detail-caution{color:#e4c59a;font-size:12px;line-height:1.8;background:#3228196b;border-left:3px solid #deae63;padding:14px;margin:21px 0 0}
 @media(max-width:1000px){.bench-mount{width:1100px;height:520px}.bench-drawer{position:fixed;right:0;top:auto;bottom:0;left:0;width:100%;max-height:77vh;z-index:2001;box-shadow:0 -15px 40px #000d}.bench-shade{position:fixed;inset:0;z-index:2000}.detail-values{grid-template-columns:1fr}}
 @media(max-width:530px){.gunsmith-intro{padding:19px 14px;display:block}.bench-legend{display:block;margin-top:9px}.bench-footer{padding:12px 14px}.details-header{padding:24px 16px 0}.details-tabs{padding:0 16px 15px}.detail-body{padding:12px 16px 22px}}
+
+.ammo-banner{background:#111f29;border:1px solid #344c57;margin:-8px 0 25px;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.ammo-banner>span{font-size:12px;color:#edb25c;font-weight:750;white-space:nowrap}
+.ammo-banner>div{font-size:11px;color:#a5bdc3;line-height:1.8;text-align:right}
+@media(max-width:650px){.ammo-banner{align-items:flex-start;flex-direction:column}.ammo-banner>div{text-align:left}}

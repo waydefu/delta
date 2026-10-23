@@ -58,3 +58,10 @@ test("改槍台及詳細屬性元件皆可匯入",async()=>{
  assert.equal(typeof gun.initGunsmith,"function");
  assert.equal(typeof detail.initDetails,"function");
 });
+
+test("前端使用的靜態 ID 在 HTML 全部存在，避免初始化中斷", () => {
+ const html=readFileSync(new URL("../index.html",import.meta.url),"utf8");
+ const js=readFileSync(new URL("../src/app.mjs",import.meta.url),"utf8");
+ const ids=[...js.matchAll(/setText\("([a-z0-9-]+)"/g)].map(x=>x[1]);
+ for(const id of ids) assert.ok(html.includes('id="'+id+'"'),"Missing DOM element: "+id);
+});
