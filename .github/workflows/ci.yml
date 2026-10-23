@@ -19,5 +19,6 @@ jobs:
           node --check src/visualizations.mjs
           node --check src/details.mjs
           node --check src/engine.mjs
+          node --check src/motion.mjs
       - name: Unit tests
         run: node --test tests/*.test.mjs

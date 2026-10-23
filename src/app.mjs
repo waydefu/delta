@@ -1,4 +1,4 @@
-import { setupMotionToggle, initializeEntrance, countTo, drawLine } from "./motion.mjs";
+import { setupMotionToggle, initializeEntrance, countTo, drawLine, diagramEnter } from "./motion.mjs";
 import { reconcileSelection } from "./attachment-graph.mjs";
 import { initGunsmith } from "./gunsmith.mjs";
 import { renderMountGraph, renderContributions, renderFlightChart } from "./visualizations.mjs";
@@ -71,7 +71,7 @@ async function main() {
     },weapon);
     await initDetails($("detail-explorer"));
     $("distance").value = distance;
-    $("distance").addEventListener("input", event => { distance = Number(event.target.value); update(); });
+    $("distance").addEventListener("input", event => { distance = Number(event.target.value); update(false); });
     $("reset").addEventListener("click", () => {
       for(const slot of SLOTS) { selections[slot] = ""; $("select-" + slot).value = ""; }
       distance = 80; $("distance").value = 80; update();
@@ -80,10 +80,19 @@ async function main() {
       try { await navigator.clipboard.writeText(location.href); setText("copy", "已複製 ✓"); setTimeout(()=>setText("copy","分享配置"),1600); }
       catch { setText("copy","複製失敗，請使用網址列"); }
     });
-    function update() {
+    function update(buildChanged = true) {
       const result = resolveBuild(weapon,attachments,selections);
+      if(!buildChanged){
+        setText("distance-label",distance+" m");
+        setText("flight-time",format(idealFlightTimeMs(distance,result.stats.muzzleVelocityMps))+" ms");
+        setText("flight-distance",distance+" m");
+        const params=new URLSearchParams(location.search);params.set("distance",String(distance));
+        history.replaceState(null,"",location.pathname+"?"+params);
+        return;
+      }
       bench.refresh();
       renderMountGraph($("mount-graph"), result.equipped.find(x=>x.slot==="barrel"));
+      diagramEnter($("mount-graph"));
       renderContributions($("contribution-viz"),weapon,result);
       renderFlightChart($("flight-chart"),weapon.base.muzzleVelocityMps,result.stats.muzzleVelocityMps);
       for(const path of $("flight-chart").querySelectorAll("polyline:not([stroke-dasharray])"))drawLine(path);

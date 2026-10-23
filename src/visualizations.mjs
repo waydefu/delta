@@ -8,15 +8,16 @@ export function renderMountGraph(root, barrel){
   heading.append(el("strong","",barrel ? "AKM → "+barrel.name : "AKM → 裸槍／預設結構"),el("span","",barrel?"槍管已選裝":"尚未更換槍管"));
   root.append(heading);
   const links=el("div","mount-links");
-  const samples=[["護木／導軌","front"],["前握把掛載","under"],["光學／側瞄座","top"]];
+  const provided=(barrel?.providesSlots||[]).map(s=>typeof s==="string"?s:s.slot);
+  const samples=provided.length ? provided.map(s=>[s,"provided"]) : [["護木／導軌","unknown"],["前握把掛載","unknown"],["瞄具基座","unknown"]];
   for(const [label] of samples){
     const item=el("div","mount-node");
-    item.dataset.state=barrel?"conditional":"unresolved";
-    item.append(el("strong","",label),el("small","",barrel?"條件結構・相容待查":"需確認相容性"));
+    item.dataset.state=provided.length?"conditional":"unresolved";
+    item.append(el("strong","",label),el("small","",provided.length?"配件資料明示提供・仍須實機核對":"未取得掛載資料"));
     links.append(item);
   }
   root.append(links);
-  root.append(el("small","", "注意：此圖為依附關係示意，不代表所有 AKM 槍管都會新增上述槽位。"));
+  root.append(el("small","", "注意：沒有明確 providesSlots 資料時，只顯示研究中的掛載類型，不會將槽位視為已解鎖。"));
 }
 export function renderContributions(root,weapon,result){
   if(!root)return;

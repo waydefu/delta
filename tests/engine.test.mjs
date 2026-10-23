@@ -109,3 +109,29 @@ test("動效切換鈕連接到 HTML 及 JS",()=>{
  assert.match(html,/id="motion-toggle"/);
  assert.match(js,/setupMotionToggle/);
 });
+
+test("槍械側面示意圖應保留校準比例與明示來源",()=>{
+ const geo=JSON.parse(readFileSync(new URL("../data/weapons/akm-geometry.json",import.meta.url)));
+ const svg=readFileSync(new URL("../assets/akm-side.svg",import.meta.url),"utf8");
+ assert.equal(geo.physical.overallLengthMm,880);
+ assert.equal(geo.physical.barrelLengthMm,415);
+ assert.ok(Math.abs(geo.physical.barrelRatio-(415/880))<.001);
+ assert.deepEqual(geo.outline.viewBox,[0,0,1000,420]);
+ assert.match(svg,/preserveAspectRatio="xMidYMid meet"/);
+ assert.match(svg,/id="receiver-assembly"/);
+ assert.match(svg,/id="stock-assembly"/);
+ const segments=geo.outline.referenceSections;
+ for(const name of ["front","receiver","stock"])assert.equal(segments[name].length,2);
+ assert.ok(Math.abs(segments.front[1]-segments.receiver[0])<.0001);
+ assert.ok(Math.abs(segments.receiver[1]-segments.stock[0])<.0001);
+});
+test("手機動效、候選配件預覽與動效開關相互連結",()=>{
+ const gun=readFileSync(new URL("../src/gunsmith.mjs",import.meta.url),"utf8");
+ const html=readFileSync(new URL("../index.html",import.meta.url),"utf8");
+ assert.match(gun,/sheetEntrance\\(drawer\\)/);
+ assert.match(gun,/sheetExit\\(drawer\\)/);
+ assert.match(gun,/touchend/);
+ assert.match(gun,/candidate-preview/);
+ assert.match(html,/id="motion-toggle"/);
+ assert.match(html,/motion-v05\\.css/);
+});
