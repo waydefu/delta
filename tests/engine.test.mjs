@@ -133,5 +133,15 @@ test("手機動效、候選配件預覽與動效開關相互連結",()=>{
  assert.match(gun,/touchend/);
  assert.match(gun,/candidate-preview/);
  assert.match(html,/id="motion-toggle"/);
- assert.match(html,/motion-v05\.css/);
+ assert.match(html,/main\.css/);
+});
+
+test("網站只載入單一整合樣式，防止多層覆寫失控",()=>{
+ const html=readFileSync(new URL("../index.html",import.meta.url),"utf8");
+ const stylesheetLinks=html.match(/<link rel="stylesheet"/g)||[];
+ assert.equal(stylesheetLinks.length,1);
+ assert.match(html,/assets\/main\.css/);
+ const css=readFileSync(new URL("../assets/main.css",import.meta.url),"utf8");
+ assert.match(css,/\.detail-layout/);
+ assert.match(css,/\.candidate-preview/);
 });

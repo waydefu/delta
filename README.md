@@ -89,3 +89,11 @@ node --check src/engine.mjs
 - 設計與動效規則分別存放 DESIGN.md、docs/MOTION.md。相關 Skill 來源與安裝腳本 scripts/install-agent-skills.sh 可供自行檢視。
 - **限制**：未安裝第三方 Skills 到使用者本機 Agent；亦未導入 GSAP / Motion / Three.js 到網站 runtime。獨立網站目前使用原生 Web Animations API。
 - 真正原生 3D 槍械模型、實際彈道／後座力曲線仍須合法素材與遊戲實測。
+
+## 2026-10-23 視覺化與 CSS 整合
+
+- `src/details.mjs` 已為五個詳細屬性分頁加入以 SVG／原生 DOM 顯示的參考圖：部位傷害、衰減輪廓、後座力走勢、操控時間、晃動及腰射散布。
+- 遊戲實機截圖只確認裸槍基礎值；衰減曲線轉折、後座力逐發落點等尚未校準。圖內明示『示意』，不得作為實戰精確模擬。
+- 網站現在只載入 `assets/main.css` 一份合併樣式，避免由四個 CSS 檔案串接的網路請求；各歷史 CSS 原稿仍保留作為重構參考。
+- 詳細屬性區塊提前到改槍台之後，桌面為文字＋圖形左右呈現，手機垂直排列。
+- 此次未取得精準遊戲 3D 槍模資產，也未完成瀏覽器逐視窗截圖驗收。
