@@ -222,3 +222,33 @@ test("原生 GLB 模式只有資產存在時才曝光，不取代原有 2D／Ske
  assert.match(src,/loadGeneration!==generation/);
  assert.match(src,/clearLocal\(\)/);
 });
+
+test("所有 AKM 截圖／第三方辨識槽位都進入結構，未證實拉機柄不可直接裝",async()=>{
+ const {SLOTS}=await import("../src/engine.mjs");
+ assert.equal(SLOTS.length,11);
+ for(const slot of ["barrel","muzzle","optic","canted","magazine","magwell","foregrip","stock","buttpad","reargrip"])assert.ok(weapon.openSlots.includes(slot));
+ assert.ok(!weapon.openSlots.includes("charging"));
+});
+test("AKM 彈匣容量覆寫，不應被當作可加總增益",()=>{
+ const polymer=resolveBuild(weapon,attachments,{magazine:"akm-polymer-30-mag"});
+ const drum=resolveBuild(weapon,attachments,{magazine:"akm-70-drum"});
+ assert.equal(polymer.stats.magazineCapacity,30);
+ assert.equal(polymer.stats.handling,58);
+ assert.equal(drum.stats.magazineCapacity,70);
+ assert.equal(drum.stats.handling,39);
+ assert.match(drum.sourceWarnings.join(" "),/2024/);
+});
+test("歷史配件清單與已研究數值必須明示來源、日期與驗證程度",()=>{
+ assert.equal(attachments.length,17);
+ for(const x of attachments){
+  assert.ok(x.source.startsWith("https://"));
+  assert.ok(x.dataAsOf);
+  assert.equal(x.platformValidated,false);
+  assert.ok(x.dataStatus);
+  resolveBuild(weapon,attachments,{[x.slot]:x.id});
+ }
+});
+test("不能用未確認的掛載槽位或未知效果偷渡配件",()=>{
+ assert.throws(()=>resolveBuild(weapon,[...attachments,{id:"unverified",slot:"charging",effects:{recoilControl:10},compatibleWeapons:["akm"]}],{charging:"unverified"}),/未確認可直接掛載/);
+ assert.throws(()=>resolveBuild(weapon,[...attachments,{id:"wrongstat",slot:"foregrip",effects:{magicPower:10},compatibleWeapons:["akm"]}],{foregrip:"wrongstat"}),/未知或無效/);
+});

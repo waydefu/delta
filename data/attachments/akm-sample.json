@@ -18,7 +18,9 @@
       "akm"
     ],
     "dataAsOf": "2026-09-23",
-    "platformValidated": false
+    "platformValidated": false,
+    "dataStatus": "community-unverified",
+    "sourceTier": "community-secondary"
   },
   {
     "id": "akm-standard-barrel",
@@ -37,7 +39,9 @@
       "akm"
     ],
     "dataAsOf": "2026-09-23",
-    "platformValidated": false
+    "platformValidated": false,
+    "dataStatus": "community-unverified",
+    "sourceTier": "community-secondary"
   },
   {
     "id": "akm-long-barrel",
@@ -58,7 +62,9 @@
       "akm"
     ],
     "dataAsOf": "2026-09-23",
-    "platformValidated": false
+    "platformValidated": false,
+    "dataStatus": "community-unverified",
+    "sourceTier": "community-secondary"
   },
   {
     "id": "akm-transcendent-barrel",
@@ -76,7 +82,9 @@
       "akm"
     ],
     "dataAsOf": "2026-09-23",
-    "platformValidated": false
+    "platformValidated": false,
+    "dataStatus": "community-unverified",
+    "sourceTier": "community-secondary"
   },
   {
     "id": "ak-compensator",
@@ -93,7 +101,9 @@
       "akm"
     ],
     "dataAsOf": "2026-09-23",
-    "platformValidated": false
+    "platformValidated": false,
+    "dataStatus": "community-unverified",
+    "sourceTier": "community-secondary"
   },
   {
     "id": "ak-suppressor",
@@ -114,7 +124,9 @@
       "akm"
     ],
     "dataAsOf": "2026-09-23",
-    "platformValidated": false
+    "platformValidated": false,
+    "dataStatus": "community-unverified",
+    "sourceTier": "community-secondary"
   },
   {
     "id": "ak-polymer-stock",
@@ -131,7 +143,9 @@
       "akm"
     ],
     "dataAsOf": "2026-09-23",
-    "platformValidated": false
+    "platformValidated": false,
+    "dataStatus": "community-unverified",
+    "sourceTier": "community-secondary"
   },
   {
     "id": "ak-folding-stock",
@@ -147,7 +161,9 @@
       "akm"
     ],
     "dataAsOf": "2026-09-23",
-    "platformValidated": false
+    "platformValidated": false,
+    "dataStatus": "community-unverified",
+    "sourceTier": "community-secondary"
   },
   {
     "id": "ak-skeleton-stock",
@@ -165,6 +181,170 @@
       "akm"
     ],
     "dataAsOf": "2026-09-23",
-    "platformValidated": false
+    "platformValidated": false,
+    "dataStatus": "community-unverified",
+    "sourceTier": "community-secondary"
+  },
+  {
+    "id": "akm-polymer-30-mag",
+    "objectId": 13120000313,
+    "slot": "magazine",
+    "name": "AKM 30 發聚合物彈匣",
+    "effects": {
+      "handling": 4,
+      "magazineCapacity": 30
+    },
+    "confidence": "weapon-named",
+    "compatibleWeapons": [
+      "akm"
+    ],
+    "dataStatus": "historical-unverified",
+    "platformValidated": false,
+    "dataAsOf": "2024-12-21",
+    "source": "https://github.com/jiansenc/DeltaForceData/blob/main/public/json/acc/accMagazine.json",
+    "sourceTier": "historical-public-archive"
+  },
+  {
+    "id": "akm-40-mag",
+    "objectId": 13120000239,
+    "slot": "magazine",
+    "name": "AKM 40 發延長彈匣",
+    "effects": {
+      "handling": -8,
+      "magazineCapacity": 40
+    },
+    "conditionalEffects": [
+      "換彈時間可能增加（未有可驗證秒數）"
+    ],
+    "confidence": "weapon-named",
+    "compatibleWeapons": [
+      "akm"
+    ],
+    "dataStatus": "historical-unverified",
+    "platformValidated": false,
+    "dataAsOf": "2024-12-21",
+    "source": "https://github.com/jiansenc/DeltaForceData/blob/main/public/json/acc/accMagazine.json",
+    "sourceTier": "historical-public-archive"
+  },
+  {
+    "id": "akm-70-drum",
+    "objectId": 13120000241,
+    "slot": "magazine",
+    "name": "AKM 70 發大彈鼓",
+    "effects": {
+      "handling": -15,
+      "magazineCapacity": 70
+    },
+    "conditionalEffects": [
+      "換彈時間可能增加（未有可驗證秒數）"
+    ],
+    "confidence": "weapon-named",
+    "compatibleWeapons": [
+      "akm"
+    ],
+    "dataStatus": "historical-unverified",
+    "platformValidated": false,
+    "dataAsOf": "2024-12-21",
+    "source": "https://github.com/jiansenc/DeltaForceData/blob/main/public/json/acc/accMagazine.json",
+    "sourceTier": "historical-public-archive"
+  },
+  {
+    "id": "ak-heavy-tower-grip",
+    "objectId": 13030000167,
+    "slot": "reargrip",
+    "name": "AK 重塔後握把",
+    "effects": {
+      "recoilControl": 1,
+      "handling": 1,
+      "aimStability": 1,
+      "hipFireAccuracy": 4
+    },
+    "confidence": "weapon-named",
+    "compatibleWeapons": [
+      "akm"
+    ],
+    "dataStatus": "historical-unverified",
+    "platformValidated": false,
+    "dataAsOf": "2024-12-21",
+    "source": "https://github.com/jiansenc/DeltaForceData/blob/main/public/json/acc/accBackGrip.json",
+    "sourceTier": "historical-public-archive"
+  },
+  {
+    "id": "ak-openwork-grip",
+    "objectId": 13030000168,
+    "slot": "reargrip",
+    "name": "AK 鏤空後握把",
+    "effects": {
+      "recoilControl": 3,
+      "handling": 9,
+      "aimStability": -4
+    },
+    "confidence": "weapon-named",
+    "compatibleWeapons": [
+      "akm"
+    ],
+    "dataStatus": "historical-unverified",
+    "platformValidated": false,
+    "dataAsOf": "2024-12-21",
+    "source": "https://github.com/jiansenc/DeltaForceData/blob/main/public/json/acc/accBackGrip.json",
+    "sourceTier": "historical-public-archive"
+  },
+  {
+    "id": "ak-practical-reargrip",
+    "objectId": 13030000117,
+    "slot": "reargrip",
+    "name": "實用 AK 後握把",
+    "effects": {
+      "recoilControl": 2,
+      "handling": 2
+    },
+    "confidence": "weapon-named",
+    "compatibleWeapons": [
+      "akm"
+    ],
+    "dataStatus": "historical-unverified",
+    "platformValidated": false,
+    "dataAsOf": "2024-12-21",
+    "source": "https://github.com/jiansenc/DeltaForceData/blob/main/public/json/acc/accBackGrip.json",
+    "sourceTier": "historical-public-archive"
+  },
+  {
+    "id": "ak-shooter-reargrip",
+    "objectId": 13030000121,
+    "slot": "reargrip",
+    "name": "射手 AK 後握把",
+    "effects": {
+      "aimStability": 4
+    },
+    "confidence": "weapon-named",
+    "compatibleWeapons": [
+      "akm"
+    ],
+    "dataStatus": "historical-unverified",
+    "platformValidated": false,
+    "dataAsOf": "2024-12-21",
+    "source": "https://github.com/jiansenc/DeltaForceData/blob/main/public/json/acc/accBackGrip.json",
+    "sourceTier": "historical-public-archive"
+  },
+  {
+    "id": "ak-stock-endcap",
+    "objectId": 13040000172,
+    "slot": "stock",
+    "name": "AK 槍托尾蓋",
+    "effects": {
+      "recoilControl": -10,
+      "handling": 12,
+      "aimStability": -4,
+      "hipFireAccuracy": 12
+    },
+    "confidence": "weapon-named",
+    "compatibleWeapons": [
+      "akm"
+    ],
+    "dataStatus": "historical-unverified",
+    "platformValidated": false,
+    "dataAsOf": "2024-12-21",
+    "source": "https://github.com/jiansenc/DeltaForceData/blob/main/public/json/acc/accStock.json",
+    "sourceTier": "historical-public-archive"
   }
 ]

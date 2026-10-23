@@ -5,7 +5,7 @@ import { renderMountGraph, renderContributions, renderFlightChart } from "./visu
 import { initDetails } from "./details.mjs";
 import { resolveBuild, idealFlightTimeMs, idealUnarmoredTtkMs, SLOTS } from "./engine.mjs";
 const $ = id => document.getElementById(id);
-const slotNames = { barrel: "槍管", muzzle: "槍口", stock: "槍托" };
+const slotNames = {muzzle:"槍口",barrel:"槍管",optic:"瞄具",canted:"側瞄",foregrip:"前握把",magazine:"彈匣",magwell:"彈匣座",stock:"槍托",buttpad:"槍托墊",reargrip:"後握把",charging:"拉機柄"};
 const statFields = [
   ["recoilControl","後座力控制","點"],
   ["handling","操控速度","點"],
@@ -36,7 +36,7 @@ async function main() {
     const weapon = await wr.json();
     const attachments = await ar.json();
     setText("weapon-subtitle", weapon.caliber + " · 600 RPM · 30 發");
-    setText("snapshot", "裸槍面板 2026-10-23 截圖已核對 · 配件仍待校準");
+    setText("snapshot", "裸槍實機值已核對 · 部分配件僅有 2024 歷史值，均未經 2026 手遊核對");
     setText("ammo-text", weapon.ammo.join(" · "));
     const sourceWrap = $("sources");
     for(const url of weapon.sourceUrls) {
@@ -53,7 +53,7 @@ async function main() {
       select.id = "select-" + slot;
       select.append(new Option("未安裝（裸槍基準）", ""));
       for(const part of attachments.filter(a => a.slot === slot)) {
-        select.append(new Option(part.name + (part.confidence === "slot-inferred" ? " · 待核驗" : ""), part.id));
+        select.append(new Option(part.name + (part.dataStatus==="historical-unverified"?" · 2024 歷史": " · 待核驗"), part.id));
       }
       select.value = attachments.some(a=>a.id===selections[slot] && a.slot===slot) ? selections[slot] : "";
       selections[slot] = select.value;
@@ -126,7 +126,8 @@ async function main() {
       countTo($("recoil-summary"),format(stats.recoilControl));
       setText("range-summary",format(stats.effectiveRangeM) + " m");
       setText("velocity-summary",format(stats.muzzleVelocityMps) + " m/s");
-      setText("equipped-count",result.equipped.length + " 件配件");
+      setText("equipped-count",result.equipped.length + " 件研究配件");
+      setText("magazine-capacity-current",stats.magazineCapacity+" 發");
       const breakdown=$("breakdown"); breakdown.replaceChildren();
       if(!result.equipped.length) breakdown.append(el("li","breakdown-empty","尚未安裝配件，顯示裸槍基準。"));
       for(const part of result.equipped) {
@@ -134,15 +135,16 @@ async function main() {
         const top=el("div","breakdown-top");
         top.append(el("span","breakdown-name",part.name),el("span","breakdown-slot",slotNames[part.slot]));
         const info=el("small","breakdown-effects",Object.entries(part.effects).map(([key,val])=>{
-          const map={recoilControl:"後座",handling:"操控",aimStability:"穩定",hipFireAccuracy:"腰射",effectiveRangePct:"射程",muzzleVelocityPct:"初速"};
-          return map[key]+" "+describeDelta(val, key.endsWith("Pct") ? "%" : "");
+          const map={recoilControl:"後座",handling:"操控",aimStability:"穩定",hipFireAccuracy:"腰射",effectiveRangePct:"射程",muzzleVelocityPct:"初速",magazineCapacity:"容量"};
+          return map[key]+" "+(key==="magazineCapacity"?val+" 發":describeDelta(val,key.endsWith("Pct")?"%":""));
         }).join("  ·  "));
         item.append(top,info);
-        if(part.confidence==="slot-inferred") item.append(el("small","provisional","⚠ 相容性來自槽位推導，需遊戲內確認"));
+        if(part.platformValidated!==true) item.append(el("small","provisional",part.dataStatus==="historical-unverified"?"⚠ 2024 歷史資料；遊戲版本與數值待核驗":"⚠ 社群配件數值／相容性尚未由 2026 手遊核驗"));
         breakdown.append(item);
       }
       setText("model-note",result.calculationStatus + "。實際彈道下墜與連射後座力仍待實測。" +
-        (result.compatibilityProvisional ? " 部分配件相容性尚未實機確認。" : ""));
+        (result.compatibilityProvisional?" 所有已選配件均未獲得手遊完整實機驗證。":"")+
+        (result.sourceWarnings.some(s=>s.includes("2024"))?" ⚠ 包含 2024 歷史數值，不能當作現行版本。":""));
       const params = new URLSearchParams();
       for(const slot of SLOTS) if(selections[slot]) params.set(slot,selections[slot]);
       params.set("distance",String(distance));

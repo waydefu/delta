@@ -31,20 +31,27 @@
     "7.62×39mm LP"
   ],
   "openSlots": [
-    "barrel",
     "muzzle",
-    "stock"
+    "barrel",
+    "optic",
+    "canted",
+    "foregrip",
+    "magazine",
+    "magwell",
+    "stock",
+    "buttpad",
+    "reargrip"
   ],
-  "allSlotsStatus": "此原型只收錄 3 種槽位；不代表 AKM 只有這些槽位",
+  "allSlotsStatus": "遊戲截圖提供 11 個標記；其中 10 種被第三方槽位資料列為可直接開啟，拉機柄（charging）是否可直接裝配件未驗證",
   "sourceUrls": [
     "https://deltaforcedb.com/weapon/akm",
     "https://gamegrids.io/delta-force/zh/weapons/akm/",
     "https://github.com/jiansenc/DeltaForceData/blob/main/public/json/gun/gunRifle.json"
   ],
   "limitations": [
-    "未核對 2026-10-23 手遊實機面板",
     "傷害取原始面板，不含彈藥、命中部位、護甲影響",
-    "未取得可驗證的遊戲後座力軌跡或重力/阻力參數"
+    "未取得可驗證的遊戲後座力軌跡或重力/阻力參數",
+    "基礎面板由使用者提供的手遊截圖核對；配件相容性與裝備後面板值仍未逐項實測"
   ],
   "verification": {
     "base": "Screenshot verified",
@@ -64,5 +71,11 @@
     "reargrip",
     "magazine",
     "magwell"
-  ]
+  ],
+  "slotSource": {
+    "url": "https://gamegrids.io/delta-force/zh/weapons/akm/",
+    "asOf": "2026-09-18",
+    "verification": "third-party-derived"
+  },
+  "researchCatalogAsOf": "2026-10-24"
 }
