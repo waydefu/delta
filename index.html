@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <meta name="theme-color" content="#080f1a">
+  <meta name="description" content="三角洲行動 AKM 槍械資料庫、配件屬性試算與理想飛行時間研究原型。">
+  <title>AKM 槍械實驗室 | DELTA LAB</title>
+  <link rel="stylesheet" href="./assets/styles.css">
+</head>
+<body>
+  <div class="page-shell">
+    <header class="site-header">
+      <a href="./" class="brand" aria-label="DELTA LAB 首頁"><span class="brand-symbol">△</span><span>DELTA<span class="brand-accent">LAB</span></span></a>
+      <div class="header-right"><span class="beta-pill">RESEARCH PROTOTYPE · 0.1</span><a href="https://github.com/waydefu/delta" target="_blank" rel="noopener noreferrer" class="github-link">GitHub ↗</a></div>
+    </header>
+    <main>
+      <div class="breadcrumb">武器資料庫 <span>/</span> 突擊步槍 <span>/</span> AKM</div>
+      <section class="hero">
+        <div class="hero-content">
+          <div class="overline"><span class="signal"></span> OPERATIONS / AK PLATFORM</div>
+          <h1>AKM <em>槍械實驗室</em></h1>
+          <p id="weapon-subtitle" class="hero-sub">資料載入中…</p>
+          <p class="hero-description">從裸槍面板、配件修正到飛行時間。每筆數值保留來源，將「已知資料」與「推估模型」清楚分開。</p>
+          <div id="snapshot" class="snapshot">正在載入版本資料</div>
+        </div>
+        <div class="hero-visual" aria-hidden="true">
+          <div class="scope-ring"></div>
+          <svg class="weapon-silhouette" viewBox="0 0 670 255" xmlns="http://www.w3.org/2000/svg">
+            <g fill="#98acba" stroke="#202f3a" stroke-width="3" stroke-linejoin="round">
+              <path d="M36 130 L148 126 L162 108 L213 108 L220 142 L153 154 L133 178 L36 181 L30 165 Z"/>
+              <path d="M166 111 L320 108 L343 117 L370 117 L390 132 L384 166 L277 171 L244 150 L170 148 Z" fill="#c0c9c6"/>
+              <path d="M375 126 L574 124 L574 135 L375 143 Z" fill="#687f87"/>
+              <path d="M568 118 L621 118 L621 141 L568 141 Z" fill="#c0c9c6"/>
+              <path d="M280 165 L335 176 L322 245 L276 246 L250 191 Z" fill="#708893"/>
+              <path d="M203 155 L225 151 L224 195 L205 203 L193 186 Z"/>
+              <path d="M169 98 L214 91 L322 93 L341 101 L341 111 L166 111 Z" fill="#617780"/>
+              <path d="M300 91 L317 80 L355 80 L356 87 L335 98 Z"/>
+            </g>
+            <g stroke="#e7ab54" stroke-width="2" fill="none" opacity=".76"><path d="M374 105 H619"/><path d="M616 102 V109"/><path d="M31 192 H130"/><path d="M31 189 V195"/></g>
+          </svg>
+          <span class="visual-label">SCHEMATIC / NOT TO SCALE</span>
+        </div>
+      </section>
+      <section class="summary-grid" aria-label="主要改裝數值">
+        <div class="summary-card"><span>後座力控制</span><strong id="recoil-summary">—</strong><small>基準 39</small></div>
+        <div class="summary-card"><span>操控速度</span><strong id="handling-summary">—</strong><small>基準 54</small></div>
+        <div class="summary-card"><span>有效射程</span><strong id="range-summary">—</strong><small>基準 40 m</small></div>
+        <div class="summary-card"><span>槍口初速</span><strong id="velocity-summary">—</strong><small>基準 525 m/s</small></div>
+      </section>
+      <div id="error" class="error" hidden></div>
+      <div class="workspace">
+        <section class="panel configuration">
+          <div class="panel-heading"><div><span class="eyebrow">01 / CONFIGURATION</span><h2>配件組裝</h2></div><span id="equipped-count" class="subtle-tag">0 件配件</span></div>
+          <p class="muted">首版收錄 AKM 槍管、槍口及槍托樣本。其他槽位尚未建檔，並非不能安裝。</p>
+          <div id="controls" class="controls"></div>
+          <div class="panel-actions"><button id="reset" class="ghost-button" type="button">重設裸槍</button><button id="copy" class="accent-button" type="button">分享配置 ↗</button></div>
+          <div class="divider"></div>
+          <div class="section-heading"><h3>配件影響明細</h3><span class="eyebrow">LIVE DELTA</span></div>
+          <ul id="breakdown" class="breakdown"></ul>
+        </section>
+        <section class="panel metrics">
+          <div class="panel-heading"><div><span class="eyebrow">02 / STATS</span><h2>即時面板試算</h2></div><span class="subtle-tag">未實機校準</span></div>
+          <p class="muted">加減數值依據配件頁；百分比疊加與面板取整仍需遊戲內驗證。</p>
+          <div id="stat-list" class="stats"></div>
+          <div class="divider"></div>
+          <div class="section-heading"><h3>固定裸槍資料</h3><span class="eyebrow">BASE PROFILE</span></div>
+          <div class="base-grid">
+            <div><span>肉體傷害</span><strong>40</strong></div>
+            <div><span>護甲傷害面板</span><strong>42</strong></div>
+            <div><span>射速</span><strong>600 RPM</strong></div>
+            <div><span>彈匣</span><strong>30 發</strong></div>
+          </div>
+        </section>
+      </div>
+      <section class="panel simulation">
+        <div class="panel-heading"><div><span class="eyebrow">03 / BALLISTIC RESEARCH</span><h2>理想飛行時間</h2></div><span class="model-tag">⚠ 簡化模型</span></div>
+        <p class="muted">僅用「距離 ÷ 試算初速」估算恆速飛行時間。<strong>這不是實際彈著點、下墜或後座力軌跡。</strong></p>
+        <div class="sim-grid">
+          <div>
+            <div class="distance-heading"><label for="distance">目標距離</label><strong id="distance-label">80 m</strong></div>
+            <input id="distance" type="range" min="10" max="200" step="5" value="80">
+            <div class="range-extremes"><span>10 m</span><span>200 m</span></div>
+            <div class="simulation-track"><span class="origin-mark">AKM</span><span class="trajectory-line"></span><span class="target-mark">TARGET</span></div>
+          </div>
+          <div class="sim-results">
+            <div><span>理想飛行時間</span><strong id="flight-time">—</strong></div>
+            <div><span>計算初速</span><strong id="flight-velocity">—</strong></div>
+            <div><span>目標距離</span><strong id="flight-distance">—</strong></div>
+            <div><span>理論空甲 TTK*</span><strong id="ttk">—</strong></div>
+          </div>
+        </div>
+        <div class="disclaimer" id="model-note">尚未取得真實彈道參數。</div>
+        <p class="tiny">* TTK 僅假設 100 HP、每發固定 40 傷、全部命中、不考慮護甲、部位倍率、觸發延遲及飛行時間。</p>
+      </section>
+      <section class="panel source-panel">
+        <div class="panel-heading"><div><span class="eyebrow">04 / DATA PROVENANCE</span><h2>數值來源與研究狀態</h2></div><span class="subtle-tag">可追溯</span></div>
+        <p class="muted">基礎數值來自第三方整理的遊戲面板；配件修正以 2026-09-23 來源快照為主要依據。相容性僅以槽位推導者會在介面註明待核驗。不同平台、版本、精校與特殊效果均未完成確認。</p>
+        <div class="source-links" id="sources"></div>
+        <p class="tiny">非《三角洲行動》官方網站。資料及介面僅供研究、測試與比較。</p>
+      </section>
+    </main>
+    <footer><span>DELTA LAB · BUILD 0.1</span><span>DATA FIRST. VERIFY EVERYTHING.</span></footer>
+  </div>
+  <script type="module" src="./src/app.mjs"></script>
+</body>
+</html>

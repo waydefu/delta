@@ -1,0 +1,170 @@
+[
+  {
+    "id": "akm-performance-barrel",
+    "objectId": 13020000355,
+    "slot": "barrel",
+    "name": "AKM 性能槍管組合",
+    "confidence": "weapon-named",
+    "effects": {
+      "recoilControl": 2,
+      "handling": 2,
+      "aimStability": 2,
+      "hipFireAccuracy": 4,
+      "effectiveRangePct": 6,
+      "muzzleVelocityPct": 6
+    },
+    "source": "https://gamegrids.io/delta-force/zh/attachments/akm-performance-barrel-assembly/",
+    "compatibleWeapons": [
+      "akm"
+    ],
+    "dataAsOf": "2026-09-23",
+    "platformValidated": false
+  },
+  {
+    "id": "akm-standard-barrel",
+    "objectId": 13020000356,
+    "slot": "barrel",
+    "name": "AKM 實用標準槍管組合",
+    "confidence": "weapon-named",
+    "effects": {
+      "recoilControl": 2,
+      "handling": 6,
+      "aimStability": -6,
+      "hipFireAccuracy": 8
+    },
+    "source": "https://gamegrids.io/delta-force/zh/attachments/akm-practical-standard-barrel-assembly/",
+    "compatibleWeapons": [
+      "akm"
+    ],
+    "dataAsOf": "2026-09-23",
+    "platformValidated": false
+  },
+  {
+    "id": "akm-long-barrel",
+    "objectId": 13020000357,
+    "slot": "barrel",
+    "name": "AKM 實用長槍管組合",
+    "confidence": "weapon-named",
+    "effects": {
+      "recoilControl": 8,
+      "handling": -5,
+      "aimStability": 3,
+      "hipFireAccuracy": -12,
+      "effectiveRangePct": 30,
+      "muzzleVelocityPct": 30
+    },
+    "source": "https://gamegrids.io/delta-force/zh/attachments/akm-practical-long-barrel-assembly/",
+    "compatibleWeapons": [
+      "akm"
+    ],
+    "dataAsOf": "2026-09-23",
+    "platformValidated": false
+  },
+  {
+    "id": "akm-transcendent-barrel",
+    "objectId": 13020000358,
+    "slot": "barrel",
+    "name": "AKM 超然長槍管組合",
+    "confidence": "weapon-named",
+    "effects": {
+      "recoilControl": 5,
+      "effectiveRangePct": 18,
+      "muzzleVelocityPct": 18
+    },
+    "source": "https://gamegrids.io/delta-force/zh/attachments/akm-transcendent-long-barrel-assembly/",
+    "compatibleWeapons": [
+      "akm"
+    ],
+    "dataAsOf": "2026-09-23",
+    "platformValidated": false
+  },
+  {
+    "id": "ak-compensator",
+    "objectId": 13130000175,
+    "slot": "muzzle",
+    "name": "AK 實用補償器",
+    "confidence": "slot-inferred",
+    "effects": {
+      "recoilControl": 7,
+      "aimStability": -2
+    },
+    "source": "https://gamegrids.io/delta-force/zh/attachments/ak-practical-compensator/",
+    "compatibleWeapons": [
+      "akm"
+    ],
+    "dataAsOf": "2026-09-23",
+    "platformValidated": false
+  },
+  {
+    "id": "ak-suppressor",
+    "objectId": 13130000176,
+    "slot": "muzzle",
+    "name": "AK 勇火消音器",
+    "confidence": "slot-inferred",
+    "effects": {
+      "recoilControl": 3,
+      "handling": -4,
+      "aimStability": 3,
+      "hipFireAccuracy": -8,
+      "effectiveRangePct": 18,
+      "muzzleVelocityPct": 18
+    },
+    "source": "https://gamegrids.io/delta-force/zh/attachments/ak-valor-flame-suppressor/",
+    "compatibleWeapons": [
+      "akm"
+    ],
+    "dataAsOf": "2026-09-23",
+    "platformValidated": false
+  },
+  {
+    "id": "ak-polymer-stock",
+    "objectId": 13040000116,
+    "slot": "stock",
+    "name": "AK 聚合物槍托",
+    "confidence": "slot-inferred",
+    "effects": {
+      "recoilControl": 1,
+      "aimStability": 1
+    },
+    "source": "https://gamegrids.io/delta-force/zh/attachments/ak-polymer-stock/",
+    "compatibleWeapons": [
+      "akm"
+    ],
+    "dataAsOf": "2026-09-23",
+    "platformValidated": false
+  },
+  {
+    "id": "ak-folding-stock",
+    "objectId": 13040000117,
+    "slot": "stock",
+    "name": "AK 折疊槍托",
+    "confidence": "slot-inferred",
+    "effects": {
+      "handling": 5
+    },
+    "source": "https://gamegrids.io/delta-force/zh/attachments/ak-folding-stock/",
+    "compatibleWeapons": [
+      "akm"
+    ],
+    "dataAsOf": "2026-09-23",
+    "platformValidated": false
+  },
+  {
+    "id": "ak-skeleton-stock",
+    "objectId": 13040000119,
+    "slot": "stock",
+    "name": "AK 骨架槍托",
+    "confidence": "slot-inferred",
+    "effects": {
+      "recoilControl": -3,
+      "handling": 8,
+      "aimStability": -3
+    },
+    "source": "https://gamegrids.io/delta-force/zh/attachments/ak-skeleton-stock/",
+    "compatibleWeapons": [
+      "akm"
+    ],
+    "dataAsOf": "2026-09-23",
+    "platformValidated": false
+  }
+]

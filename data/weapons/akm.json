@@ -1,0 +1,49 @@
+{
+  "id": "akm",
+  "objectId": 18010000006,
+  "name": "AKM 突擊步槍",
+  "category": "突擊步槍",
+  "caliber": "7.62×39mm",
+  "game": "Delta Force",
+  "mode": "烽火行動",
+  "platform": "待以手遊實測確認",
+  "sourceSnapshot": "2026-09-23",
+  "lastReviewed": "2026-10-23",
+  "base": {
+    "fleshDamage": 40,
+    "armorDamage": 42,
+    "fireRateRpm": 600,
+    "magazineCapacity": 30,
+    "effectiveRangeM": 40,
+    "muzzleVelocityMps": 525,
+    "recoilControl": 39,
+    "handling": 54,
+    "aimStability": 55,
+    "hipFireAccuracy": 53,
+    "soundRangeM": 500,
+    "weaponWeightKg": 4.3
+  },
+  "ammo": [
+    "7.62×39mm AP",
+    "7.62×39mm BP",
+    "7.62×39mm PS",
+    "7.62×39mm T45M",
+    "7.62×39mm LP"
+  ],
+  "openSlots": [
+    "barrel",
+    "muzzle",
+    "stock"
+  ],
+  "allSlotsStatus": "此原型只收錄 3 種槽位；不代表 AKM 只有這些槽位",
+  "sourceUrls": [
+    "https://deltaforcedb.com/weapon/akm",
+    "https://gamegrids.io/delta-force/zh/weapons/akm/",
+    "https://github.com/jiansenc/DeltaForceData/blob/main/public/json/gun/gunRifle.json"
+  ],
+  "limitations": [
+    "未核對 2026-10-23 手遊實機面板",
+    "傷害取原始面板，不含彈藥、命中部位、護甲影響",
+    "未取得可驗證的遊戲後座力軌跡或重力/阻力參數"
+  ]
+}
