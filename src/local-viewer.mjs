@@ -109,6 +109,8 @@ export async function mountLocalGLB(host,{url="./assets/models/akm.glb",onStatus
       mag.visible=false;render();mag.visible=true;render();return true;
     }
     magazineAnimating=true;
+    canvas.dataset.magazineMaxDisplacement="0";
+    canvas.dataset.magazineDisplacement="0";
     mag.parent?.updateWorldMatrix(true,false);
     const parentOrientation=new THREE.Quaternion();
     mag.parent?.getWorldQuaternion(parentOrientation);
@@ -122,6 +124,7 @@ export async function mountLocalGLB(host,{url="./assets/models/akm.glb",onStatus
         if(magazineFrame)documentWindow.cancelAnimationFrame(magazineFrame);
         magazineFrame=0;
         mag.position.copy(origin);
+        canvas.dataset.magazineDisplacement="0";
         if(!disposed)render();
         magazineAnimating=false;
         cancelMagazine=null;
@@ -133,6 +136,11 @@ export async function mountLocalGLB(host,{url="./assets/models/akm.glb",onStatus
         const t=Math.min(1,(now-started)/960);
         const progress=t<.40?ease(t/.40):t<.58?1:1-ease((t-.58)/.42);
         mag.position.copy(origin).addScaledVector(direction,progress);
+        const travelled=mag.position.distanceTo(origin);
+        canvas.dataset.magazineDisplacement=travelled.toFixed(6);
+        canvas.dataset.magazineMaxDisplacement=Math.max(
+          Number(canvas.dataset.magazineMaxDisplacement||0),travelled
+        ).toFixed(6);
         render();
         if(t<1)magazineFrame=documentWindow.requestAnimationFrame(tick);
         else finish(true);

@@ -483,3 +483,13 @@ test("P1：卸載 3D 視圖時會取消彈匣 RAF 並恢復幾何位置",()=>{
  assert.match(src,/mag\.position\.copy\(origin\)/);
  assert.match(src,/magazineAnimating=false/);
 });
+
+test("P1 真正以 3D 網格位置記錄裝卸峰值位移與復位",()=>{
+ const viewer=readFileSync(new URL("../src/local-viewer.mjs",import.meta.url),"utf8");
+ const smoke=readFileSync(new URL("../scripts/p1-browser-check.mjs",import.meta.url),"utf8");
+ assert.match(viewer,/mag\.position\.distanceTo\(origin\)/);
+ assert.match(viewer,/canvas\.dataset\.magazineMaxDisplacement/);
+ assert.match(viewer,/canvas\.dataset\.magazineDisplacement="0"/);
+ assert.match(smoke,/magazinePeakDisplacement/);
+ assert.match(smoke,/magazineFinalDisplacement/);
+});

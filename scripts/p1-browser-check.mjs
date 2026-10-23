@@ -57,10 +57,17 @@ try{
      await page.getByRole("button",{name:"重設視角"}).click();
      const animate=page.getByRole("button",{name:"3D 彈匣裝卸示範"});
      await animate.click();
-     await page.waitForTimeout(330);
+     await page.waitForFunction(()=>{
+       const canvas=document.querySelector(".local-glb-canvas");
+       return Number(canvas?.dataset?.magazineMaxDisplacement||0)>0.03;
+     },null,{timeout:6000});
+     result.magazinePeakDisplacement=Number(await canvas.getAttribute("data-magazine-max-displacement"));
      await page.screenshot({path:resolve(out,config.name+"-magazine-moving.png"),fullPage:false});
      await animate.waitFor({state:"visible",timeout:6000});
-     await page.waitForFunction(()=>!document.querySelector(".local-viewer-toolbar button[disabled]"),{timeout:6000});
+     await page.waitForFunction(()=>!document.querySelector(".local-viewer-toolbar button[disabled]"),null,{timeout:6000});
+     result.magazineFinalDisplacement=Number(await canvas.getAttribute("data-magazine-displacement"));
+     if(result.magazinePeakDisplacement<=.03||result.magazineFinalDisplacement>.0001)
+       errors.push("Magazine animation failed motion/return integrity check");
      if(config.draft){
        if(!result.glbStatus.includes("2 個網格"))errors.push("Expected two independently separated meshes");
        await page.getByRole("button",{name:"隱藏候選彈匣"}).click();
