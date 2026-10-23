@@ -81,7 +81,7 @@ export function initResearchCatalog(host,curated){
  }));
  let all=[],results=local,loaded=false,index=0;
  const heading=node("div","research-directory-head");
- const intro=node("p","muted","目前 17 件 AKM 研究配件可供試算；全量目錄是所有槍械的候選品項，不代表 AKM 可安裝，亦不代表數值已經過 2026 手遊驗證。");
+ const intro=node("p","muted","目前已整理的 AKM 研究配件可供試算；全量目錄是所有槍械的候選品項，不代表 AKM 可安裝，亦不代表數值已經過 2026 手遊驗證。");
  const header=node("div","research-directory-controls");
  const search=node("input","research-search");
  search.type="search";search.placeholder="搜尋名稱或配件 ID（例如 AKM、前握把）";
@@ -90,7 +90,7 @@ export function initResearchCatalog(host,curated){
  category.setAttribute("aria-label","篩選配件類別");
  const load=node("button","research-load","載入全量社群候選目錄");
  load.type="button";
- const status=node("p","research-directory-status","本機研究：17 件 · 未有任何已驗證可裝的全量資料");
+ const status=node("p","research-directory-status","本機研究："+local.length+" 件 · 未有任何已驗證可裝的全量資料");
  status.setAttribute("role","status");status.setAttribute("aria-live","polite");
  const list=node("div","research-results");
  const more=node("button","research-more","顯示更多");more.type="button";more.hidden=true;
@@ -160,7 +160,7 @@ export function initResearchCatalog(host,curated){
   }catch(error){
    console.warn("Optional research index unavailable:",error);
    load.disabled=false;load.textContent="重新讀取全量社群候選";
-   status.textContent="外部目錄暫時無法載入；17 件本機 AKM 研究資料仍可正常使用。";
+   status.textContent="外部目錄暫時無法載入；"+local.length+" 件本機 AKM 研究資料仍可正常使用。";
   }
  });
  return {get loaded(){return loaded;},refresh:filter};
