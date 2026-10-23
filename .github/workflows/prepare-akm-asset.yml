@@ -18,7 +18,7 @@ jobs:
       - name: Install Blender
         run: |
           sudo apt-get update -qq
-          sudo apt-get install -y --no-install-recommends blender zstd
+          sudo apt-get install -y --no-install-recommends blender zstd python3-numpy python3-pil
       - name: Download source from the author's CC0 OpenGameArt page
         run: |
           mkdir -p .model-work model-output
@@ -52,6 +52,7 @@ jobs:
           AKM_OUTPUT="$GITHUB_WORKSPACE/model-output" \
           blender --background --disable-autoexec .model-work/akm54.blend \
             --python scripts/inspect-export-akm.py
+          test -s model-output/akm.glb
       - name: Check output is a real GLB
         run: |
           python3 - <<'PY'

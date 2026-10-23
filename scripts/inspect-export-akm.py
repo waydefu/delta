@@ -52,6 +52,12 @@ report={
 (out/"inspection.json").write_text(json.dumps(report,indent=2,ensure_ascii=False))
 if not meshes:
     raise RuntimeError("No meshes in source")
+print("AKM_INSPECTION_SUMMARY",json.dumps({
+    "mesh_count":len(meshes),
+    "materials":len(materials),
+    "images":len(images),
+    "part_candidates":candidates,
+},ensure_ascii=False))
 # Preserve the artist's original materials; do not replace with shiny defaults.
 bpy.ops.export_scene.gltf(
     filepath=str(out/"akm.glb"),
