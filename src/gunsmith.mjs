@@ -1,3 +1,4 @@
+import { initModelReference } from "./model-reference.mjs";
 import { attachStudioLight } from "./studio-light.mjs";
 import { sheetEntrance, sheetExit, notifySlot, swapContents, shouldAnimate } from "./motion.mjs";
 import { getAvailableSlots } from "./attachment-graph.mjs";
@@ -41,6 +42,7 @@ export function initGunsmith(mount,selections,attachments,onPick,weapon){
  const overlay=node("div","bench-overlay");
  overlay.append(node("span","bench-model-kind","AKM SIDE PROFILE / CALIBRATED"),node("span","bench-model-measure","880 mm PHYSICAL REFERENCE"));
  stage.append(overlay,node("span","bench-watermark","AKM / CALIBRATED PROFILE"));
+ initModelReference(stage);
  const shade=node("button","bench-shade");shade.type="button";shade.hidden=true;shade.setAttribute("aria-label","關閉配件選單");
  const drawer=node("aside","bench-drawer");drawer.hidden=true;drawer.setAttribute("aria-label","配件選單");
  mount.append(stage,shade,drawer);

@@ -21,5 +21,6 @@ jobs:
           node --check src/engine.mjs
           node --check src/motion.mjs
           node --check src/studio-light.mjs
+          node --check src/model-reference.mjs
       - name: Unit tests
         run: node --test tests/*.test.mjs

@@ -106,3 +106,9 @@ node --check src/engine.mjs
 ## 研究後第一批光影特效
 - `src/studio-light.mjs`：單一 WebGL2 畫布提供低反光軍械庫柔光，配件槽 focus/hover 時才觸發 360ms 短暫光影移動，支援背景分頁暫停與 WebGL2 回退。
 - 保留 2D AKM 比例校正及可獨立裝卸示範的彈匣；目前不是實際 3D PBR 模型。
+
+## AKM 真正 3D 模型（第三方平台預覽）
+- 改槍台新增「2D 改槍 / 3D 槍模」切換。3D 模式使用 Sketchfab 官方 iframe，玩家可旋轉檢視實際模型，離開即卸載 iframe。
+- 作者與授權：GAMICO AKM（CC BY、約 10,100 triangles，作者稱有分件彈匣等）；kennethtzh AKM（CC BY、約 16,200 triangles，已安裝瞄具與側導軌）。介面保留原作者來源及授權連結。
+- **重要**：Sketchfab 嵌入不代表本專案擁有模型檔或可控制其網格；配件槽與 3D 模型不連動，不能把這當作已完成的 Three.js 模組化改槍。
+- 研究用本機 GLB 首選：LonesomeDucky CC0 [Weathered AKM](https://opengameart.org/content/weathered-akm-rifle)，原始 42.5 MB Blender 檔，須合法取得並檢查節點、轉檔後才可獨立渲染與換件。

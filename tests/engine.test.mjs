@@ -182,3 +182,17 @@ test("WebGL2 局部柔光可回退，且在使用者互動才觸發動畫",async
  assert.ok(source.includes("Math.min(1360"));
  assert.ok(gun.includes("attachStudioLight(stage)"));
 });
+
+test("3D 模型僅載入允許的作者來源，提供授權與退出解除 iframe",async()=>{
+ const {MODELS,modelEmbedUrl,initModelReference}=await import("../src/model-reference.mjs");
+ assert.equal(typeof initModelReference,"function");
+ assert.equal(MODELS.length,2);
+ assert.ok(MODELS.every(m=>m.license==="CC BY"&&m.creator&&m.uid.length===32&&m.source.startsWith("https://sketchfab.com/")));
+ assert.ok(MODELS.every(m=>modelEmbedUrl(m.uid).endsWith("?autostart=0")));
+ assert.throws(()=>modelEmbedUrl("invalid"));
+ const js=readFileSync(new URL("../src/model-reference.mjs",import.meta.url),"utf8");
+ assert.match(js,/layer\.replaceChildren\(\);sync\(\)/);
+ assert.match(js,/allow-scripts allow-same-origin allow-popups allow-forms/);
+ assert.match(js,/模型原作者／授權/);
+ assert.match(readFileSync(new URL("../src/gunsmith.mjs",import.meta.url),"utf8"),/initModelReference\(stage\)/);
+});
