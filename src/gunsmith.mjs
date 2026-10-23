@@ -1,3 +1,4 @@
+import { getAvailableSlots } from "./attachment-graph.mjs";
 const SLOTS=[
  ["muzzle","槍口",9,32,8,49],
  ["barrel","槍管",24,12,30,49],
@@ -13,7 +14,7 @@ const SLOTS=[
 ];
 const ENABLED=new Set(["muzzle","barrel","stock"]);
 const node=(tag,cls,text)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(text!==undefined)e.textContent=text;return e;};
-export function initGunsmith(mount,selections,attachments,onPick){
+export function initGunsmith(mount,selections,attachments,onPick,weapon){
  const stage=node("div","bench-canvas");
  const grid=node("div","bench-grid");
  const img=node("img","bench-gun");img.src="./assets/akm-side.svg";img.alt="AKM 側面槍械示意圖，非原生遊戲貼圖";img.draggable=false;
@@ -27,7 +28,7 @@ export function initGunsmith(mount,selections,attachments,onPick){
   lines.append(line);
   const button=node("button","bench-slot");button.type="button";button.style.left=x+"%";button.style.top=y+"%";
   button.setAttribute("aria-label",label+"配件槽");const title=node("span","bench-slot-name",label);
-  const icon=node("span","bench-slot-icon",ENABLED.has(id)?"＋":"◇");icon.setAttribute("aria-hidden","true");
+  const icon=node("span","bench-slot-icon",["muzzle","barrel","stock"].includes(id)?"＋":"◇");icon.setAttribute("aria-hidden","true");
   const status=node("span","bench-slot-state");button.append(title,icon,status);
   button.addEventListener("click",()=>open(id));stage.append(button);buttons.set(id,{button,status});
  }
@@ -46,7 +47,7 @@ export function initGunsmith(mount,selections,attachments,onPick){
   const head=node("div","bench-drawer-head"),heading=node("div"),small=node("small","", "ATTACHMENT / "+slot[0].toUpperCase()),h=node("h3","",slot[1]),x=node("button","drawer-close","✕");
   x.type="button";x.setAttribute("aria-label","關閉選單");x.addEventListener("click",close);
   heading.append(small,h);head.append(heading,x);drawer.append(head);
-  if(!ENABLED.has(active)||!choices.length){
+  if(!getAvailableSlots(weapon,attachments,selections).has(active)||!choices.length){
     const box=node("div","empty-slot"),title=node("strong","","配件資料建置中"),p=node("p","","實機畫面確認此配件槽存在，但尚未建好完整配件與相容性資料，因此暫不提供虛構選項。");
     box.append(title,p);drawer.append(box);return;
   }
@@ -68,12 +69,14 @@ export function initGunsmith(mount,selections,attachments,onPick){
   drawer.append(wrap);
  }
  function refresh(){
+  const open=getAvailableSlots(weapon,attachments,selections);
   for(const [id,label] of SLOTS){
    const {button,status}=buttons.get(id),installed=attachments.find(a=>a.id===selections[id]);
+   const ready=open.has(id)&&attachments.some(a=>a.slot===id&&a.compatibleWeapons?.includes(weapon.id));
    button.classList.toggle("installed",!!installed);button.classList.toggle("active",active===id);
-   button.classList.toggle("not-ready",!ENABLED.has(id));
+   button.classList.toggle("not-ready",!ready);
    button.setAttribute("aria-pressed",String(active===id));
-   status.textContent=installed?"已安裝":ENABLED.has(id)?"可選配件":"待建檔";
+   status.textContent=installed?"已安裝":ready?"可選配件":"待建檔";
   }
  }
  refresh();return {refresh};

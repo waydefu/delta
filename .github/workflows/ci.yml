@@ -14,6 +14,10 @@ jobs:
       - name: Syntax checks
         run: |
           node --check src/app.mjs
+          node --check src/gunsmith.mjs
+          node --check src/attachment-graph.mjs
+          node --check src/visualizations.mjs
+          node --check src/details.mjs
           node --check src/engine.mjs
       - name: Unit tests
         run: node --test tests/*.test.mjs

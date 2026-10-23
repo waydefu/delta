@@ -1,3 +1,4 @@
+import { reconcileSelection } from "./attachment-graph.mjs";
 import { initGunsmith } from "./gunsmith.mjs";
 import { renderMountGraph, renderContributions, renderFlightChart } from "./visualizations.mjs";
 import { initDetails } from "./details.mjs";
@@ -54,15 +55,18 @@ async function main() {
       }
       select.value = attachments.some(a=>a.id===selections[slot] && a.slot===slot) ? selections[slot] : "";
       selections[slot] = select.value;
-      select.addEventListener("change", () => { selections[slot] = select.value; update(); });
+      select.addEventListener("change", () => { const normalized=reconcileSelection(weapon,attachments,{...selections,[slot]:select.value});Object.assign(selections,normalized.selected);for(const key of SLOTS){selections[key]=normalized.selected[key]||"";$("select-"+key).value=selections[key];}update(); });
       panel.append(label, select);
       controlWrap.append(panel);
     }
     const bench = initGunsmith($("gunsmith-workbench"), selections, attachments, (slot, id) => {
-      selections[slot] = id;
-      $("select-" + slot).value = id;
+      const proposed={...selections,[slot]:id};
+      const result=reconcileSelection(weapon,attachments,proposed);
+      for(const key of Object.keys(selections))delete selections[key];
+      Object.assign(selections,result.selected);
+      for(const key of SLOTS) $("select-" + key).value = selections[key]||"";
       update();
-    });
+    },weapon);
     await initDetails($("detail-explorer"));
     $("distance").value = distance;
     $("distance").addEventListener("input", event => { distance = Number(event.target.value); update(); });

@@ -65,3 +65,33 @@ test("前端使用的靜態 ID 在 HTML 全部存在，避免初始化中斷", (
  const ids=[...js.matchAll(/setText\("([a-z0-9-]+)"/g)].map(x=>x[1]);
  for(const id of ids) assert.ok(html.includes('id="'+id+'"'),"Missing DOM element: "+id);
 });
+
+test("父槽位提供子槽位，拆掉父配件後自動卸除子孫",async()=>{
+ const {getAvailableSlots,reconcileSelection}=await import("../src/attachment-graph.mjs");
+ const fakeWeapon={id:"test",openSlots:["barrel"]};
+ const fake=[
+  {id:"barrel-a",slot:"barrel",compatibleWeapons:["test"],providesSlots:["rail"]},
+  {id:"rail-a",slot:"rail",compatibleWeapons:["test"],providesSlots:["optic"]},
+  {id:"optic-a",slot:"optic",compatibleWeapons:["test"]}
+ ];
+ const initial={barrel:"barrel-a",rail:"rail-a",optic:"optic-a"};
+ assert.deepEqual([...getAvailableSlots(fakeWeapon,fake,initial)].sort(),["barrel","optic","rail"]);
+ const changed=reconcileSelection(fakeWeapon,fake,{...initial,barrel:""});
+ assert.deepEqual(changed.selected,{barrel:""});
+ assert.equal(changed.removed.length,2);
+ assert.deepEqual([...changed.openSlots],["barrel"]);
+});
+test("不存在的子槽不能裝，且拒絕不相容的配件",async()=>{
+ const {reconcileSelection}=await import("../src/attachment-graph.mjs");
+ const w={id:"test",openSlots:["barrel"]};
+ const a=[{id:"optic",slot:"optic",compatibleWeapons:["test"]},{id:"foreign",slot:"barrel",compatibleWeapons:["other"]}];
+ const result=reconcileSelection(w,a,{barrel:"foreign",optic:"optic"});
+ assert.deepEqual(result.selected,{});
+ assert.equal(result.removed.length,2);
+});
+test("premium UI 需要的視覺化容器均存在",()=>{
+ const html=readFileSync(new URL("../index.html",import.meta.url),"utf8");
+ for(const id of ["gunsmith-workbench","mount-graph","contribution-viz","flight-chart"]){
+  assert.ok(html.includes('id="'+id+'"'),"Missing UI block: "+id);
+ }
+});
