@@ -434,3 +434,11 @@ test("P1：真實單網格 GLB 檢視支持材質與線框檢查，不偽裝成�
  for(const fragment of ["instance.setWireframe","instance.resetCamera","不支援 3D 配件替換"])
   assert.ok(ui.includes(fragment),fragment);
 });
+
+test("P1 攝影機以兩軸取景，保持 AKM 3D 幾何比例而非沿軸壓縮",()=>{
+ const source=readFileSync(new URL("../src/local-viewer.mjs",import.meta.url),"utf8");
+ assert.ok(source.includes("projectedWidth/(2*Math.tan(fov/2)*aspect*.80)"));
+ assert.ok(source.includes("projectedHeight/(2*Math.tan(fov/2)*.73)"));
+ assert.ok(source.includes("camera.position.copy(defaultView)"));
+ assert.ok(!source.includes("asset.scale.set("));
+});

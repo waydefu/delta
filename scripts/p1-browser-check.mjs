@@ -50,6 +50,8 @@ try{
      await page.getByRole("button",{name:"查看網格"}).click();
      await page.getByRole("button",{name:"查看材質"}).click();
      await page.getByRole("button",{name:"重設視角"}).click();
+     // Crop the interaction view to the actual 3D panel, not page top.
+     await page.locator(".bench-canvas").scrollIntoViewIfNeeded();
      await page.screenshot({path:resolve(out,config.name+"-3d.png"),fullPage:false});
      await page.getByRole("button",{name:"2D 改槍"}).click();
      if(await page.locator(".local-glb-canvas").count())errors.push("Native viewer canvas not removed on exit");

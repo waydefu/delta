@@ -69,18 +69,27 @@ export async function mountLocalGLB(host,{url="./assets/models/akm.glb",onStatus
   if(maxDim<.0001||!Number.isFinite(maxDim))throw new Error("GLB dimensions invalid");
   // Center without re-scaling the artist's geometry; dimensions stay true.
   const center=bounds.getCenter(new THREE.Vector3());asset.position.sub(center);
+  // Camera fit uses *both* the current viewport width and height.
+  // No mesh scaling; preserves true model aspect proportions.
   const fov=camera.fov*Math.PI/180;
-  const distance=Math.max(1.5*maxDim,(maxDim/(2*Math.tan(fov/2)))*1.26);
-  camera.near=Math.max(.001,distance/1000);
-  camera.far=Math.max(100,distance*10);
+  const aspect=Math.max(.3,host.clientWidth/Math.max(1,host.clientHeight));
   const longestX=dims.x>=Math.max(dims.y,dims.z);
   const longestY=dims.y>Math.max(dims.x,dims.z);
+  const projectedWidth=longestX?dims.x:longestY?dims.y:dims.z;
+  const projectedHeight=longestY?dims.z:dims.y;
+  const distance=Math.max(
+   projectedWidth/(2*Math.tan(fov/2)*aspect*.80),
+   projectedHeight/(2*Math.tan(fov/2)*.73),
+   maxDim*.40
+  );
+  camera.near=Math.max(.001,distance/1000);
+  camera.far=Math.max(100,distance*10);
   const defaultView=longestX?new THREE.Vector3(distance*.08,distance*.12,distance):
     longestY?new THREE.Vector3(distance,distance*.14,distance*.08):
       new THREE.Vector3(distance,distance*.12,distance*.08);
   camera.position.copy(defaultView);
   camera.lookAt(0,0,0);camera.updateProjectionMatrix();
-  controls.target.set(0,0,0);controls.minDistance=distance*.5;controls.maxDistance=distance*3;
+  controls.target.set(0,0,0);controls.minDistance=distance*.55;controls.maxDistance=distance*4;
   controls.update();
   const names=[],materials=new Set(),meshes=[];
   asset.traverse(n=>{
