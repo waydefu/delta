@@ -12,13 +12,23 @@ permissions:
 jobs:
   prepare:
     runs-on: ubuntu-24.04
-    timeout-minutes: 25
+    timeout-minutes: 24
     steps:
       - uses: actions/checkout@v4
-      - name: Install Blender
+      - name: Install Blender and glTF exporter prerequisites
+        timeout-minutes: 14
         run: |
-          sudo apt-get update -qq
-          sudo apt-get install -y --no-install-recommends blender zstd python3-numpy python3-pil
+          set -euo pipefail
+          # GitHub's Azure regional apt mirror timed out on a large Blender dependency.
+          # Prefer the general Ubuntu archive; retry only a bounded number of times.
+          if [ -f /etc/apt/sources.list.d/ubuntu.sources ]; then
+            sudo sed -i 's|http://azure.archive.ubuntu.com/ubuntu|http://archive.ubuntu.com/ubuntu|g' /etc/apt/sources.list.d/ubuntu.sources
+          fi
+          sudo apt-get -o Acquire::Retries=3 -o Acquire::http::Timeout=35 update -qq
+          sudo DEBIAN_FRONTEND=noninteractive apt-get -y -o Acquire::Retries=3 \
+            -o Acquire::http::Timeout=35 --no-install-recommends install \
+            blender zstd python3-numpy
+          blender --background --factory-startup --python-expr "import numpy; print('BLENDER_NUMPY_OK',numpy.__version__)"
       - name: Download source from the author's CC0 OpenGameArt page
         run: |
           mkdir -p .model-work model-output
