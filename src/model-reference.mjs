@@ -22,15 +22,19 @@ export function initModelReference(stage){
  const bar=el("div","model-reference-controls");
  const schematic=el("button","model-view-button selected","2D 改槍");
  const modelButton=el("button","model-view-button","3D 槍模");
+ const nativeButton=el("button","model-view-button","本機 PBR 3D");nativeButton.hidden=true;
  schematic.type=modelButton.type="button";
- bar.append(schematic,modelButton);stage.append(bar);
+ bar.append(schematic,modelButton,nativeButton);stage.append(bar);
  const layer=el("div","model-reference-layer");layer.hidden=true;stage.append(layer);
- let showing=false,choice=MODELS[0];
+ let showing=false,mode="2d",choice=MODELS[0],localViewer=null,loadGeneration=0;
+ const assetUrl="./assets/models/akm.glb";
  function sync(){
   schematic.classList.toggle("selected",!showing);
-  modelButton.classList.toggle("selected",showing);
+  modelButton.classList.toggle("selected",showing&&mode==="remote");
+  nativeButton.classList.toggle("selected",showing&&mode==="native");
   schematic.setAttribute("aria-pressed",String(!showing));
-  modelButton.setAttribute("aria-pressed",String(showing));
+  modelButton.setAttribute("aria-pressed",String(showing&&mode==="remote"));
+  nativeButton.setAttribute("aria-pressed",String(showing&&mode==="native"));
  }
  function render(model){
   layer.replaceChildren();
@@ -62,18 +66,53 @@ export function initModelReference(stage){
   footer.append(link);
   layer.append(iframe,top,footer);
  }
+ function clearLocal(){
+  loadGeneration++;
+  localViewer?.dispose();localViewer=null;
+ }
  function show3D(){
-  if(showing)return;
+  if(showing&&mode==="remote")return;
+  clearLocal();mode="remote";
   showing=true;stage.classList.add("is-model-preview");
   layer.hidden=false;render(choice);sync();
  }
+ async function showNative(){
+  if(showing&&mode==="native")return;
+  clearLocal();mode="native";showing=true;
+  stage.classList.add("is-model-preview");
+  layer.hidden=false;layer.replaceChildren();
+  const viewport=el("div","local-glb-viewport");
+  const status=el("p","local-glb-status","正在載入已審核的本機模型…");
+  status.setAttribute("role","status");status.setAttribute("aria-live","polite");
+  layer.append(viewport,status);sync();
+  const generation=loadGeneration;
+  try{
+   const {mountLocalGLB}=await import("./local-viewer.mjs");
+   const instance=await mountLocalGLB(viewport,{
+    url:assetUrl,onStatus:message=>{if(loadGeneration===generation)status.textContent=message;}
+   });
+   if(loadGeneration!==generation){instance.dispose();return;}
+   localViewer=instance;
+  }catch(error){
+   if(loadGeneration===generation){
+    console.warn("Local AKM preview failed:",error);
+    status.textContent="本機 3D 模型無法載入，請切回 2D 或 Sketchfab。";
+   }
+  }
+ }
  function show2D(){
   if(!showing)return;
-  showing=false;stage.classList.remove("is-model-preview");
+  clearLocal();showing=false;mode="2d";stage.classList.remove("is-model-preview");
   layer.hidden=true;layer.replaceChildren();sync();
  }
  schematic.addEventListener("click",show2D);
  modelButton.addEventListener("click",show3D);
+ nativeButton.addEventListener("click",showNative);
+ // Do not expose an empty GLB mode. A real asset must first exist in the repo.
+ fetch(assetUrl,{method:"HEAD",cache:"no-store"}).then(response=>{
+  const type=response.headers.get("content-type")||"";
+  if(response.ok&&!type.includes("text/html"))nativeButton.hidden=false;
+ }).catch(()=>{});
  sync();
- return {show3D,show2D,get is3D(){return showing;}};
+ return {show3D,show2D,showNative,get is3D(){return showing;},get isNative(){return mode==="native";}};
 }

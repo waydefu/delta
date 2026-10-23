@@ -26,7 +26,14 @@ jobs:
             --proto '=https' --tlsv1.2 \
             --output .model-work/akm54.blend \
             https://opengameart.org/sites/default/files/akm54.blend
-          test "$(head -c 7 .model-work/akm54.blend)" = "BLENDER"
+          file .model-work/akm54.blend
+          od -An -tx1 -N32 .model-work/akm54.blend
+          python3 - <<'PY'
+          from pathlib import Path
+          data=Path(".model-work/akm54.blend").read_bytes()[:64]
+          print("Detected file prefix repr:",repr(data))
+          assert data.startswith(b"BLENDER"),"Source URL returned a non-Blender file; must inspect archive/compression before conversion"
+          PY
           test "$(stat -c %s .model-work/akm54.blend)" -le 65000000
           sha256sum .model-work/akm54.blend | tee model-output/source-sha256.txt
       - name: Inspect meshes and export glTF

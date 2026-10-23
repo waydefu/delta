@@ -11,8 +11,11 @@ export function findPartNodes(names) {
   handguard:/(?:^|[_ .-])(handguard|foregrip)(?:$|[_ .-])/i
  };
  const result={magazine:[],stock:[],barrel:[],handguard:[]};
- for(const n of names)for(const [part,pattern] of Object.entries(patterns))
-  if(pattern.test(n))result[part].push(n);
+ for(const n of names){
+  // Sockets, anchors, and attachment mounts are not detachable geometry.
+  if(/(?:socket|mount|anchor|empty|marker)/i.test(n))continue;
+  for(const [part,pattern] of Object.entries(patterns))if(pattern.test(n))result[part].push(n);
+ }
  return result;
 }
 export async function mountLocalGLB(host,{url="./assets/models/akm.glb",onStatus=()=>{}}={}){
@@ -20,8 +23,7 @@ export async function mountLocalGLB(host,{url="./assets/models/akm.glb",onStatus
  let renderer,controls,scene,asset,roomTarget,resizeObserver,disposed=false;
  let rootGroup=null;
  const documentWindow=host.ownerDocument.defaultView || window;
- const [{default:noop},THREE,{GLTFLoader},{OrbitControls},{RoomEnvironment}]=await Promise.all([
-  Promise.resolve({default:null}),
+ const [THREE,{GLTFLoader},{OrbitControls},{RoomEnvironment}]=await Promise.all([
   import("three"),
   import("three/addons/loaders/GLTFLoader.js"),
   import("three/addons/controls/OrbitControls.js"),
