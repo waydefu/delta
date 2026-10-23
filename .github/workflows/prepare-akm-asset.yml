@@ -60,6 +60,8 @@ jobs:
           AKM_OUTPUT="$GITHUB_WORKSPACE/model-output" \
           python scripts/inspect-export-akm.py
           test -s model-output/akm.glb
+          test -s model-output/akm-segmented-unreviewed.glb
+          test -s model-output/magazine-segmentation.json
       - name: Validate glTF binary and model provenance report
         run: |
           python - <<'PY'
@@ -80,6 +82,8 @@ jobs:
           name: akm-cc0-glb-unreviewed
           path: |
             model-output/akm.glb
+            model-output/akm-segmented-unreviewed.glb
+            model-output/magazine-segmentation.json
             model-output/inspection.json
             model-output/source-sha256.txt
             model-output/download-sha256.txt

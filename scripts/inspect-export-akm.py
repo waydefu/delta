@@ -129,3 +129,77 @@ bpy.ops.export_scene.gltf(
 )
 assert (output/"akm.glb").is_file()
 print("GLB export complete", (output/"akm.glb").stat().st_size)
+
+# === Provisional magazine extraction from measured disconnected geometry ===
+# The body and magazine retain their Blender transforms and original material.
+# Export goes to a separate artifact, never live website without visual review.
+def try_extract_magazine():
+    targets=[o for o in bpy.context.scene.objects if o.type=="MESH"]
+    if len(targets)!=1:return None
+    obj=targets[0];mesh=obj.data
+    num=len(mesh.vertices)
+    parent=list(range(num))
+    def find(n):
+        while n!=parent[n]:
+            parent[n]=parent[parent[n]]
+            n=parent[n]
+        return n
+    def union(a,b):
+        ra,rb=find(a),find(b)
+        if ra!=rb:parent[rb]=ra
+    for edge in mesh.edges:union(*edge.vertices)
+    groups={}
+    for v in mesh.vertices:groups.setdefault(find(v.index),[]).append(v.index)
+    matches=[]
+    for root,indices in groups.items():
+        coords=[mesh.vertices[i].co for i in indices]
+        bounds=[(min(c[a] for c in coords),max(c[a] for c in coords)) for a in range(3)]
+        min_x,max_x=bounds[0];min_z,max_z=bounds[2]
+        dx=max_x-min_x;dz=max_z-min_z
+        # Gate by dimensions and anatomical location (AKM's lower receiver).
+        if 65<=len(indices)<=95 and .145<=dx<=.180 and .18<=dz<=.22 \
+          and -.12<=min_x<=-.06 and -.235<=min_z<=-.20 and -.04<=max_z<=-.005:
+            matches.append((root,indices,bounds))
+    if len(matches)!=1:
+        raise RuntimeError(f"Magazine topology ambiguous: {len(matches)} matches among {len(groups)} islands; refusing to guess")
+    root,indices,bounds=matches[0]
+    bpy.ops.object.select_all(action="DESELECT")
+    obj.select_set(True)
+    bpy.context.view_layer.objects.active=obj
+    bpy.ops.object.mode_set(mode="EDIT")
+    bpy.ops.mesh.select_all(action="DESELECT")
+    bpy.ops.object.mode_set(mode="OBJECT")
+    keep=set(indices)
+    for vertex in obj.data.vertices:vertex.select=vertex.index in keep
+    bpy.ops.object.mode_set(mode="EDIT")
+    bpy.ops.mesh.separate(type="SELECTED")
+    bpy.ops.object.mode_set(mode="OBJECT")
+    pieces=[o for o in bpy.context.scene.objects if o.type=="MESH"]
+    if len(pieces)!=2:raise RuntimeError(f"Expected body + magazine, got {len(pieces)}")
+    mag=next((p for p in pieces if 65<=len(p.data.vertices)<=95),None)
+    if not mag:raise RuntimeError("Extracted magazine vertex count unexpected")
+    body=next(p for p in pieces if p!=mag)
+    mag.name="AKM_Magazine"
+    body.name="AKM_Body"
+    if len(mag.data.polygons)<130 or len(mag.data.polygons)>200:
+        raise RuntimeError("Extracted part polygon count unexpected")
+    result={
+      "status":"geometry-candidate-needs-visual-review",
+      "part":"AKM_Magazine","vertices":len(mag.data.vertices),
+      "polygons":len(mag.data.polygons),"originalIslandCount":len(groups),
+      "bboxLocal":[[round(float(v),5) for v in axis] for axis in bounds],
+      "sceneMeshNames":[p.name for p in pieces],
+      "mountSocketValidated":False,
+      "realMobileFitmentValidated":False,
+      "note":"Candidate is the lower curved island from the artist model, not yet proven to match game AKM magazine socket."
+    }
+    (output/"magazine-segmentation.json").write_text(json.dumps(result,indent=2))
+    bpy.ops.export_scene.gltf(
+      filepath=str(output/"akm-segmented-unreviewed.glb"),export_format="GLB",
+      export_materials="EXPORT",export_texcoords=True,export_normals=True,
+      export_apply=False
+    )
+    print("AKM_MAGAZINE_CANDIDATE",json.dumps(result))
+    return result
+
+try_extract_magazine()
