@@ -13,3 +13,6 @@
 - 成功 [Blender GLB 匯出](https://github.com/waydefu/delta/actions/runs/40024755786)；成功 [WebP 優化發佈](https://github.com/waydefu/delta/actions/runs/40025116885)。
 - 模型已存在 `assets/models/akm.glb`，大小 1,092,960 B（來源 44,293,464 B）。物件數 1、材質數 1、圖片數 6、可確認獨立拆件 0。
 - 真實 3D Viewer 會在支援的裝置按需載入，並提供側視角重置、材質／網格模式。分件及遊戲精準幾何需要另外建模與驗收。
+
+## 分件可行性研究（幾何連通區塊）
+原始模型為 1 個 AKM 網格，但網格內可能有多個不相連的拓撲區塊。腳本現在以頂點／邊的 union-find 計算每個連通區的頂點數、多邊形數、局部座標包圍盒、表面積與尺寸，結果寫入 `inspection.json.connected_islands` 並印出 `AKM_ISLAND_ANALYSIS`。這並**不等於**已辨識遊戲彈匣；下一步仍需比對位置、材質與實際預覽，不能僅以尺寸與名稱自動分離可換零件。

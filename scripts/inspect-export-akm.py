@@ -29,6 +29,60 @@ for obj in bpy.data.objects:
         "parent":obj.parent.name if obj.parent else None,
         "materials":mats
     })
+
+def inspect_connected_islands(obj, top_n=32):
+    """Structural topology audit only. Does not imply a game-verified part."""
+    mesh=obj.data
+    n=len(mesh.vertices)
+    parents=list(range(n))
+    rank=[0]*n
+    def find(x):
+        while parents[x]!=x:
+            parents[x]=parents[parents[x]]
+            x=parents[x]
+        return x
+    def union(a,b):
+        x=find(a);y=find(b)
+        if x==y:return
+        if rank[x]<rank[y]:x,y=y,x
+        parents[y]=x
+        if rank[x]==rank[y]:rank[x]+=1
+    for edge in mesh.edges:union(edge.vertices[0],edge.vertices[1])
+    components={}
+    for v in mesh.vertices:
+        key=find(v.index)
+        d=components.setdefault(key,{
+            "vertices":0,"polygons":0,
+            "min":[float("inf")]*3,"max":[float("-inf")]*3,
+            "surfaceArea":0.0
+        })
+        d["vertices"]+=1
+        for k in range(3):
+            d["min"][k]=min(d["min"][k],float(v.co[k]))
+            d["max"][k]=max(d["max"][k],float(v.co[k]))
+    for polygon in mesh.polygons:
+        key=find(polygon.vertices[0]);d=components[key]
+        d["polygons"]+=1;d["surfaceArea"]+=polygon.area
+    ranked=sorted(components.values(),key=lambda x:x["surfaceArea"],reverse=True)
+    for i,p in enumerate(ranked):
+        p["islandId"]=i
+        p["min"]=[round(x,5) for x in p["min"]]
+        p["max"]=[round(x,5) for x in p["max"]]
+        p["dimensions"]=[round(p["max"][k]-p["min"][k],5) for k in range(3)]
+        p["center"]=[round((p["max"][k]+p["min"][k])/2,5) for k in range(3)]
+        p["surfaceArea"]=round(p["surfaceArea"],6)
+    return {"totalIslands":len(ranked),"topBySurfaceArea":ranked[:top_n],
+        "warning":"Connected islands are geometric regions, NOT validated magazines, stocks, or in-game attachment pivots."}
+
+geometry_islands={}
+for obj in bpy.data.objects:
+    if obj.type=="MESH":
+        geometry_islands[obj.name]=inspect_connected_islands(obj)
+print("AKM_ISLAND_ANALYSIS",json.dumps({
+    name:{"count":info["totalIslands"],"top":info["topBySurfaceArea"][:20]}
+    for name,info in geometry_islands.items()
+},ensure_ascii=False))
+
 images=[{
     "name":im.name,
     "width":int(im.size[0]),
@@ -55,6 +109,7 @@ report={
     "meshes":meshes,
     "materials":sorted(materials),
     "images":images,
+    "connected_islands":geometry_islands,
     "part_candidates":candidates,
     "warning":"Names are guesses, no real mount socket or game mod compatibility established."
 }
