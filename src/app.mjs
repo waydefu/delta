@@ -1,3 +1,5 @@
+import { initGunsmith } from "./gunsmith.mjs";
+import { initDetails } from "./details.mjs";
 import { resolveBuild, idealFlightTimeMs, idealUnarmoredTtkMs, SLOTS } from "./engine.mjs";
 const $ = id => document.getElementById(id);
 const slotNames = { barrel: "槍管", muzzle: "槍口", stock: "槍托" };
@@ -30,7 +32,7 @@ async function main() {
     const weapon = await wr.json();
     const attachments = await ar.json();
     setText("weapon-subtitle", weapon.caliber + " · 600 RPM · 30 發");
-    setText("snapshot", "資料快照：" + weapon.sourceSnapshot + " · 平台未實機校驗");
+    setText("snapshot", "裸槍面板 2026-10-23 截圖已核對 · 配件仍待校準");
     setText("ammo-text", weapon.ammo.join(" · "));
     const sourceWrap = $("sources");
     for(const url of weapon.sourceUrls) {
@@ -55,6 +57,12 @@ async function main() {
       panel.append(label, select);
       controlWrap.append(panel);
     }
+    const bench = initGunsmith($("gunsmith-workbench"), selections, attachments, (slot, id) => {
+      selections[slot] = id;
+      $("select-" + slot).value = id;
+      update();
+    });
+    await initDetails($("detail-explorer"));
     $("distance").value = distance;
     $("distance").addEventListener("input", event => { distance = Number(event.target.value); update(); });
     $("reset").addEventListener("click", () => {
@@ -67,6 +75,7 @@ async function main() {
     });
     function update() {
       const result = resolveBuild(weapon,attachments,selections);
+      bench.refresh();
       const stats = result.stats;
       setText("distance-label", distance + " m");
       setText("flight-time", format(idealFlightTimeMs(distance,stats.muzzleVelocityMps)) + " ms");

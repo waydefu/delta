@@ -42,6 +42,16 @@
           <span class="visual-label">SCHEMATIC / NOT TO SCALE</span>
         </div>
       </section>
+      <section class="panel gunsmith-section" aria-label="AKM 互動改槍台">
+        <div class="gunsmith-intro">
+          <div><span class="eyebrow">00 / GUNSMITH WORKBENCH</span><h2>AKM 改槍台</h2></div>
+          <span class="bench-legend">點擊槍械周圍的配件槽 · 已開放槍管、槍口、槍托</span>
+        </div>
+        <div class="bench-scroll" tabindex="0" aria-label="槍械與配件槽，可左右滑動">
+          <div id="gunsmith-workbench" class="bench-mount"></div>
+        </div>
+        <div class="bench-footer"><span>◇ 灰色槽位：已確認位置，配件尚未建檔</span><span>手機可左右滑動 · 槍械為向量示意</span></div>
+      </section>
       <section class="summary-grid" aria-label="主要改裝數值">
         <div class="summary-card"><span>後座力控制</span><strong id="recoil-summary">—</strong><small>基準 39</small></div>
         <div class="summary-card"><span>操控速度</span><strong id="handling-summary">—</strong><small>基準 54</small></div>
@@ -93,8 +103,12 @@
         <div class="disclaimer" id="model-note">尚未取得真實彈道參數。</div>
         <p class="tiny">* TTK 僅假設 100 HP、每發固定 40 傷、全部命中、不考慮護甲、部位倍率、觸發延遲及飛行時間。</p>
       </section>
+      <section class="panel details-panel" aria-label="AKM 詳細屬性">
+        <div class="details-header"><span class="eyebrow">04 / ADVANCED ATTRIBUTES</span><h2>AKM 詳細屬性</h2><p class="muted">使用你提供的 2026-10-23 遊戲截圖核對裸槍細項。<strong>配裝後的細項時間、倍率與散布尚未完成公式驗證。</strong></p></div>
+        <div id="detail-explorer"></div>
+      </section>
       <section class="panel source-panel">
-        <div class="panel-heading"><div><span class="eyebrow">04 / DATA PROVENANCE</span><h2>數值來源與研究狀態</h2></div><span class="subtle-tag">可追溯</span></div>
+        <div class="panel-heading"><div><span class="eyebrow">05 / DATA PROVENANCE</span><h2>數值來源與研究狀態</h2></div><span class="subtle-tag">可追溯</span></div>
         <p class="muted">基礎數值來自第三方整理的遊戲面板；配件修正以 2026-09-23 來源快照為主要依據。相容性僅以槽位推導者會在介面註明待核驗。不同平台、版本、精校與特殊效果均未完成確認。</p>
         <div class="source-links" id="sources"></div>
         <p class="tiny">非《三角洲行動》官方網站。資料及介面僅供研究、測試與比較。</p>

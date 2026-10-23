@@ -44,3 +44,17 @@ test("資料符合唯一 id 與每個效果皆可計算", () => {
   resolveBuild(weapon,attachments,{[a.slot]:a.id});
  }
 });
+
+test("玩家實機截圖對照：裸槍值一致", () => {
+ const detail=JSON.parse(readFileSync(new URL("../data/weapons/akm-details.json",import.meta.url)));
+ for(const [key,value] of Object.entries(detail.base)) assert.equal(weapon.base[key],value,key);
+ assert.equal(detail.observedSlots.length,11);
+ assert.ok(detail.groups.some(g=>g.id==="handling"&&g.values.some(([k,v])=>k==="開鏡時間"&&v==="327 ms")));
+ assert.ok(detail.groups.some(g=>g.id==="hipfire"&&g.values.some(([k,v])=>v==="2.33°")));
+});
+test("改槍台及詳細屬性元件皆可匯入",async()=>{
+ const gun=await import("../src/gunsmith.mjs");
+ const detail=await import("../src/details.mjs");
+ assert.equal(typeof gun.initGunsmith,"function");
+ assert.equal(typeof detail.initDetails,"function");
+});

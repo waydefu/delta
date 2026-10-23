@@ -6,7 +6,7 @@
   "caliber": "7.62×39mm",
   "game": "Delta Force",
   "mode": "烽火行動",
-  "platform": "待以手遊實測確認",
+  "platform": "手遊：使用者提供的 2026-10-23 實機畫面",
   "sourceSnapshot": "2026-09-23",
   "lastReviewed": "2026-10-23",
   "base": {
@@ -45,5 +45,24 @@
     "未核對 2026-10-23 手遊實機面板",
     "傷害取原始面板，不含彈藥、命中部位、護甲影響",
     "未取得可驗證的遊戲後座力軌跡或重力/阻力參數"
+  ],
+  "verification": {
+    "base": "Screenshot verified",
+    "date": "2026-10-23",
+    "description": "使用者提供的原始未改裝 AKM 基礎屬性截圖",
+    "substats": "請見 data/weapons/akm-details.json"
+  },
+  "observedSlots": [
+    "muzzle",
+    "barrel",
+    "foregrip",
+    "charging",
+    "optic",
+    "canted",
+    "buttpad",
+    "stock",
+    "reargrip",
+    "magazine",
+    "magwell"
   ]
 }
