@@ -128,10 +128,10 @@ test("槍械側面示意圖應保留校準比例與明示來源",()=>{
 test("手機動效、候選配件預覽與動效開關相互連結",()=>{
  const gun=readFileSync(new URL("../src/gunsmith.mjs",import.meta.url),"utf8");
  const html=readFileSync(new URL("../index.html",import.meta.url),"utf8");
- assert.match(gun,/sheetEntrance\\(drawer\\)/);
- assert.match(gun,/sheetExit\\(drawer\\)/);
+ assert.match(gun,/sheetEntrance\(drawer\)/);
+ assert.match(gun,/sheetExit\(drawer\)/);
  assert.match(gun,/touchend/);
  assert.match(gun,/candidate-preview/);
  assert.match(html,/id="motion-toggle"/);
- assert.match(html,/motion-v05\\.css/);
+ assert.match(html,/motion-v05\.css/);
 });
