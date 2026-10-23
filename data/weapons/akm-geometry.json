@@ -1,0 +1,49 @@
+{
+  "weapon": "AKM",
+  "reference": "User-supplied Delta Force mobile screenshot from 2026-10-23",
+  "physicalSources": [
+    {
+      "url": "https://www.armaco.bg/en/product/assault-rifles-c2/akm-assault-rifle-p492",
+      "overallLengthMm": 880,
+      "barrelLengthMm": 415
+    }
+  ],
+  "physical": {
+    "overallLengthMm": 880,
+    "barrelLengthMm": 415,
+    "barrelRatio": 0.47159,
+    "remark": "barrel length measures bore from muzzle to bolt face; not visible free-barrel length"
+  },
+  "outline": {
+    "viewBox": [
+      0,
+      0,
+      1000,
+      420
+    ],
+    "startX": 18,
+    "endX": 991,
+    "referenceSections": {
+      "front": [
+        0,
+        0.345
+      ],
+      "receiver": [
+        0.345,
+        0.695
+      ],
+      "stock": [
+        0.695,
+        1
+      ]
+    },
+    "tolerance": 0.04
+  },
+  "proportions": "Approximation to screenshot silhouette; not a licensed or original in-game mesh",
+  "rules": [
+    "No independent image horizontal/vertical scaling",
+    "All attachments share the same weapon-coordinate space",
+    "No mod-specific dimension changes without data",
+    "Do not claim physical CAD or pixel-perfect 3D accuracy"
+  ]
+}

@@ -1,32 +1,54 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 410" role="img" aria-label="AKM 側面示意">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 420" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="title desc">
+<title id="title">AKM 槍械比例校準側面示意</title>
+<desc id="desc">依據實機畫面校準前段、機匣與固定槍托比例的 AKM 研究用側視向量圖；非官方 3D 槍模。</desc>
 <defs>
-<linearGradient id="metal" x2="0" y2="1"><stop stop-color="#929c9b"/><stop offset=".3" stop-color="#515e64"/><stop offset=".7" stop-color="#262e33"/><stop offset="1" stop-color="#66747a"/></linearGradient>
-<linearGradient id="wood" x2=".7" y2="1"><stop stop-color="#b18a5f"/><stop offset=".5" stop-color="#795139"/><stop offset="1" stop-color="#422d23"/></linearGradient>
-<linearGradient id="mag" x2="1" y2="1"><stop stop-color="#576064"/><stop offset=".5" stop-color="#1e252b"/><stop offset="1" stop-color="#4f5a5c"/></linearGradient>
-<filter id="shadow"><feDropShadow dx="0" dy="12" stdDeviation="9" flood-color="#000" flood-opacity=".6"/></filter>
+<linearGradient id="metal" x1="0" y1="0" x2="0.3" y2="1"><stop stop-color="#9ca6a0"/><stop offset=".22" stop-color="#535f5b"/><stop offset=".62" stop-color="#232b30"/><stop offset="1" stop-color="#536160"/></linearGradient>
+<linearGradient id="wood" x1="0" y1="0" x2=".78" y2="1"><stop stop-color="#b59066"/><stop offset=".42" stop-color="#895e40"/><stop offset="1" stop-color="#3b2b26"/></linearGradient>
+<linearGradient id="mag" x1="0" y1="0" x2=".85" y2="1"><stop stop-color="#586366"/><stop offset=".46" stop-color="#22292d"/><stop offset="1" stop-color="#4c575a"/></linearGradient>
+<filter id="ground"><feDropShadow dx="0" dy="12" stdDeviation="10" flood-color="#000" flood-opacity=".6"/></filter>
 </defs>
-<g filter="url(#shadow)" stroke="#192025" stroke-width="3" stroke-linejoin="round">
-<path d="M26 164 H370 V181 H26Z" fill="#454f55"/>
-<path d="M16 157 H60 V190 H16Z" fill="url(#metal)"/>
-<path d="M30 158V190M46 158V190" stroke="#b9ae8a" fill="none" stroke-width="5"/>
-<path d="M167 149V187H191V151Z" fill="#7b7d72"/>
-<path d="M178 143L360 141L385 159L385 173L171 174Z" fill="#46545a"/>
-<path d="M200 168L392 168L423 187L401 220H223L207 209Z" fill="url(#wood)"/>
-<path d="M211 181Q284 170 407 189M219 195Q310 191 413 207" fill="none" stroke="#d6b080" stroke-opacity=".4" stroke-width="2"/>
-<path d="M411 166L628 160L654 176V232L620 245L426 239L410 221Z" fill="url(#metal)"/>
-<path d="M421 163L448 148H606L628 161Z" fill="#9ba6a4"/>
-<path d="M440 145V126H449V146" fill="none" stroke="#b5aaa0" stroke-width="4"/>
-<path d="M458 146H477V137H521L531 147" fill="none" stroke="#b6beb2" stroke-width="4"/>
-<path d="M469 198H572" stroke="#121b22" stroke-width="10"/>
-<path d="M488 196H560" stroke="#99a49e" stroke-width="4"/>
-<circle cx="441" cy="188" r="4" fill="#d5c69c"/><circle cx="620" cy="192" r="4" fill="#d5c69c"/>
-<path d="M513 236L598 246Q585 344 504 406L470 388Q515 334 513 236Z" fill="url(#mag)"/>
-<path d="M535 260Q519 338 484 380M557 262Q538 343 505 394M578 264Q557 356 524 391" fill="none" stroke="#8e9894" stroke-opacity=".5" stroke-width="2"/>
-<path d="M595 244L655 240Q668 269 631 274L607 265Z" fill="none" stroke="#c7a66f" stroke-width="4"/>
-<path d="M646 245L681 258L713 339Q709 364 671 359L622 276Z" fill="url(#wood)"/>
-<path d="M659 265L683 340" stroke="#b18660" stroke-width="3"/>
-<path d="M653 167Q730 167 771 192L892 187L1035 180L1052 187V281L1032 289L890 284L764 235L658 229Z" fill="url(#wood)"/>
-<path d="M690 195Q836 200 1020 202M742 220Q852 227 1030 249" fill="none" stroke="#d6b080" stroke-opacity=".35" stroke-width="2"/>
-<path d="M908 215Q969 209 1014 219Q977 240 907 240Z" fill="#382b27"/>
-<path d="M1048 180H1064V283H1048Z" fill="#454c4e"/>
-</g></svg>
+<g filter="url(#ground)" stroke="#172025" stroke-width="2.8" stroke-linejoin="round">
+<!-- front assembly: muzzle to receiver ≈35% of total reference silhouette -->
+<g id="front-assembly">
+<path d="M25 172 H350 V186 H25Z" fill="#414b4e"/>
+<path d="M17 166 H47 L55 174 V193 H17 L11 188 V173Z" fill="url(#metal)"/>
+<path d="M29 166 V193 M43 168 V192" fill="none" stroke="#c0b18a" stroke-width="4"/>
+<path d="M139 145 H150 L154 185 H132Z" fill="#8b8c74"/>
+<path d="M144 142V130 H153 V142" fill="none" stroke="#b7b3a6" stroke-width="4"/>
+<path d="M170 151 H356 L362 164 H165Z" fill="#536065"/>
+<path d="M172 142 H352 L360 151 H170Z" fill="#303a3c"/>
+<path d="M191 164 H349 L366 184 L352 228 H211 L190 215Z" fill="url(#wood)"/>
+<path d="M193 177 Q273 170 357 184 M197 196 Q270 192 358 203 M210 216 Q284 217 349 218" fill="none" stroke="#d4b48b" stroke-opacity=".35" stroke-width="2"/>
+<path d="M215 228 H355" fill="none" stroke="#293034" stroke-width="5"/>
+<path d="M255 229 V240 H320 V229" fill="#353d40"/>
+</g>
+<!-- receiver: 35–69.5% of silhouette, matching user's screenshot's large receiver -->
+<g id="receiver-assembly">
+<path d="M349 163 L657 158 L687 177 L687 236 L652 248 L365 239 L347 215Z" fill="url(#metal)"/>
+<path d="M355 164 L380 143 H640 L666 160 V178 H354Z" fill="#75847f"/>
+<path d="M371 147 V126 H380 V146" stroke="#c4bcaa" stroke-width="5" fill="none"/>
+<path d="M412 144 H460 L469 133 H516 L530 144 H580" fill="none" stroke="#b8b9ab" stroke-width="4"/>
+<path d="M625 162 V141 H642 V166" fill="none" stroke="#a1aa9b" stroke-width="5"/>
+<path d="M373 188 H655" fill="none" stroke="#aab8aa" stroke-opacity=".36"/>
+<path d="M433 200 H572" stroke="#151e22" stroke-width="10"/>
+<path d="M452 199 H558" stroke="#929f98" stroke-width="4"/>
+<path d="M371 229 Q497 244 657 233" stroke="#171e23" stroke-width="5" fill="none"/>
+<circle cx="370" cy="180" r="4" fill="#dbcaa0"/><circle cx="649" cy="188" r="4" fill="#dbcaa0"/><circle cx="395" cy="226" r="4" fill="#dbcaa0"/>
+<!-- magazine placed under magazine well at 49–59% -->
+<path d="M481 238 L580 242 Q575 330 483 406 L454 387 Q499 335 481 238Z" fill="url(#mag)"/>
+<path d="M504 256 Q509 335 465 384 M529 258 Q526 338 481 397 M552 263 Q544 344 496 397" stroke="#87958e" stroke-opacity=".45" stroke-width="2" fill="none"/>
+<path d="M594 234 H662 Q678 271 638 285 H616 L597 254" fill="none" stroke="#bdaa84" stroke-width="4"/>
+<path d="M628 244 L674 246 L720 345 Q710 364 670 359 L613 274Z" fill="url(#wood)"/>
+<path d="M648 259 L684 343" stroke="#d8b487" stroke-opacity=".5" stroke-width="3"/>
+<path d="M620 244 V265" stroke="#b4a18a" stroke-width="4"/>
+</g>
+<!-- buttstock: ~30.5% of silhouette, no arbitrary horizontal stretching -->
+<g id="stock-assembly">
+<path d="M683 166 Q731 171 764 190 Q812 184 858 186 L961 177 L986 182 L989 278 L960 289 L853 287 Q809 275 767 250 L703 238 L687 231Z" fill="url(#wood)"/>
+<path d="M702 190 Q806 198 977 196 M749 214 Q856 234 980 248 M770 244 Q852 255 978 269" fill="none" stroke="#e0b88a" stroke-width="2" stroke-opacity=".35"/>
+<path d="M857 219 Q900 211 958 220 Q947 238 855 240Z" fill="#322923" opacity=".7"/>
+<path d="M985 178 H996 V282 H985Z" fill="#394445"/>
+<path d="M994 184 V278" stroke="#94a29b" stroke-width="3"/>
+</g>
+</g>
+</svg>
