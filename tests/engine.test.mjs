@@ -453,3 +453,13 @@ test("P1：實際 GLB 檔頭、網格、材質與來源 SHA256 要全數一致",
  assert.ok(asset.imageCount>=1);
  assert.throws(()=>inspectGLB(Buffer.from("glTFhello")),/Invalid GLB/);
 });
+
+test("P1 分件 AKM 候選必須另行 QA，正式主槍模不會預設換成研究版",()=>{
+ const ui=readFileSync(new URL("../src/model-reference.mjs",import.meta.url),"utf8");
+ const viewer=readFileSync(new URL("../src/local-viewer.mjs",import.meta.url),"utf8");
+ assert.ok(ui.includes('get("partReview")==="1"'));
+ assert.ok(ui.includes("akm-parts-candidate.glb"));
+ assert.ok(ui.includes("instance.setPartVisible"));
+ assert.ok(viewer.includes("function setPartVisible(name,visible)"));
+ assert.ok(ui.includes("並未確認遊戲裝配位置與動畫"));
+});

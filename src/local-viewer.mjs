@@ -100,6 +100,12 @@ export async function mountLocalGLB(host,{url="./assets/models/akm.glb",onStatus
    }
   });
   const parts=findPartNodes(names);
+  function setPartVisible(name,visible){
+    // Research inspection: independently hidden mesh must not hide the rest.
+    const matches=meshes.filter(obj=>obj.name===name);
+    if(matches.length!==1)return false;
+    matches[0].visible=Boolean(visible);render();return true;
+  }
   function setWireframe(enabled){
     for(const mesh of meshes){
       for(const mat of Array.isArray(mesh.material)?mesh.material:[mesh.material]){
@@ -127,7 +133,7 @@ export async function mountLocalGLB(host,{url="./assets/models/akm.glb",onStatus
   onStatus("載入完成："+meshes.length+" 個網格、"+materials.size+" 種材質。已辨識彈匣節點："+parts.magazine.length+" 個；無法僅依名稱保證可拆件。");
   return {
    root:rootGroup,parts,meshCount:meshes.length,materialCount:materials.size,
-   setWireframe,resetCamera,render,resize,
+   setPartVisible,setWireframe,resetCamera,render,resize,
    dispose(){
     disposed=true;resizeObserver?.disconnect();
     controls?.dispose();

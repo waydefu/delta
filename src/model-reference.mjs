@@ -22,12 +22,13 @@ export function initModelReference(stage){
  const bar=el("div","model-reference-controls");
  const schematic=el("button","model-view-button selected","2D 改槍");
  const modelButton=el("button","model-view-button","Sketchfab 參考");
- const nativeButton=el("button","model-view-button","真實 AKM 3D");nativeButton.hidden=true;nativeButton.type="button";
+ const partReview=new URLSearchParams(location.search).get("partReview")==="1";
+ const nativeButton=el("button","model-view-button",partReview?"分件測試 3D":"真實 AKM 3D");nativeButton.hidden=true;nativeButton.type="button";
  schematic.type=modelButton.type="button";
  bar.append(schematic,modelButton,nativeButton);stage.append(bar);
  const layer=el("div","model-reference-layer");layer.hidden=true;stage.append(layer);
  let showing=false,mode="2d",choice=MODELS[0],localViewer=null,loadGeneration=0;
- const assetUrl="./assets/models/akm.glb";
+ const assetUrl=partReview?"./assets/models/akm-parts-candidate.glb":"./assets/models/akm.glb";
  function sync(){
   schematic.classList.toggle("selected",!showing);
   modelButton.classList.toggle("selected",showing&&mode==="remote");
@@ -108,6 +109,17 @@ export function initModelReference(stage){
     "CC0 真實 3D · "+instance.meshCount+" 個網格 · "+instance.materialCount+
     " 種材質 · 不支援 3D 配件替換，遊戲內比例仍需對照");
    controls.append(reset,wireframe,warning);
+   if(partReview&&instance.parts.magazine.includes("AKM_Magazine")){
+      const mag=el("button","local-viewer-action","隱藏候選彈匣");
+      mag.type="button";let visible=true;
+      mag.addEventListener("click",()=>{
+       visible=!visible;
+       instance.setPartVisible("AKM_Magazine",visible);
+       mag.textContent=visible?"隱藏候選彈匣":"顯示候選彈匣";
+      });
+      const marker=el("p","local-viewer-caveat","⚠ 幾何分離實驗：用隱藏／顯示驗證是否真的只影響彈匣。並未確認遊戲裝配位置與動畫。");
+      controls.append(mag,marker);
+   }
    layer.append(controls);
   }catch(error){
    if(loadGeneration===generation){

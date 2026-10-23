@@ -19,12 +19,16 @@ const browser=await chromium.launch({headless:true,args:["--enable-webgl","--use
 const report={at:new Date().toISOString(),browsers:[],asset:"assets/models/akm.glb",notes:[]};
 let failed=false;
 try{
- for(const config of [{name:"desktop",viewport:{width:1440,height:900},isMobile:false},{name:"mobile",viewport:{width:390,height:844},isMobile:true}]){
+ for(const config of [
+ {name:"desktop",viewport:{width:1440,height:900},isMobile:false},
+ {name:"mobile",viewport:{width:390,height:844},isMobile:true},
+ {name:"draft-parts",viewport:{width:1440,height:900},isMobile:false,draft:true}
+]){
   const context=await browser.newContext({viewport:config.viewport,isMobile:config.isMobile,deviceScaleFactor:1,hasTouch:config.isMobile});
   const page=await context.newPage(),errors=[];
   page.on("pageerror",e=>errors.push("pageerror: "+e.message));
   page.on("console",m=>{if(m.type()==="error")errors.push("console: "+m.text().slice(0,300));});
-  await page.goto("http://127.0.0.1:8734/",{waitUntil:"networkidle",timeout:40000});
+  await page.goto("http://127.0.0.1:8734/"+(config.draft?"?partReview=1":""),{waitUntil:"networkidle",timeout:40000});
   await page.locator("#recoil-summary").waitFor({state:"visible",timeout:14000});
   const result={mode:config.name,errors:[],nativeButtonVisible:false,glbStatus:null,loaded:false,canvasBounds:null,webgl2:false};
   await page.screenshot({path:resolve(out,config.name+"-2d.png"),fullPage:false});
@@ -32,7 +36,7 @@ try{
    const canvas=document.createElement("canvas");
    try{const gl=canvas.getContext("webgl2");if(!gl)return false;gl.getExtension("WEBGL_lose_context")?.loseContext();return true;}catch{return false;}
   });
-  const native=page.getByRole("button",{name:"真實 AKM 3D"});
+  const native=page.getByRole("button",{name:config.draft?"分件測試 3D":"真實 AKM 3D"});
   await native.waitFor({state:"visible",timeout:12000});
   result.nativeButtonVisible=true;
   if(result.webgl2){
@@ -50,6 +54,13 @@ try{
      await page.getByRole("button",{name:"查看網格"}).click();
      await page.getByRole("button",{name:"查看材質"}).click();
      await page.getByRole("button",{name:"重設視角"}).click();
+     if(config.draft){
+       if(!result.glbStatus.includes("2 個網格"))errors.push("Expected two independently separated meshes");
+       await page.getByRole("button",{name:"隱藏候選彈匣"}).click();
+       await page.locator(".bench-canvas").scrollIntoViewIfNeeded();
+       await page.screenshot({path:resolve(out,"draft-mag-hidden.png"),fullPage:false});
+       await page.getByRole("button",{name:"顯示候選彈匣"}).click();
+     }
      // Crop the interaction view to the actual 3D panel, not page top.
      await page.locator(".bench-canvas").scrollIntoViewIfNeeded();
      await page.screenshot({path:resolve(out,config.name+"-3d.png"),fullPage:false});
