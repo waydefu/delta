@@ -12,72 +12,69 @@ permissions:
 jobs:
   prepare:
     runs-on: ubuntu-24.04
-    timeout-minutes: 24
+    timeout-minutes: 22
     steps:
       - uses: actions/checkout@v4
-      - name: Install Blender and glTF exporter prerequisites
-        timeout-minutes: 14
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install official Blender Python wheel (no slow Ubuntu apt mirror)
+        timeout-minutes: 11
         run: |
-          set -euo pipefail
-          # GitHub's Azure regional apt mirror timed out on a large Blender dependency.
-          # Prefer the general Ubuntu archive; retry only a bounded number of times.
-          if [ -f /etc/apt/sources.list.d/ubuntu.sources ]; then
-            sudo sed -i 's|http://azure.archive.ubuntu.com/ubuntu|http://archive.ubuntu.com/ubuntu|g' /etc/apt/sources.list.d/ubuntu.sources
-          fi
-          sudo apt-get -o Acquire::Retries=3 -o Acquire::http::Timeout=35 update -qq
-          sudo DEBIAN_FRONTEND=noninteractive apt-get -y -o Acquire::Retries=3 \
-            -o Acquire::http::Timeout=35 --no-install-recommends install \
-            blender zstd python3-numpy
-          blender --background --factory-startup --python-expr "import numpy; print('BLENDER_NUMPY_OK',numpy.__version__)"
-      - name: Download source from the author's CC0 OpenGameArt page
+          python -m pip install --disable-pip-version-check --no-input --only-binary=:all: bpy==4.5.15 zstandard
+          python -c 'import bpy; print("BLENDER_PYTHON", bpy.app.version_string)'
+      - name: Download CC0 source and unpack Zstd if present
+        timeout-minutes: 5
         run: |
           mkdir -p .model-work model-output
-          curl --fail --location --retry 3 --max-time 240 \
+          curl --fail --location --retry 2 --connect-timeout 12 --max-time 220 \
             --proto '=https' --tlsv1.2 \
-            -o .model-work/akm54.blend \
+            -o .model-work/akm54.source \
             https://opengameart.org/sites/default/files/akm54.blend
-          file .model-work/akm54.blend
-          # The artist's .blend download is wrapped in a Zstd stream.
-          # Detect by magic, safely decompress, then validate the Blender header.
-          python3 - <<'PY'
+          python - <<'PY'
           from pathlib import Path
-          p=Path(".model-work/akm54.blend")
-          prefix=p.read_bytes()[:8]
-          assert prefix.startswith((b"BLENDER",b"\x28\xb5\x2f\xfd")), "Unexpected file magic, source changed"
-          print("Source magic:",prefix.hex())
+          import hashlib, shutil, zstandard as zstd
+          source=Path(".model-work/akm54.source")
+          size=source.stat().st_size
+          assert 1_000_000<size<70_000_000, ("unexpected download size",size)
+          raw=source.read_bytes()
+          Path("model-output/download-sha256.txt").write_text(hashlib.sha256(raw).hexdigest()+"  akm54.source\n")
+          target=Path(".model-work/akm54.blend")
+          if raw.startswith(bytes.fromhex("28b52ffd")):
+              with source.open("rb") as inp, target.open("wb") as out:
+                  with zstd.ZstdDecompressor().stream_reader(inp) as stream:
+                      shutil.copyfileobj(stream,out,length=1024*1024)
+          elif raw.startswith(b"BLENDER"):
+              target.write_bytes(raw)
+          else:
+              raise ValueError("Source has unexpected file magic "+raw[:16].hex())
+          assert 100_000<target.stat().st_size<300_000_000, "decompressed size outside safe bound"
+          with target.open("rb") as handle: assert handle.read(7)==b"BLENDER"
+          Path("model-output/source-sha256.txt").write_text(hashlib.sha256(target.read_bytes()).hexdigest()+"  akm54.blend\n")
+          print("Blender source valid, length",target.stat().st_size,"version",target.read_bytes()[7:12])
           PY
-          if [ "$(od -An -tx1 -N4 .model-work/akm54.blend | tr -d ' \n')" = "28b52ffd" ]; then
-            mv .model-work/akm54.blend .model-work/akm54.blend.zst
-            sha256sum .model-work/akm54.blend.zst | tee model-output/download-sha256.txt
-            zstd --decompress --force .model-work/akm54.blend.zst \
-              -o .model-work/akm54.blend
-          fi
-          test "$(head -c 7 .model-work/akm54.blend)" = "BLENDER"
-          test "$(stat -c %s .model-work/akm54.blend)" -le 300000000
-          file .model-work/akm54.blend
-          blender --version | head -n 2
-          sha256sum .model-work/akm54.blend | tee model-output/source-sha256.txt
-      - name: Inspect meshes and export glTF
+      - name: Inspect and export GLB without running embedded scripts
+        timeout-minutes: 6
         run: |
+          AKM_SOURCE="$GITHUB_WORKSPACE/.model-work/akm54.blend" \
           AKM_OUTPUT="$GITHUB_WORKSPACE/model-output" \
-          blender --background --disable-autoexec .model-work/akm54.blend \
-            --python scripts/inspect-export-akm.py
+          python scripts/inspect-export-akm.py
           test -s model-output/akm.glb
-      - name: Check output is a real GLB
+      - name: Validate glTF binary and model provenance report
         run: |
-          python3 - <<'PY'
+          python - <<'PY'
           import json, pathlib, struct
-          path=pathlib.Path("model-output/akm.glb")
-          raw=path.read_bytes()
-          assert raw[:4] == b"glTF", "not a GLB"
-          assert struct.unpack_from("<I",raw,8)[0] == len(raw), "GLB byte count mismatch"
+          p=pathlib.Path("model-output/akm.glb")
+          with p.open("rb") as f: header=f.read(12)
+          assert header[:4]==b"glTF", "not a GLB"
+          assert struct.unpack_from("<I",header,4)[0]==2, "not glTF 2.0"
+          assert struct.unpack_from("<I",header,8)[0]==p.stat().st_size, "GLB size mismatch"
           report=json.loads(pathlib.Path("model-output/inspection.json").read_text())
-          assert report["meshes"], "no meshes"
-          assert path.stat().st_size < 100_000_000, "too large"
-          print("GLB size:",path.stat().st_size,"mesh count:",len(report["meshes"]))
-          print("Found detachable candidates:",report["part_candidates"])
+          assert report["meshes"] and report["license"]=="CC0 1.0 Universal", "missing model/provenance"
+          assert p.stat().st_size<100_000_000, "too large for web"
+          print("P1_MODEL_REVIEW",json.dumps({"bytes":p.stat().st_size,"meshCount":len(report["meshes"]),"parts":report["part_candidates"],"materials":len(report["materials"]),"images":len(report["images"])},ensure_ascii=False))
           PY
-      - name: Upload reviewed-source conversion and report
+      - name: Archive GLB and mesh report for review
         uses: actions/upload-artifact@v4
         with:
           name: akm-cc0-glb-unreviewed
@@ -87,4 +84,4 @@ jobs:
             model-output/source-sha256.txt
             model-output/download-sha256.txt
           if-no-files-found: error
-          retention-days: 7
+          retention-days: 14

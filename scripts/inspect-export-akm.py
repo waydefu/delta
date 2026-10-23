@@ -1,70 +1,76 @@
-"""Inspect CC0 AKM Blender file and export a genuine GLB for review.
-Run inside Blender headless. Does not auto-publish or modify the site.
-Original source: LonesomeDucky, OpenGameArt (CC0).
+"""Inspect creator CC0 AKM with bpy 4.5.15 and export glTF, no auto-exec.
+Source: LonesomeDucky / OpenGameArt.
+This is a research artifact, not a game-verified modular weapon.
 """
-import bpy, json, os, pathlib, re
+import os
+import re
+import json
+from pathlib import Path
+import bpy
 
-out=pathlib.Path(os.environ.get("AKM_OUTPUT","model-output"))
-out.mkdir(parents=True,exist_ok=True)
+source = Path(os.environ["AKM_SOURCE"])
+output = Path(os.environ.get("AKM_OUTPUT", "model-output"))
+output.mkdir(parents=True, exist_ok=True)
+bpy.context.preferences.filepaths.use_scripts_auto_execute = False
+bpy.ops.wm.open_mainfile(filepath=str(source), load_ui=False, use_scripts=False)
 meshes=[]
 materials=set()
 for obj in bpy.data.objects:
-    if obj.type != "MESH":
+    if obj.type!="MESH":
         continue
-    matnames=[s.material.name for s in obj.material_slots if s.material]
-    materials.update(matnames)
+    mats=[s.material.name for s in obj.material_slots if s.material]
+    materials.update(mats)
     meshes.append({
         "name":obj.name,
-        "vertex_count":len(obj.data.vertices),
-        "polygon_count":len(obj.data.polygons),
-        "dimensions":[round(v,6) for v in obj.dimensions],
-        "location":[round(v,6) for v in obj.location],
+        "vertices":len(obj.data.vertices),
+        "polygons":len(obj.data.polygons),
+        "dimensions":[round(float(n),5) for n in obj.dimensions],
+        "location":[round(float(n),5) for n in obj.location],
         "parent":obj.parent.name if obj.parent else None,
-        "materials":matnames,
+        "materials":mats
     })
 images=[{
     "name":im.name,
-    "size":list(im.size),
+    "width":int(im.size[0]),
+    "height":int(im.size[1]),
     "packed":bool(im.packed_file),
-    "path":im.filepath,
-} for im in bpy.data.images if im.source != "GENERATED"]
+    "path":im.filepath
+} for im in bpy.data.images if im.source!="GENERATED"]
 patterns={
     "magazine":r"(magaz|mag[_ .]|clip|ammo)",
     "stock":r"(stock|butt)",
     "barrel":r"(barrel|muzzle)",
     "handguard":r"(handguard|forearm|foregrip)",
-    "optic":r"(optic|sight|scope|rail)",
+    "optic":r"(optic|sight|scope|rail)"
 }
 candidates={key:[m["name"] for m in meshes if re.search(pattern,m["name"],re.I)]
-            for key,pattern in patterns.items()}
+    for key,pattern in patterns.items()}
 report={
     "source":"https://opengameart.org/content/weathered-akm-rifle",
     "creator":"LonesomeDucky",
     "license":"CC0 1.0 Universal",
-    "model_kind":"source Blender conversion; attachment segmentation unverified",
+    "inspectionTool":"bpy 4.5.15, embedded .blend Python scripts disabled",
+    "model_kind":"unreviewed independent CC0 Blender conversion, attachment segmentation unknown",
     "mesh_count":len(meshes),
+    "meshes":meshes,
     "materials":sorted(materials),
     "images":images,
     "part_candidates":candidates,
-    "meshes":meshes,
-    "warning":"Object names are suggestions, not proof of detached game-compatible parts. Manual inspection required.",
+    "warning":"Names are guesses, no real mount socket or game mod compatibility established."
 }
-(out/"inspection.json").write_text(json.dumps(report,indent=2,ensure_ascii=False))
-if not meshes:
-    raise RuntimeError("No meshes in source")
+(output/"inspection.json").write_text(json.dumps(report,indent=2,ensure_ascii=False))
+if not meshes: raise RuntimeError("No meshes in source")
 print("AKM_INSPECTION_SUMMARY",json.dumps({
-    "mesh_count":len(meshes),
-    "materials":len(materials),
-    "images":len(images),
-    "part_candidates":candidates,
+    "meshCount":len(meshes),"imageCount":len(images),"mesh_names":[m["name"] for m in meshes[:80]],
+    "part_candidates":candidates
 },ensure_ascii=False))
-# Preserve the artist's original materials; do not replace with shiny defaults.
 bpy.ops.export_scene.gltf(
-    filepath=str(out/"akm.glb"),
+    filepath=str(output/"akm.glb"),
     export_format="GLB",
-    export_apply=False,
     export_materials="EXPORT",
     export_texcoords=True,
     export_normals=True,
+    export_apply=False
 )
-print("Export complete:",out/"akm.glb")
+assert (output/"akm.glb").is_file()
+print("GLB export complete", (output/"akm.glb").stat().st_size)
