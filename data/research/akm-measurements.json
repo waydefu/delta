@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "weaponId": "akm",
+  "platform": "mobile",
+  "gameMode": "operations",
+  "checkedAt": "2026-10-24",
+  "sourceType": "none",
+  "measurements": [],
+  "requiredPerMeasurement": [
+    "id",
+    "gameVersion",
+    "weaponId",
+    "installedObjectIds",
+    "source",
+    "capturedAt",
+    "sampleRateOrTrial",
+    "shotPoints",
+    "screenCoordinateCalibration",
+    "cameraMode"
+  ],
+  "note": "Empty by design: supplied game screenshot is insufficient to infer per-shot XY impacts, drag, gravity or exact trajectory. No source-free synthetic patterns are shown."
+}

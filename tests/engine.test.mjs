@@ -410,3 +410,18 @@ test("P0：實機嚴格模式接入手機 UI 與改槍台預覽",()=>{
  assert.match(app,/option\.disabled=buildMode==="verified"/);
  assert.match(gun,/getMode\(\)==="research"/);
 });
+
+test("P1：實測後座資料與空白狀態不可偽造精準軌跡",async()=>{
+ const {validateObservationSet,findMeasuredRecoil}=await import("../src/measurements.mjs");
+ const d=JSON.parse(readFileSync(new URL("../data/research/akm-measurements.json",import.meta.url)));
+ assert.deepEqual(validateObservationSet(d),d);
+ assert.equal(findMeasuredRecoil(d,[]),null);
+ assert.equal(findMeasuredRecoil(d,[1,2]),null);
+ const invalid={...d,measurements:[{id:"bad",shotPoints:[{x:1,y:2,shot:1}]}]};
+ assert.throws(()=>validateObservationSet(invalid));
+ const viewer=readFileSync(new URL("../src/details.mjs",import.meta.url),"utf8");
+ const app=readFileSync(new URL("../src/app.mjs",import.meta.url),"utf8");
+ assert.match(viewer,/findMeasuredRecoil/);
+ assert.match(viewer,/update\(stats,result\)/);
+ assert.match(app,/details\.update\(stats,result\)/);
+});

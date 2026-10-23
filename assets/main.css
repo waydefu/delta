@@ -678,3 +678,8 @@ body {
 .p0-mode-switch{display:flex;align-items:center;gap:9px;color:#dce7d9;font:600 12px system-ui;margin:12px 0 4px;cursor:pointer}
 .p0-mode-switch input{accent-color:#a9c49d;width:19px;height:19px;flex-shrink:0;cursor:pointer}
 .p0-mode-description{color:#c7b897;font-size:11px;line-height:1.5;margin:3px 0 16px}
+
+/* P1: honesty-first live attributes and measured recoil graph */
+.detail-live-note{font-size:11px;line-height:1.7;padding:10px 12px;background:#292c28;color:#d1c49e;border-left:2px solid #a8a280;margin:12px 0}
+.detail-score-base{display:block;color:#aab7a8;font:10px/1.6 monospace;margin-top:5px}
+.graphics-recoil .graphic-overlay-note{left:15%;right:15%;top:40%;border:1px solid #60776b;background:#121c20e8}

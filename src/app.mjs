@@ -108,7 +108,7 @@ async function main() {
       refreshMode();update();
     });
     refreshMode();
-    await initDetails($("detail-explorer"));
+    const details=await initDetails($("detail-explorer"));
     $("distance").value = distance;
     $("distance").addEventListener("input", event => { distance = Number(event.target.value); update(false); });
     $("reset").addEventListener("click", () => {
@@ -136,6 +136,7 @@ async function main() {
       renderFlightChart($("flight-chart"),weapon.base.muzzleVelocityMps,result.stats.muzzleVelocityMps);
       for(const path of $("flight-chart").querySelectorAll("polyline:not([stroke-dasharray])"))drawLine(path);
       const stats = result.stats;
+      details.update(stats,result);
       setText("distance-label", distance + " m");
       setText("flight-time", format(idealFlightTimeMs(distance,stats.muzzleVelocityMps)) + " ms");
       setText("flight-velocity", format(stats.muzzleVelocityMps) + " m/s");

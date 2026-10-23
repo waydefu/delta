@@ -1,3 +1,4 @@
+import {validateObservationSet,findMeasuredRecoil} from "./measurements.mjs";
 import { swapContents } from "./motion.mjs";
 
 const el=(tag,cls,value)=>{
@@ -28,20 +29,27 @@ function damage(){
  root.append(anatomy,curve);
  return root;
 }
-function recoil(){
+function recoil(observations,installedIds,estimatedScore){
  const root=el("div","graphics-grid graphics-recoil");
- function card(title,current) {
-  const c=el("div","graphic-card");
-  c.append(el("span","graphic-kicker",title));
-  const pts=[[90,245],[86,220],[100,197],[108,176],[118,155],[122,137],[130,117],[136,99],[144,79],[152,63],[158,49]];
-  const circles=pts.map(([x,y],i)=>'<circle cx="'+x+'" cy="'+y+'" r="4.2" fill="'+(current?'#506b63':'#b4c4b9')+'" opacity="'+(current?'.45':'.9')+'"/>').join("");
-  const shape='<svg viewBox="0 0 250 310" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M125 20 V270 M28 150 H222" stroke="#4b6460" stroke-dasharray="4 5"/><circle cx="125" cy="150" r="88" fill="none" stroke="#31443f"/>'+circles+'</svg>';
-  c.append(svgGraphic(shape,current?"當前改裝後座力圖，尚無可驗證彈著點數據":"AKM 原始後座力走勢的示意點，不是逐發量測座標"));
-  if(current)c.append(el("div","graphic-overlay-note","待實測\n無可驗證的逐發資料"));
-  c.append(caption(current?"當前配裝尚無逐發落點；不能以面板控制值直接生成真實彈道。":"依遊戲截圖的走勢繪製參考點，座標未精確數位化。"));
-  return c;
+ const sources=[["BASE PROFILE / VERIFIED ONLY",[]],["CURRENT BUILD / VERIFIED ONLY",installedIds]];
+ for(const [title,ids] of sources){
+  const card=el("div","graphic-card");
+  card.append(el("span","graphic-kicker",title));
+  const observation=findMeasuredRecoil(observations,ids);
+  const points=observation?.shotPoints||[];
+  const circles=points.map(p=>
+   '<circle cx="'+(125+p.x)+'" cy="'+(150-p.y)+'" r="3.8" fill="#bcd9b5" opacity=".85"/>'
+  ).join("");
+  const grid='<svg viewBox="0 0 250 310" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">'+
+   '<g fill="none" stroke="#344d49" stroke-width="1"><circle cx="125" cy="150" r="100"/><circle cx="125" cy="150" r="60"/><circle cx="125" cy="150" r="20"/>'+
+   '<path d="M125 24 V276 M19 150 H231" stroke-dasharray="4 6"/></g>'+circles+'</svg>';
+  card.append(svgGraphic(grid,observation?"有來源的連射實測點位":"無實測座標的空白射擊靶，不代表實際後座力"));
+  if(!observation)card.append(el("div","graphic-overlay-note","尚無可核對的\n逐發彈著座標"));
+  card.append(caption(observation?
+   "遊戲版本："+observation.gameVersion+" · "+observation.shotPoints.length+" 發／由 "+observation.source+" 取得":
+   "未以槍械控制值 "+estimatedScore+" 推導虛構彈孔；待有實測才會顯示。"));
+  root.append(card);
  }
- root.append(card("BASE PROFILE / REFERENCE",false),card("CURRENT BUILD / UNCALIBRATED",true));
  return root;
 }
 function handling(){
@@ -72,17 +80,24 @@ function hipfire(){
  card.append(caption("圈的相對大小依照實機角度數值繪製；這是範圍比較，不是子彈隨機分布或實際命中機率。"));
  return card;
 }
-const GRAPHICS={damage,recoil,handling,stability,hipfire};
+const GRAPHICS={damage,handling,stability,hipfire};
 const SCORE={damage:"40",recoil:"39",handling:"54",stability:"55",hipfire:"53"};
 export async function initDetails(mount){
- const response=await fetch("./data/weapons/akm-details.json");
- if(!response.ok)throw new Error("詳細屬性資料讀取失敗");
+ const [response,measured]=await Promise.all([
+  fetch("./data/weapons/akm-details.json"),
+  fetch("./data/research/akm-measurements.json")
+ ]);
+ if(!response.ok||!measured.ok)throw new Error("AKM 詳細屬性或實測資料讀取失敗");
  const data=await response.json();
+ const observations=validateObservationSet(await measured.json());
  const tabs=el("div","details-tabs"),body=el("div","detail-body");
  tabs.setAttribute("role","tablist");tabs.setAttribute("aria-label","AKM 五類詳細屬性");
  body.setAttribute("role","tabpanel");
  mount.append(tabs,body);
  let active=data.groups[0].id;
+ let currentStats={...data.base};
+ let installedIds=[];
+ let provisional=false;
  const buttons=[];
  const render=()=>{
   const group=data.groups.find(g=>g.id===active);
@@ -98,19 +113,26 @@ export async function initDetails(mount){
   const copy=el("div","detail-copy");
   const header=el("div","detail-heading");
   const heading=el("div");
-  heading.append(el("small","detail-source","VERIFIED BASELINE / IN-GAME SCREENSHOT"),el("h3","",group.label));
+  heading.append(el("small","detail-source",installedIds.length?"BASE VALUES VERIFIED · CURRENT SCORES ESTIMATED":"VERIFIED BASELINE / IN-GAME SCREENSHOT"),el("h3","",group.label));
   const score=el("div","detail-score");
-  score.append(el("span","","裸槍數值"),el("strong","",SCORE[group.id]||"—"));
+  const scoreKey={damage:"fleshDamage",recoil:"recoilControl",handling:"handling",stability:"aimStability",hipfire:"hipFireAccuracy"}[group.id];
+  const baseScore=data.base[scoreKey]??SCORE[group.id];
+  const currentScore=currentStats[scoreKey]??baseScore;
+  score.append(el("span","",installedIds.length?"當前研究試算":"裸槍數值"),el("strong","",currentScore),
+    el("small","detail-score-base",installedIds.length?"裸槍 "+baseScore:""));
   header.append(heading,score);
   copy.append(header);
   const list=el("div","detail-values");
+  if(installedIds.length){
+    copy.append(el("p","detail-live-note","目前選裝 "+installedIds.length+" 件候選；主面板值會更新，但下列細項仍是裸槍實測值，不能從單一控制分數推算開鏡、彈道或散布。"));
+  }
   for(const [label,value] of group.values){
    const row=el("div","detail-value");
    row.append(el("span","",label),el("strong","",value));list.append(row);
   }
   copy.append(list,el("p","detail-caution","注意："+group.note));
   const visual=el("div","detail-visuals");
-  visual.append(GRAPHICS[group.id]());
+  visual.append(group.id==="recoil"?recoil(observations,installedIds,currentStats.recoilControl):GRAPHICS[group.id]());
   layout.append(copy,visual);body.append(layout);
   swapContents(visual);
  };
@@ -130,4 +152,13 @@ export async function initDetails(mount){
   buttons.push(button);tabs.append(button);
  });
  render();
+ return {
+  update(stats,result){
+   if(!stats||!Number.isFinite(stats.recoilControl))throw new TypeError("未提供改槍數值");
+   currentStats={...stats};
+   installedIds=(result?.equipped||[]).map(p=>p.objectId).filter(Number.isSafeInteger);
+   provisional=result?.verified!==true;
+   render();
+  }
+ };
 }
