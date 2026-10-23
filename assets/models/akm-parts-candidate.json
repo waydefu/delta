@@ -1,0 +1,18 @@
+{
+  "status": "candidate-needs-visual-review",
+  "model": "Weathered AKM experimental magazine segment",
+  "source": "https://opengameart.org/content/weathered-akm-rifle",
+  "creator": "LonesomeDucky",
+  "license": "CC0 1.0 Universal",
+  "bytes": 1093884,
+  "webSha256": "1eb0f2c3ba69835a1deb889b73de58f0932b70595d709084e5c90a835a0ad208",
+  "meshCount": 2,
+  "nodeNames": [
+    "AKM_Body",
+    "AKM_Magazine"
+  ],
+  "separablePartsCandidate": 1,
+  "gameMountVerified": false,
+  "restriction": "Never assume geometry split proves real AKM attachment compatibility",
+  "originalJob": 40026606857
+}
