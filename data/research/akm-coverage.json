@@ -14,7 +14,7 @@
     "accFunctional": 36,
     "accBackGrip": 27
   },
-  "akmCurated": 17,
+  "akmCurated": 21,
   "matchedIds": 17,
   "verifiedCurrentMobileAttachments": 0,
   "sourceConflicts": [
@@ -48,6 +48,13 @@
   "warnings": [
     "392 是 2024 年全槍系的配件記錄，非 AKM 適配數。",
     "第三方 AKM 頁面宣稱的 531 件相容候選由槽位推導，並非官方逐件確認。",
-    "不能把歷史數值當成現在正確，數值衝突不會自動覆蓋。"
+    "不能把歷史數值當成現在正確，數值衝突不會自動覆蓋。",
+    "2026 資料另有 4 件 AK/AKM 具名配件，但尚未逐件手遊驗證，特別是槍托緩衝墊的插槽關係。"
+  ],
+  "newer2026OnlyIds": [
+    13020000490,
+    13020000491,
+    13030000122,
+    13240000006
   ]
 }

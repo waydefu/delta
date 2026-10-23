@@ -239,7 +239,7 @@ test("AKM 彈匣容量覆寫，不應被當作可加總增益",()=>{
  assert.match(drum.sourceWarnings.join(" "),/2024/);
 });
 test("歷史配件清單與已研究數值必須明示來源、日期與驗證程度",()=>{
- assert.equal(attachments.length,17);
+ assert.equal(attachments.length,21);
  for(const x of attachments){
   assert.ok(x.source.startsWith("https://"));
   assert.ok(x.dataAsOf);
@@ -280,4 +280,17 @@ test("全量配件僅作研究索引，不會冒充 AKM 已確認相容",async()
  assert.match(UPSTREAM.module,/0\.8\.0/);
  const html=readFileSync(new URL("../index.html",import.meta.url),"utf8");
  assert.match(html,/id="research-directory"/);
+});
+
+test("2026 AKM 新配件須有來源與未驗證標記",()=>{
+ const ids=["akm-beaver-barrel","akm-beaver-long-barrel","ak-stable-reargrip","ak-recoil-buttpad"];
+ for(const id of ids){
+   const item=attachments.find(x=>x.id===id);
+   assert.ok(item,id);
+   assert.equal(item.dataAsOf,"2026-09-23");
+   assert.equal(item.platformValidated,false);
+   assert.ok(item.source.startsWith("https://gamegrids.io"));
+   resolveBuild(weapon,attachments,{[item.slot]:item.id});
+ }
+ assert.equal(resolveBuild(weapon,attachments,{barrel:"akm-beaver-long-barrel"}).stats.muzzleVelocityMps,682.5);
 });
