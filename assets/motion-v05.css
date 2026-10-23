@@ -1,0 +1,31 @@
+
+/* DELTA LAB 0.5 — aspect-preserving AKM and motion UX */
+.bench-gun{object-fit:contain!important;object-position:center center!important;max-width:100%;image-rendering:auto;backface-visibility:hidden}
+.bench-overlay{position:absolute;left:20px;bottom:20px;z-index:3;display:grid;gap:7px;pointer-events:none;font:600 10px monospace;letter-spacing:1.2px;text-shadow:0 2px 12px #000b;color:#b9d0bf}
+.bench-model-measure{color:#8ca49b;font-size:9px;font-weight:400}
+.bench-slot{transition:transform .17s cubic-bezier(.22,1,.36,1),border-color .17s,background-color .17s,box-shadow .17s}
+.bench-slot:hover{box-shadow:0 15px 27px #0009,0 0 0 1px #c4df9a4b}
+.bench-slot.active{border-color:#c4df9a;box-shadow:0 0 0 1px #c4df9a5c}
+.bench-slot.installed .bench-slot-icon{color:#d3f2c1}
+.bench-slot.not-ready{opacity:.68}
+.bench-slot.not-ready:hover{opacity:1}
+.bench-drawer{overscroll-behavior:contain;touch-action:pan-y;scrollbar-width:thin;scrollbar-color:#648275 transparent}
+.drawer-grip{display:none}
+.candidate-preview{background:linear-gradient(130deg,#25372d,#172821);border:1px solid #43604e;padding:13px 12px;margin:9px 0 16px;min-height:92px}
+.candidate-caption{display:block;color:#b7d9ab;font-size:11px;margin-bottom:11px}
+.candidate-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px}
+.candidate-metric{border-right:1px solid #425947;min-width:0;padding:0 5px 0 0}
+.candidate-metric:last-child{border:0}
+.candidate-metric span{display:block;font-size:10px;color:#93a99c}
+.candidate-metric strong{display:block;margin-top:4px;font:bold 18px/1.3 monospace;color:#e5f1e2}
+.candidate-metric strong.positive{color:#c4df9a}
+.candidate-metric strong.negative{color:#f2a19b}
+.bench-option{position:relative}
+.bench-option:before{content:"";position:absolute;left:0;top:7px;bottom:7px;width:2px;opacity:0;background:#bcd69c;transform:scaleY(.5);transition:transform .18s,opacity .18s}
+.bench-option:hover:before,.bench-option.selected:before{opacity:1;transform:scaleY(1)}
+.motion-toggle{border:1px solid #466052;background:transparent;color:#c0d2c6;padding:8px 10px;font:700 11px system-ui;cursor:pointer;white-space:nowrap}
+.motion-toggle:hover,.motion-toggle:focus-visible{background:#2b3a30;border-color:#c4df9a}
+.motion-toggle[aria-pressed=true]{color:#899a91}
+@media(max-width:1000px){.bench-overlay{left:14px;top:225px;bottom:auto;font-size:9px}.bench-model-measure{font-size:8px}}
+@media(max-width:530px){.bench-overlay{left:11px;top:179px;gap:4px}.bench-model-kind,.bench-model-measure{font-size:8px}.bench-drawer{border-top:2px solid #c4df9a;border-left:0;border-radius:16px 16px 0 0;padding:12px 17px 24px}.drawer-grip{display:block;width:39px;height:4px;background:#8eab97;border-radius:5px;margin:0 auto 16px}.candidate-preview{padding:12px 8px}.candidate-metric strong{font-size:16px}.motion-toggle{padding:7px 8px;font-size:10px}}
+@media(prefers-reduced-motion:reduce){.bench-slot,.bench-option,.bench-option:before{transition:none!important;animation:none!important}}
