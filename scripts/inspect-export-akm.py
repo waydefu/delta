@@ -163,26 +163,43 @@ def try_extract_magazine():
     if len(matches)!=1:
         raise RuntimeError(f"Magazine topology ambiguous: {len(matches)} matches among {len(groups)} islands; refusing to guess")
     root,indices,bounds=matches[0]
-    bpy.ops.object.select_all(action="DESELECT")
-    obj.select_set(True)
-    bpy.context.view_layer.objects.active=obj
-    bpy.ops.object.mode_set(mode="EDIT")
-    bpy.ops.mesh.select_all(action="DESELECT")
-    bpy.ops.object.mode_set(mode="OBJECT")
+    # Use bmesh topology rather than view-layer selection; Blender edit-mode
+    # selection synchronization previously produced invalid separated faces.
+    import bmesh
+    original_mesh=obj.data
     keep=set(indices)
-    for vertex in obj.data.vertices:vertex.select=vertex.index in keep
-    bpy.ops.object.mode_set(mode="EDIT")
-    bpy.ops.mesh.separate(type="SELECTED")
-    bpy.ops.object.mode_set(mode="OBJECT")
-    pieces=[o for o in bpy.context.scene.objects if o.type=="MESH"]
-    if len(pieces)!=2:raise RuntimeError(f"Expected body + magazine, got {len(pieces)}")
-    mag=next((p for p in pieces if 65<=len(p.data.vertices)<=95),None)
-    if not mag:raise RuntimeError("Extracted magazine vertex count unexpected")
-    body=next(p for p in pieces if p!=mag)
-    mag.name="AKM_Magazine"
-    body.name="AKM_Body"
-    if len(mag.data.polygons)<130 or len(mag.data.polygons)>200:
-        raise RuntimeError("Extracted part polygon count unexpected")
+    def make_submesh(name,selected):
+        bm=bmesh.new()
+        bm.from_mesh(original_mesh)
+        bm.verts.ensure_lookup_table()
+        bm.verts.index_update()
+        doomed=[v for v in bm.verts if ((v.index in keep)!=selected)]
+        bmesh.ops.delete(bm,geom=doomed,context="VERTS")
+        new=bpy.data.meshes.new(name+"_Mesh")
+        bm.to_mesh(new);bm.free()
+        for material in original_mesh.materials:
+            new.materials.append(material)
+        new.update()
+        return new
+    mag_mesh=make_submesh("AKM_Magazine",True)
+    body_mesh=make_submesh("AKM_Body",False)
+    if len(mag_mesh.vertices)!=len(indices) or len(mag_mesh.polygons)!=150:
+        raise RuntimeError("Split topology differs from source island: "+
+            str((len(mag_mesh.vertices),len(mag_mesh.polygons),len(indices))))
+    original_transform=obj.matrix_world.copy()
+    obj.data=body_mesh
+    obj.name="AKM_Body"
+    mag=bpy.data.objects.new("AKM_Magazine",mag_mesh)
+    bpy.context.collection.objects.link(mag)
+    mag.matrix_world=original_transform
+    body=obj
+    pieces=[body,mag]
+    print("AKM_MAG_SEGMENT_DEBUG",[
+        (p.name,len(p.data.vertices),len(p.data.polygons),len(p.data.uv_layers))
+        for p in pieces
+    ])
+    if not mag_mesh.uv_layers or not body_mesh.uv_layers:
+        raise RuntimeError("UV layers missing after segmentation")
     result={
       "status":"geometry-candidate-needs-visual-review",
       "part":"AKM_Magazine","vertices":len(mag.data.vertices),
