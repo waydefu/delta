@@ -16,6 +16,7 @@ jobs:
           node --check src/app.mjs
           node --check src/gunsmith.mjs
           node --check src/attachment-graph.mjs
+          node --check src/data-governance.mjs
           node --check src/visualizations.mjs
           node --check src/details.mjs
           node --check src/engine.mjs

@@ -60,11 +60,23 @@
         <section class="panel configuration">
           <div class="panel-heading"><div><span class="eyebrow">04 / CONFIGURATION</span><h2>配件組裝</h2></div><span id="equipped-count" class="subtle-tag">0 件配件</span></div>
           <p class="muted">目前收錄 AKM 已識別的槍管、槍口、槍托、彈匣、後握把研究樣本；2024 歷史數值會清楚標示，不代表 2026 手遊仍然有效。其他槽位仍待逐件核驗。</p>
+          <div class="p0-evidence-panel" aria-label="配件核驗狀態">
+            <div class="p0-evidence-title">P0 · 配件證據分級 <a href="https://github.com/waydefu/delta/blob/main/docs/P0-ACCEPTANCE.md" rel="noopener noreferrer" target="_blank">核驗清單 ↗</a></div>
+            <div class="p0-evidence-counts">
+              <div><strong id="proof-verified">—</strong><span>實機核實</span></div>
+              <div><strong id="proof-provisional">—</strong><span>研究候選</span></div>
+              <div><strong id="proof-blocked">—</strong><span>禁用</span></div>
+              <div><strong id="proof-conflicts">—</strong><span>來源衝突</span></div>
+            </div>
+            <p id="proof-summary">核對資料證據中…</p>
+            <p class="proof-warning">目前預設是「研究試算」，不是現行手遊正式數值。所有未核驗的相容性皆保留警告。</p>
+          </div>
           <div id="controls" class="controls"></div>
           <div class="panel-actions"><button id="reset" class="ghost-button" type="button">重設裸槍</button><button id="copy" class="accent-button" type="button">分享配置 ↗</button></div>
           <div class="divider"></div>
           <div class="section-heading"><h3>配件影響明細</h3><span class="eyebrow">LIVE DELTA</span></div>
           <ul id="breakdown" class="breakdown"></ul>
+          <div id="conflict-scenarios" class="conflict-scenarios" aria-live="polite"></div>
         </section>
         <section class="panel metrics">
           <div class="panel-heading"><div><span class="eyebrow">05 / STATS</span><h2>即時面板試算</h2></div><span class="subtle-tag">未實機校準</span></div>

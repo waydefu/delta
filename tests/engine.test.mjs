@@ -361,3 +361,12 @@ test("P0：數值衝突必須提供兩組情境邊界，並揭露試算公式",(
  assert.equal(result.scenarioBounds.muzzleVelocityMps.max,682.5);
  assert.ok(result.assumptionDetails.length>=3);
 });
+
+test("P0 來源分級必須呈現於介面，衝突使用雙來源區間",()=>{
+ const html=readFileSync(new URL("../index.html",import.meta.url),"utf8");
+ const app=readFileSync(new URL("../src/app.mjs",import.meta.url),"utf8");
+ for(const id of ["proof-verified","proof-provisional","proof-blocked","proof-conflicts","proof-summary","conflict-scenarios"])assert.ok(html.includes('id="'+id+'"'));
+ assert.match(app,/auditAttachments\(weapon,attachments\)/);
+ assert.match(app,/result\.scenarioBounds/);
+ assert.match(app,/p\.archiveComparison/);
+});

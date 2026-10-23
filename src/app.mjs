@@ -1,6 +1,7 @@
 import { initResearchCatalog } from "./research-catalog.mjs";
 import { setupMotionToggle, initializeEntrance, countTo, drawLine, diagramEnter } from "./motion.mjs";
 import { reconcileSelection } from "./attachment-graph.mjs";
+import {auditAttachments} from "./data-governance.mjs";
 import { initGunsmith } from "./gunsmith.mjs";
 import { renderMountGraph, renderContributions, renderFlightChart } from "./visualizations.mjs";
 import { initDetails } from "./details.mjs";
@@ -37,6 +38,16 @@ async function main() {
     const weapon = await wr.json();
     const attachments = await ar.json();
     initResearchCatalog($("research-directory"),attachments);
+    const audit=auditAttachments(weapon,attachments);
+    const counters=audit.counts;
+    setText("proof-verified",String(counters.verified));
+    setText("proof-provisional",String(counters.provisional));
+    setText("proof-blocked",String(counters.blocked));
+    setText("proof-conflicts",String(counters.conflicts));
+    setText("proof-summary",audit.issues.length?
+      "資料稽核發現 "+audit.issues.length+" 個結構問題。" :
+      "目前列入的配件仍是研究候選；尚無 2026 手遊逐件驗證配件。");
+    if(audit.issues.length)throw new Error("P0 資料稽核未通過："+audit.issues.join("；"));
     setText("weapon-subtitle", weapon.caliber + " · 600 RPM · 30 發");
     setText("snapshot", "裸槍實機值已核對 · 部分配件僅有 2024 歷史值，均未經 2026 手遊核對");
     setText("ammo-text", weapon.ammo.join(" · "));
@@ -143,6 +154,24 @@ async function main() {
         item.append(top,info);
         if(part.platformValidated!==true) item.append(el("small","provisional",part.dataStatus==="source-conflict"?"⚠ 來源衝突，尚未核實":part.dataStatus==="historical-unverified"?"⚠ 2024 歷史資料；遊戲版本與數值待核驗":"⚠ 社群配件數值／相容性尚未由 2026 手遊核驗"));
         breakdown.append(item);
+      }
+      const conflicting=result.equipped.filter(p=>p.dataStatus==="source-conflict");
+      const scenario=$("conflict-scenarios");
+      scenario.replaceChildren();
+      if(conflicting.length){
+        scenario.append(el("strong","", "⚠ 兩個資料來源互相衝突，不可視為現行實測值"));
+        for(const p of conflicting){
+          const row=el("p","",p.name+"：");
+          for(const [url,title] of [[p.source,"近期研究頁 ↗"],[p.archiveComparison.source,"2024 快照 ↗"]]){
+            const link=el("a","",title);link.href=url;link.target="_blank";link.rel="noopener noreferrer";
+            row.append(" ",link);
+          }
+          scenario.append(row);
+        }
+        for(const [key,label,unit] of [["recoilControl","後座",""],["handling","操控",""],["aimStability","穩定",""],["effectiveRangeM","射程"," m"],["muzzleVelocityMps","初速"," m/s"]]){
+          const bounds=result.scenarioBounds[key];
+          if(bounds.min!==bounds.max)scenario.append(el("p","scenario-range",label+"："+format(bounds.min)+" ～ "+format(bounds.max)+unit+"（來源情境，不是實測誤差）"));
+        }
       }
       setText("model-note",result.calculationStatus + "。實際彈道下墜與連射後座力仍待實測。" +
         (result.compatibilityProvisional?" 所有已選配件均未獲得手遊完整實機驗證。":"")+

@@ -655,3 +655,21 @@ body {
 .research-more[hidden]{display:none}
 @media(max-width:1000px){.research-results{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:620px){.research-results{grid-template-columns:1fr}.research-directory-controls{display:grid}.research-search,.research-category,.research-load{width:100%}}
+
+/* P0 evidence status; matte armory surfaces, not glossy badges */
+.p0-evidence-panel{background:#182223;border:1px solid #536055;padding:15px 17px;margin:14px 0 19px}
+.p0-evidence-title{display:flex;justify-content:space-between;gap:12px;color:#d8e7d5;font:700 12px system-ui}
+.p0-evidence-title a{color:#b9c7b6;text-decoration:underline;font:11px system-ui}
+.p0-evidence-counts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:14px}
+.p0-evidence-counts>div{padding:10px 8px;background:#1f2b2b;border:1px solid #374a44;min-width:0}
+.p0-evidence-counts strong{display:block;font:700 24px/1.3 monospace;color:#c4d6be}
+.p0-evidence-counts span{display:block;color:#9cafa7;font-size:10px;margin-top:4px}
+.p0-evidence-panel p{line-height:1.6;font-size:11px;color:#b8cbc0;margin:11px 0 0}
+.p0-evidence-panel .proof-warning{color:#ddc69d}
+.conflict-scenarios{border-left:2px solid #b9a779;padding:12px 14px;margin-top:14px;background:#2c2b23;color:#ddd2ac}
+.conflict-scenarios:empty{display:none}
+.conflict-scenarios strong{font-size:12px}
+.conflict-scenarios p{font-size:11px;line-height:1.6;margin:7px 0}
+.conflict-scenarios a{color:#d1dabd;text-decoration:underline}
+.conflict-scenarios .scenario-range{font:12px/1.6 monospace;color:#e4e3ca}
+@media(max-width:530px){.p0-evidence-counts{gap:5px}.p0-evidence-counts>div{padding:10px 5px}.p0-evidence-counts strong{font-size:21px}.p0-evidence-counts span{font-size:9px}}
