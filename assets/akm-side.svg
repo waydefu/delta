@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 410" role="img" aria-label="AKM 側面示意">
+<defs>
+<linearGradient id="metal" x2="0" y2="1"><stop stop-color="#929c9b"/><stop offset=".3" stop-color="#515e64"/><stop offset=".7" stop-color="#262e33"/><stop offset="1" stop-color="#66747a"/></linearGradient>
+<linearGradient id="wood" x2=".7" y2="1"><stop stop-color="#b18a5f"/><stop offset=".5" stop-color="#795139"/><stop offset="1" stop-color="#422d23"/></linearGradient>
+<linearGradient id="mag" x2="1" y2="1"><stop stop-color="#576064"/><stop offset=".5" stop-color="#1e252b"/><stop offset="1" stop-color="#4f5a5c"/></linearGradient>
+<filter id="shadow"><feDropShadow dx="0" dy="12" stdDeviation="9" flood-color="#000" flood-opacity=".6"/></filter>
+</defs>
+<g filter="url(#shadow)" stroke="#192025" stroke-width="3" stroke-linejoin="round">
+<path d="M26 164 H370 V181 H26Z" fill="#454f55"/>
+<path d="M16 157 H60 V190 H16Z" fill="url(#metal)"/>
+<path d="M30 158V190M46 158V190" stroke="#b9ae8a" fill="none" stroke-width="5"/>
+<path d="M167 149V187H191V151Z" fill="#7b7d72"/>
+<path d="M178 143L360 141L385 159L385 173L171 174Z" fill="#46545a"/>
+<path d="M200 168L392 168L423 187L401 220H223L207 209Z" fill="url(#wood)"/>
+<path d="M211 181Q284 170 407 189M219 195Q310 191 413 207" fill="none" stroke="#d6b080" stroke-opacity=".4" stroke-width="2"/>
+<path d="M411 166L628 160L654 176V232L620 245L426 239L410 221Z" fill="url(#metal)"/>
+<path d="M421 163L448 148H606L628 161Z" fill="#9ba6a4"/>
+<path d="M440 145V126H449V146" fill="none" stroke="#b5aaa0" stroke-width="4"/>
+<path d="M458 146H477V137H521L531 147" fill="none" stroke="#b6beb2" stroke-width="4"/>
+<path d="M469 198H572" stroke="#121b22" stroke-width="10"/>
+<path d="M488 196H560" stroke="#99a49e" stroke-width="4"/>
+<circle cx="441" cy="188" r="4" fill="#d5c69c"/><circle cx="620" cy="192" r="4" fill="#d5c69c"/>
+<path d="M513 236L598 246Q585 344 504 406L470 388Q515 334 513 236Z" fill="url(#mag)"/>
+<path d="M535 260Q519 338 484 380M557 262Q538 343 505 394M578 264Q557 356 524 391" fill="none" stroke="#8e9894" stroke-opacity=".5" stroke-width="2"/>
+<path d="M595 244L655 240Q668 269 631 274L607 265Z" fill="none" stroke="#c7a66f" stroke-width="4"/>
+<path d="M646 245L681 258L713 339Q709 364 671 359L622 276Z" fill="url(#wood)"/>
+<path d="M659 265L683 340" stroke="#b18660" stroke-width="3"/>
+<path d="M653 167Q730 167 771 192L892 187L1035 180L1052 187V281L1032 289L890 284L764 235L658 229Z" fill="url(#wood)"/>
+<path d="M690 195Q836 200 1020 202M742 220Q852 227 1030 249" fill="none" stroke="#d6b080" stroke-opacity=".35" stroke-width="2"/>
+<path d="M908 215Q969 209 1014 219Q977 240 907 240Z" fill="#382b27"/>
+<path d="M1048 180H1064V283H1048Z" fill="#454c4e"/>
+</g></svg>
