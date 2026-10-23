@@ -475,3 +475,11 @@ test("P1 可控制真實 AKM 雙網格彈匣退出與復位，不更動遊戲裝
  assert.match(ui,/const assetUrl="\.\/assets\/models\/akm-parts-candidate\.glb"/);
  assert.match(ui,/不代表已核實遊戲的裝配/);
 });
+
+test("P1：卸載 3D 視圖時會取消彈匣 RAF 並恢復幾何位置",()=>{
+ const src=readFileSync(new URL("../src/local-viewer.mjs",import.meta.url),"utf8");
+ assert.match(src,/cancelMagazine=\(\)=>finish\(false\)/);
+ assert.match(src,/cancelMagazine\?\.\(\)/);
+ assert.match(src,/mag\.position\.copy\(origin\)/);
+ assert.match(src,/magazineAnimating=false/);
+});

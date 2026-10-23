@@ -22,7 +22,7 @@ export function findPartNodes(names) {
 export async function mountLocalGLB(host,{url="./assets/models/akm.glb",onStatus=()=>{}}={}){
  if(!host)throw new TypeError("Missing 3D viewport");
  let renderer,controls,scene,asset,roomTarget,resizeObserver,disposed=false;
- let rootGroup=null,magazineFrame=0,magazineAnimating=false;
+ let rootGroup=null,magazineFrame=0,magazineAnimating=false,cancelMagazine=null;
  const documentWindow=host.ownerDocument.defaultView || window;
  const [THREE,{GLTFLoader},{OrbitControls},{RoomEnvironment}]=await Promise.all([
   import("three"),
@@ -124,8 +124,10 @@ export async function mountLocalGLB(host,{url="./assets/models/akm.glb",onStatus
         mag.position.copy(origin);
         if(!disposed)render();
         magazineAnimating=false;
+        cancelMagazine=null;
         resolve(ok);
       }
+      cancelMagazine=()=>finish(false);
       const tick=now=>{
         if(disposed){finish(false);return;}
         const t=Math.min(1,(now-started)/960);
@@ -173,6 +175,7 @@ export async function mountLocalGLB(host,{url="./assets/models/akm.glb",onStatus
    root:rootGroup,parts,meshCount:meshes.length,materialCount:materials.size,
    setPartVisible,animateMagazine,setWireframe,resetCamera,render,resize,
    dispose(){
+    cancelMagazine?.();
     disposed=true;
     if(magazineFrame)documentWindow.cancelAnimationFrame(magazineFrame);
     magazineFrame=0;resizeObserver?.disconnect();

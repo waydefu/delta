@@ -24,3 +24,8 @@
 - 2026-10-24 Chromium 對照圖片：`draft-parts-3d.png` vs `draft-mag-hidden.png`，只消失完整彎曲彈匣，機匣／扳機／槍托仍完整。GitHub Actions [影像驗收](https://github.com/waydefu/delta/actions/runs/40026932830) 成功；原始分件 [Blender](https://github.com/waydefu/delta/actions/runs/40026606857)。
 - 已改以來源清楚的 `assets/models/akm-parts-candidate.glb` 兩網格模型做常規 3D 展示；有一個 960ms 非循環、可取消的 3D 彈匣退出復位示範，使用真實 GLB 節點平移，不動改槍數值。
 - 這是**幾何上的分件已驗證**，但遊戲內配件裝卸軸、掛載點、槍托／槍管更換能力和所有數值仍不具備驗證；不可視為正式模組化遊戲槍模。
+
+## 3D 彈匣動畫驗收
+- 真實 Playwright Chromium **1440×900、390×844** 及 `?partReview=1` 三種情境皆通過：<https://github.com/waydefu/delta/actions/runs/40027320914>。GLB 顯示 `AKM_Body` + `AKM_Magazine`，可旋轉、重置、單擊觸發約 960ms 彈匣退出與回位，無 JS 錯誤。
+- 動畫只在使用者手動點擊後執行；離開 3D 畫面時應取消影格、復原零件位置並釋放 GPU。`prefers-reduced-motion` 關閉連續平移。
+- 仍屬**拓撲與視覺分件校準**，不是完整 AKM 遊戲配件替換：沒有官方模型節點、裝配接口與遊戲可驗證的動畫軸。
