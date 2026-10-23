@@ -370,3 +370,16 @@ test("P0 來源分級必須呈現於介面，衝突使用雙來源區間",()=>{
  assert.match(app,/result\.scenarioBounds/);
  assert.match(app,/p\.archiveComparison/);
 });
+
+test("P0 候選依附關係不會冒充有證據的正式子槽",()=>{
+ const c=JSON.parse(readFileSync(new URL("../data/research/akm-fitment-candidates.json",import.meta.url)));
+ assert.equal(c.target.platform,"mobile");
+ assert.equal(c.rootSlots.verifiedParentEdges,0);
+ assert.ok(c.candidates.length>=6);
+ for(const row of c.candidates){
+  assert.equal(row.verification,"candidate");
+  assert.equal(row.mobileVerified,false);
+  assert.ok(row.source.startsWith("https://"));
+  assert.ok(["may-provide","may-block","paired-with","may-fit"].includes(row.relationship));
+ }
+});

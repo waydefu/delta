@@ -1,0 +1,146 @@
+{
+  "date": "2026-10-24",
+  "target": {
+    "game": "Delta Force",
+    "platform": "mobile",
+    "mode": "Operations",
+    "weapon": "AKM",
+    "season": "S11"
+  },
+  "issue": "No public source examined supplies an exhaustive, individual, current-mobile-version AKM compatibility-and-parameter table.",
+  "rootSlots": {
+    "observedInScreenshot": 11,
+    "thirdPartySaysOpen": 10,
+    "verifiedParentEdges": 0,
+    "allPossibleSlotsThirdParty": 24
+  },
+  "evidenceRules": {
+    "candidate": "Third-party community build / slot-derived fitment; never unlock.",
+    "verified": "Current mobile game screenshot or official game-specific source with weapon+part+slot+attribute values and date.",
+    "recordFields": [
+      "weaponId",
+      "partObjectId",
+      "partId",
+      "slotId",
+      "parentObjectId",
+      "screenshotReference",
+      "platform",
+      "version",
+      "checkedAt",
+      "effects",
+      "specialEffects",
+      "authoritativeSource"
+    ],
+    "ambiguity": "Part name, slot class, web page update date or user votes alone do not establish accurate 2026 mobile stats."
+  },
+  "candidates": [
+    {
+      "id": "akm-beaver-rail-panels",
+      "subject": "AKM 海狸槍管",
+      "relationship": "may-provide",
+      "slots": [
+        "topRail",
+        "leftRail",
+        "rightRail"
+      ],
+      "source": "https://dotesports.com/delta-force/news/best-akm-build-in-delta-force",
+      "context": "Warfare build, dated 2025; author uses three Ranger Handguard Panels",
+      "verification": "candidate",
+      "mobileVerified": false
+    },
+    {
+      "id": "akm-polymer-stock-pad",
+      "subject": "AK Polymer Stock",
+      "relationship": "may-provide",
+      "slots": [
+        "buttpad"
+      ],
+      "source": "https://topbuilds.gg/delta-force/weapons/akm/",
+      "context": "Community Warfare AKM build listed alongside AK Stock Recoil Pad; no screenshot of mount node",
+      "verification": "candidate",
+      "mobileVerified": false
+    },
+    {
+      "id": "akm-heavy-grip-mount",
+      "subject": "AK Heavy Tower Grip",
+      "relationship": "may-provide",
+      "slots": [
+        "gripMount"
+      ],
+      "source": "https://www.aimsector.com/news/delta-force-akm-build",
+      "context": "Warfare example claims grip mount, cannot prove mobile or all grip variations",
+      "verification": "candidate",
+      "mobileVerified": false
+    },
+    {
+      "id": "akm-polymer-magwell",
+      "subject": "AKM 30-Round Polymer Mag",
+      "relationship": "paired-with",
+      "slots": [
+        "magwell"
+      ],
+      "source": "https://topbuilds.gg/delta-force/weapons/akm/",
+      "context": "Coyote Medium P.Mag Assist listed with polymer mag, attachment slot relationship not directly observed",
+      "verification": "candidate",
+      "mobileVerified": false
+    },
+    {
+      "id": "akm-performance-barrel-foregrip",
+      "subject": "AKM Performance Barrel Combo",
+      "relationship": "may-block",
+      "slots": [
+        "foregrip"
+      ],
+      "source": "https://www.aimsector.com/news/delta-force-akm-build",
+      "context": "Warfare build says foregrip conflicts with this barrel, no in-game screenshot / mobile proof",
+      "verification": "candidate",
+      "mobileVerified": false
+    },
+    {
+      "id": "akm-qr-stock-buttpad",
+      "subject": "QR High-Performance Stock",
+      "relationship": "may-block",
+      "slots": [
+        "buttpad"
+      ],
+      "source": "https://www.aimsector.com/news/delta-force-akm-build",
+      "context": "Warfare guide notes stock pad slot conflict, unverified for mobile",
+      "verification": "candidate",
+      "mobileVerified": false
+    },
+    {
+      "id": "akm-charging-handle",
+      "subject": "ZenitCo Charging Handle Cap",
+      "relationship": "may-fit",
+      "slots": [
+        "charging"
+      ],
+      "source": "https://www.aimsector.com/news/delta-force-akm-build",
+      "context": "Appears in Warfare example; no verified prerequisite for mobile AKM",
+      "verification": "candidate",
+      "mobileVerified": false
+    }
+  ],
+  "sourceHierarchy": [
+    {
+      "tier": 1,
+      "name": "2026 mobile in-game Gunsmith screenshots; version known",
+      "source": "user-supplied screenshots (no UID published)"
+    },
+    {
+      "tier": 2,
+      "name": "Game publisher's weapon/attachment-specific 2026 release notices",
+      "source": "https://deltaforce.garena.com/en/news/announcement/8YN23W"
+    },
+    {
+      "tier": 3,
+      "name": "2026 third-party item parameters, two sources with item ID",
+      "source": "https://gamegrids.io/delta-force/zh/weapons/akm/"
+    },
+    {
+      "tier": 4,
+      "name": "2024 archived data, not current",
+      "source": "https://github.com/jiansenc/DeltaForceData"
+    }
+  ]
+}
