@@ -1,4 +1,4 @@
-import { sheetEntrance, sheetExit, notifySlot, swapContents } from "./motion.mjs";
+import { sheetEntrance, sheetExit, notifySlot, swapContents, shouldAnimate } from "./motion.mjs";
 import { getAvailableSlots } from "./attachment-graph.mjs";
 import { resolveBuild } from "./engine.mjs";
 const SLOTS=[
@@ -10,7 +10,7 @@ const SLOTS=[
  ["buttpad","槍托墊",92,34,93,56],
  ["stock","槍托",92,72,82,60],
  ["reargrip","後握把",77,86,61,69],
- ["magazine","彈匣",50,88,50,73],
+ ["magazine","彈匣",43,88,46,70],
  ["magwell","彈匣座",62,91,52,62],
  ["foregrip","前握把",17,78,28,59]
 ];
@@ -21,11 +21,12 @@ export function initGunsmith(mount,selections,attachments,onPick,weapon){
  const resolveBuildPreview=value=>resolveBuild(weapon,attachments,value);
  const stage=node("div","bench-canvas");
  const grid=node("div","bench-grid");
- const img=node("img","bench-gun");img.src="./assets/akm-side.svg";img.alt="AKM 側面槍械示意圖，非原生遊戲貼圖";img.draggable=false;
+ const img=node("img","bench-gun");img.src="./assets/akm-side.svg";img.alt="AKM 側面示意（彈匣已獨立分件）";img.draggable=false;
+ const magazine=node("img","bench-magazine");magazine.src="./assets/akm-magazine.svg";magazine.alt="";magazine.draggable=false;magazine.setAttribute("aria-hidden","true");
  const lines=document.createElementNS("http://www.w3.org/2000/svg","svg");
  lines.classList.add("bench-lines");lines.setAttribute("viewBox","0 0 1000 560");lines.setAttribute("preserveAspectRatio","none");
  const buttons=new Map();
- stage.append(grid,img,lines);
+ stage.append(grid,img,magazine,lines);
  for(const [id,label,x,y,tx,ty] of SLOTS){
   const line=document.createElementNS("http://www.w3.org/2000/svg","line");
   for(const [key,value] of [["x1",x*10],["y1",y*5.6],["x2",tx*10],["y2",ty*5.6]])line.setAttribute(key,String(value));
@@ -44,6 +45,21 @@ export function initGunsmith(mount,selections,attachments,onPick,weapon){
  mount.append(stage,shade,drawer);
  let active=null;
  let closing=false,opener=null;
+ function inspectMagazine(){
+   if(typeof magazine.animate!=="function"||!shouldAnimate()){
+     magazine.classList.add("magazine-inspected");
+     magazine.addEventListener("transitionend",()=>magazine.classList.remove("magazine-inspected"),{once:true});
+     requestAnimationFrame(()=>magazine.classList.remove("magazine-inspected"));
+     return;
+   }
+   magazine.getAnimations().forEach(a=>a.cancel());
+   magazine.animate([
+     {transform:"translate3d(0,0,0) rotate(0deg)",opacity:1,offset:0},
+     {transform:"translate3d(-18px,34px,0) rotate(-7deg)",opacity:1,offset:.42},
+     {transform:"translate3d(-18px,34px,0) rotate(-7deg)",opacity:1,offset:.58},
+     {transform:"translate3d(0,0,0) rotate(0deg)",opacity:1,offset:1}
+   ],{duration:820,easing:"cubic-bezier(.22,.75,.28,1)"});
+ }
  const close=async()=>{if(active===null||closing)return;closing=true;await sheetExit(drawer);active=null;shade.hidden=true;drawer.hidden=true;closing=false;refresh();opener?.focus({preventScroll:true});};
  shade.addEventListener("click",close);
  document.addEventListener("keydown",event=>{
@@ -74,7 +90,14 @@ export function initGunsmith(mount,selections,attachments,onPick,weapon){
   heading.append(small,h);head.append(heading,x);drawer.append(head);
   if(!getAvailableSlots(weapon,attachments,selections).has(active)||!choices.length){
     const box=node("div","empty-slot"),title=node("strong","","配件資料建置中"),p=node("p","","實機畫面確認此配件槽存在，但尚未建好完整配件與相容性資料，因此暫不提供虛構選項。");
-    box.append(title,p);drawer.append(box);return;
+    box.append(title,p);
+    if(active==="magazine"){
+      const inspect=node("button","magazine-inspect","觀察彈匣裝卸動作 ↗");
+      inspect.type="button";
+      inspect.addEventListener("click",async()=>{await close();inspectMagazine();});
+      box.append(inspect,node("small","magazine-inspect-note","僅展示拆件方向，不變更遊戲配件或數值"));
+    }
+    drawer.append(box);return;
   }
   drawer.append(node("p","drawer-hint","選擇配件後即時計算面板。部分相容性仍需實機核驗。"));
   const preview=node("div","candidate-preview");

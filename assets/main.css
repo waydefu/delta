@@ -552,3 +552,34 @@ body {
   .bench-slot,.summary-card,.bench-option,.detail-tab,
   .hero-action { transition:none!important; transform:none!important }
 }
+
+/* MAGAZINE: same camera, same coordinate plane, independent detachable layer */
+.bench-magazine {
+  position:absolute;z-index:2;
+  left:5.5%;top:20%;width:91%;height:77%;
+  object-fit:contain;object-position:center center;
+  max-width:100%;pointer-events:none;
+  transform-origin:49% 56%;
+  filter:drop-shadow(-1px 3px 2px #0005);
+}
+.magazine-inspect {
+  display:block;width:100%;margin-top:15px;min-height:44px;
+  border:1px solid #8fa08d;background:#28362f;color:#e2eadc;
+  padding:12px 14px;text-align:left;font-weight:700;
+}
+.magazine-inspect:hover,.magazine-inspect:focus-visible {
+  border-color:#c1d1b0;background:#344337;
+}
+.magazine-inspect-note {
+  display:block;margin-top:11px;color:#96ada0;font-size:11px;
+}
+.bench-magazine.magazine-inspected{transform:translate3d(-12px,23px,0) rotate(-5deg);transition:transform .25s ease-out}
+@media(max-width:1000px){
+  .bench-magazine {left:2%;top:16px;width:96%;height:245px;}
+}
+@media(max-width:530px){
+  .bench-magazine {left:0;top:4px;width:100%;height:200px;}
+}
+@media(prefers-reduced-motion:reduce){
+  .bench-magazine,.bench-magazine.magazine-inspected{transition:none!important;transform:none!important}
+}

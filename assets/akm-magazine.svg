@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 420" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="mag-title mag-desc">
+<title id="mag-title">AKM 7.62×39 mm 30 發弧形鋼製彈匣</title>
+<desc id="mag-desc">按使用者遊戲截圖校正，彈匣位於扳機護圈前方，末端朝槍口方向明顯前彎，包含縱向壓筋與金屬底板。</desc>
+<defs>
+<linearGradient id="mag-steel" x1="0" y1="0" x2=".22" y2="1"><stop stop-color="#444d4a"/><stop offset=".47" stop-color="#303936"/><stop offset="1" stop-color="#242d2d"/></linearGradient>
+<pattern id="mag-grain" width="8" height="9" patternUnits="userSpaceOnUse"><path d="M0 2 H8 M2 7 H7" stroke="#acbbb1" stroke-opacity=".07" stroke-width=".65"/></pattern>
+<filter id="mag-contact"><feDropShadow dx="-2" dy="4" stdDeviation="2.5" flood-color="#000" flood-opacity=".38"/></filter>
+</defs>
+<g id="magazine-assembly" filter="url(#mag-contact)" stroke-linejoin="round">
+<!-- Receiver magazine latch is directly ahead of the trigger group.
+     Curvature/position traced proportionally from user's in-game AKM screenshot. -->
+<path id="magazine-shell" d="M458 235 L550 239 C543 305 504 359 417 401 L376 381 C434 344 466 295 458 235 Z" fill="url(#mag-steel)" stroke="#151d20" stroke-width="3.5"/>
+<path d="M458 235 L550 239 L546 255 L460 252 Z" fill="#3f4844" stroke="#171f21" stroke-width="2"/>
+<path d="M459 253 L546 255" stroke="#819086" stroke-opacity=".36" stroke-width="2"/>
+<!-- Subtle parallel stamping follows the curved steel body instead of straight stripes. -->
+<g fill="none" stroke="#7c8c82" stroke-width="2.9" stroke-linecap="round" opacity=".55">
+<path d="M473 258 C485 318 446 363 388 382"/>
+<path d="M492 258 C495 313 461 369 402 391"/>
+<path d="M515 258 C510 319 481 366 417 395"/>
+<path d="M538 260 C530 310 498 359 434 389"/>
+</g>
+<g fill="none" stroke="#171f20" stroke-width="1.25" opacity=".7">
+<path d="M477 263 C489 321 450 364 391 383"/>
+<path d="M498 267 C502 320 469 368 405 388"/>
+<path d="M520 271 C518 323 487 365 421 390"/>
+</g>
+<!-- Magazine spine, rear locking lug and cap, seen in profile -->
+<path d="M542 252 C533 323 494 365 418 400" fill="none" stroke="#151d1e" stroke-width="4" opacity=".68"/>
+<path d="M542 237 L552 241 L555 249 L547 250" fill="#444f4a" stroke="#192122" stroke-width="2"/>
+<path d="M375 378 L419 399 L425 405 L413 410 L370 386 Z" fill="#222c2d" stroke="#5b6861" stroke-width="2"/>
+<path d="M380 383 L416 400" fill="none" stroke="#9aa89b" stroke-width="1.5" opacity=".35"/>
+<path d="M385 388 L414 402" fill="none" stroke="#111a1d" stroke-width="1.6" opacity=".65"/>
+<path d="M458 235 L550 239 C543 305 504 359 417 401 L376 381 C434 344 466 295 458 235 Z" fill="url(#mag-grain)" stroke="none"/>
+</g>
+</svg>

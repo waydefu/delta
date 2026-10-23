@@ -36,9 +36,9 @@
 <path d="M452 199 H558" stroke="#929f98" stroke-width="4"/>
 <path d="M371 229 Q497 244 657 233" stroke="#171e23" stroke-width="5" fill="none"/>
 <circle cx="370" cy="180" r="4" fill="#dbcaa0"/><circle cx="649" cy="188" r="4" fill="#dbcaa0"/><circle cx="395" cy="226" r="4" fill="#dbcaa0"/>
-<!-- magazine placed under magazine well at 49–59% -->
-<path d="M481 238 L580 242 Q575 330 483 406 L454 387 Q499 335 481 238Z" fill="url(#mag)"/>
-<path d="M504 256 Q509 335 465 384 M529 258 Q526 338 481 397 M552 263 Q544 344 496 397" stroke="#87958e" stroke-opacity=".45" stroke-width="2" fill="none"/>
+<!-- magazine-body is now a separate proportional SVG layer for genuine part motion -->
+<path d="M451 232 L555 234 L555 251 L459 250 Z" fill="#2f3b3b" stroke="#192222" stroke-width="3"/>
+<path d="M458 249 L554 249" fill="none" stroke="#556460" stroke-width="2"/>
 <path d="M594 234 H662 Q678 271 638 285 H616 L597 254" fill="none" stroke="#bdaa84" stroke-width="4"/>
 <path d="M628 244 L674 246 L720 345 Q710 364 670 359 L613 274Z" fill="url(#wood)"/><path d="M628 244 L674 246 L720 345 Q710 364 670 359 L613 274Z" fill="url(#woodFiber)" stroke="none"/>
 <path d="M648 259 L684 343" stroke="#9d785b" stroke-opacity=".28" stroke-width="3"/>

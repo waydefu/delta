@@ -158,3 +158,17 @@ test("霧面材質維持槍械幾何與單一生產樣式來源",()=>{
  assert.match(html,/href="\.\/assets\/main\.css"/);
  assert.equal((html.match(/rel="stylesheet"/g)||[]).length,1);
 });
+
+test("彈匣為獨立的正確比例圖層，位於扳機前並向槍口方向彎曲",()=>{
+  const gun=readFileSync(new URL("../assets/akm-side.svg",import.meta.url),"utf8");
+  const magazine=readFileSync(new URL("../assets/akm-magazine.svg",import.meta.url),"utf8");
+  const gunsmith=readFileSync(new URL("../src/gunsmith.mjs",import.meta.url),"utf8");
+  assert.match(gun,/viewBox="0 0 1000 420"/);
+  assert.doesNotMatch(gun,/M481 238 L580 242 Q575 330/);
+  assert.match(magazine,/viewBox="0 0 1000 420"/);
+  assert.match(magazine,/id="magazine-shell"/);
+  assert.match(magazine,/M458 235 L550 239 C543 305 504 359 417 401 L376 381/);
+  assert.match(gunsmith,/assets\/akm-magazine\.svg/);
+  assert.match(gunsmith,/inspectMagazine\(\)/);
+  assert.match(gunsmith,/shouldAnimate\(\)/);
+});
