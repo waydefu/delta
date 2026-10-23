@@ -1,3 +1,4 @@
+import { attachStudioLight } from "./studio-light.mjs";
 import { sheetEntrance, sheetExit, notifySlot, swapContents, shouldAnimate } from "./motion.mjs";
 import { getAvailableSlots } from "./attachment-graph.mjs";
 import { resolveBuild } from "./engine.mjs";
@@ -43,6 +44,12 @@ export function initGunsmith(mount,selections,attachments,onPick,weapon){
  const shade=node("button","bench-shade");shade.type="button";shade.hidden=true;shade.setAttribute("aria-label","關閉配件選單");
  const drawer=node("aside","bench-drawer");drawer.hidden=true;drawer.setAttribute("aria-label","配件選單");
  mount.append(stage,shade,drawer);
+ const studio=attachStudioLight(stage);
+ for(const [id,label,x,y,tx,ty] of SLOTS){
+  const b=buttons.get(id)?.button;
+  b?.addEventListener("pointerenter",()=>studio.cueAt(tx/100,ty/100));
+  b?.addEventListener("focus",()=>studio.cueAt(tx/100,ty/100));
+ }
  let active=null;
  let closing=false,opener=null;
  function inspectMagazine(){

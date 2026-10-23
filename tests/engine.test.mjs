@@ -172,3 +172,13 @@ test("彈匣為獨立的正確比例圖層，位於扳機前並向槍口方向�
   assert.match(gunsmith,/inspectMagazine\(\)/);
   assert.match(gunsmith,/shouldAnimate\(\)/);
 });
+
+test("WebGL2 局部柔光可回退，且在使用者互動才觸發動畫",async()=>{
+ const shader=await import("../src/studio-light.mjs");
+ assert.equal(typeof shader.attachStudioLight,"function");
+ const source=readFileSync(new URL("../src/studio-light.mjs",import.meta.url),"utf8");
+ const gun=readFileSync(new URL("../src/gunsmith.mjs",import.meta.url),"utf8");
+ for(const token of ["webgl2","webglcontextlost","ResizeObserver","IntersectionObserver","visibilitychange","shouldAnimate"]) assert.ok(source.includes(token),token);
+ assert.ok(source.includes("Math.min(1360"));
+ assert.ok(gun.includes("attachStudioLight(stage)"));
+});

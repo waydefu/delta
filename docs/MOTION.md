@@ -31,3 +31,6 @@ Lottie Motion: https://github.com/LottieFiles/motion-design-skill
 Motion AI Kit: https://github.com/motiondivision/ai-kit
 
 To prepare local coding agents, review and optionally run scripts/install-agent-skills.sh --install. This chat can commit that script to GitHub but cannot execute it in your local Codex/Hermes session. This script is not part of production deployment or CI.
+
+## First researched shader implementation
+`src/studio-light.mjs` is a **2D soft key-light** behind the rifle, not PBR metal rendering. WebGL2 one context, 360ms input cue, no perpetual loop, capped render resolution and DPR, page visibility and intersection handling, context-loss and reduced-motion fallback. Prioritize genuine modular GLB before introducing Three.js PBR or volumetric effects.
