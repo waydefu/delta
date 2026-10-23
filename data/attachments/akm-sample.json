@@ -20,7 +20,20 @@
     "dataAsOf": "2026-09-23",
     "platformValidated": false,
     "dataStatus": "community-unverified",
-    "sourceTier": "community-secondary"
+    "sourceTier": "community-secondary",
+    "fitmentEvidence": {
+      "status": "candidate",
+      "type": "third-party-derived",
+      "reference": "https://gamegrids.io/delta-force/zh/attachments/akm-performance-barrel-assembly/",
+      "platform": "mobile-not-individually-verified",
+      "checkedAt": null
+    },
+    "effectEvidence": {
+      "status": "secondary",
+      "reference": "https://gamegrids.io/delta-force/zh/attachments/akm-performance-barrel-assembly/",
+      "asOf": "2026-09-23",
+      "formulaValidated": false
+    }
   },
   {
     "id": "akm-standard-barrel",
@@ -41,7 +54,20 @@
     "dataAsOf": "2026-09-23",
     "platformValidated": false,
     "dataStatus": "community-unverified",
-    "sourceTier": "community-secondary"
+    "sourceTier": "community-secondary",
+    "fitmentEvidence": {
+      "status": "candidate",
+      "type": "third-party-derived",
+      "reference": "https://gamegrids.io/delta-force/zh/attachments/akm-practical-standard-barrel-assembly/",
+      "platform": "mobile-not-individually-verified",
+      "checkedAt": null
+    },
+    "effectEvidence": {
+      "status": "secondary",
+      "reference": "https://gamegrids.io/delta-force/zh/attachments/akm-practical-standard-barrel-assembly/",
+      "asOf": "2026-09-23",
+      "formulaValidated": false
+    }
   },
   {
     "id": "akm-long-barrel",
@@ -75,7 +101,20 @@
       "source": "https://github.com/jiansenc/DeltaForceData/blob/main/public/json/acc/accBarrel.json"
     },
     "reviewNote": "2024 舊資料與研究樣本有數值差異；尚未取得 2026 手遊實機證據。",
-    "lastChecked": "2026-10-24"
+    "lastChecked": "2026-10-24",
+    "fitmentEvidence": {
+      "status": "candidate",
+      "type": "third-party-derived",
+      "reference": "https://gamegrids.io/delta-force/zh/attachments/akm-practical-long-barrel-assembly/",
+      "platform": "mobile-not-individually-verified",
+      "checkedAt": null
+    },
+    "effectEvidence": {
+      "status": "conflicting",
+      "reference": "https://gamegrids.io/delta-force/zh/attachments/akm-practical-long-barrel-assembly/",
+      "asOf": "2026-09-23",
+      "formulaValidated": false
+    }
   },
   {
     "id": "akm-transcendent-barrel",
@@ -95,7 +134,20 @@
     "dataAsOf": "2026-09-23",
     "platformValidated": false,
     "dataStatus": "community-unverified",
-    "sourceTier": "community-secondary"
+    "sourceTier": "community-secondary",
+    "fitmentEvidence": {
+      "status": "candidate",
+      "type": "third-party-derived",
+      "reference": "https://gamegrids.io/delta-force/zh/attachments/akm-transcendent-long-barrel-assembly/",
+      "platform": "mobile-not-individually-verified",
+      "checkedAt": null
+    },
+    "effectEvidence": {
+      "status": "secondary",
+      "reference": "https://gamegrids.io/delta-force/zh/attachments/akm-transcendent-long-barrel-assembly/",
+      "asOf": "2026-09-23",
+      "formulaValidated": false
+    }
   },
   {
     "id": "ak-compensator",
@@ -114,7 +166,20 @@
     "dataAsOf": "2026-09-23",
     "platformValidated": false,
     "dataStatus": "community-unverified",
-    "sourceTier": "community-secondary"
+    "sourceTier": "community-secondary",
+    "fitmentEvidence": {
+      "status": "candidate",
+      "type": "third-party-derived",
+      "reference": "https://gamegrids.io/delta-force/zh/attachments/ak-practical-compensator/",
+      "platform": "mobile-not-individually-verified",
+      "checkedAt": null
+    },
+    "effectEvidence": {
+      "status": "secondary",
+      "reference": "https://gamegrids.io/delta-force/zh/attachments/ak-practical-compensator/",
+      "asOf": "2026-09-23",
+      "formulaValidated": false
+    }
   },
   {
     "id": "ak-suppressor",
@@ -147,7 +212,20 @@
       "source": "https://github.com/jiansenc/DeltaForceData/blob/main/public/json/acc/accMuzzle.json"
     },
     "reviewNote": "2024 舊資料與研究樣本有數值差異；尚未取得 2026 手遊實機證據。",
-    "lastChecked": "2026-10-24"
+    "lastChecked": "2026-10-24",
+    "fitmentEvidence": {
+      "status": "candidate",
+      "type": "third-party-derived",
+      "reference": "https://gamegrids.io/delta-force/zh/attachments/ak-valor-flame-suppressor/",
+      "platform": "mobile-not-individually-verified",
+      "checkedAt": null
+    },
+    "effectEvidence": {
+      "status": "conflicting",
+      "reference": "https://gamegrids.io/delta-force/zh/attachments/ak-valor-flame-suppressor/",
+      "asOf": "2026-09-23",
+      "formulaValidated": false
+    }
   },
   {
     "id": "ak-polymer-stock",
@@ -166,7 +244,20 @@
     "dataAsOf": "2026-09-23",
     "platformValidated": false,
     "dataStatus": "community-unverified",
-    "sourceTier": "community-secondary"
+    "sourceTier": "community-secondary",
+    "fitmentEvidence": {
+      "status": "candidate",
+      "type": "third-party-derived",
+      "reference": "https://gamegrids.io/delta-force/zh/attachments/ak-polymer-stock/",
+      "platform": "mobile-not-individually-verified",
+      "checkedAt": null
+    },
+    "effectEvidence": {
+      "status": "secondary",
+      "reference": "https://gamegrids.io/delta-force/zh/attachments/ak-polymer-stock/",
+      "asOf": "2026-09-23",
+      "formulaValidated": false
+    }
   },
   {
     "id": "ak-folding-stock",
@@ -184,7 +275,20 @@
     "dataAsOf": "2026-09-23",
     "platformValidated": false,
     "dataStatus": "community-unverified",
-    "sourceTier": "community-secondary"
+    "sourceTier": "community-secondary",
+    "fitmentEvidence": {
+      "status": "candidate",
+      "type": "third-party-derived",
+      "reference": "https://gamegrids.io/delta-force/zh/attachments/ak-folding-stock/",
+      "platform": "mobile-not-individually-verified",
+      "checkedAt": null
+    },
+    "effectEvidence": {
+      "status": "secondary",
+      "reference": "https://gamegrids.io/delta-force/zh/attachments/ak-folding-stock/",
+      "asOf": "2026-09-23",
+      "formulaValidated": false
+    }
   },
   {
     "id": "ak-skeleton-stock",
@@ -204,7 +308,20 @@
     "dataAsOf": "2026-09-23",
     "platformValidated": false,
     "dataStatus": "community-unverified",
-    "sourceTier": "community-secondary"
+    "sourceTier": "community-secondary",
+    "fitmentEvidence": {
+      "status": "candidate",
+      "type": "third-party-derived",
+      "reference": "https://gamegrids.io/delta-force/zh/attachments/ak-skeleton-stock/",
+      "platform": "mobile-not-individually-verified",
+      "checkedAt": null
+    },
+    "effectEvidence": {
+      "status": "secondary",
+      "reference": "https://gamegrids.io/delta-force/zh/attachments/ak-skeleton-stock/",
+      "asOf": "2026-09-23",
+      "formulaValidated": false
+    }
   },
   {
     "id": "akm-polymer-30-mag",
@@ -223,7 +340,20 @@
     "platformValidated": false,
     "dataAsOf": "2024-12-21",
     "source": "https://github.com/jiansenc/DeltaForceData/blob/main/public/json/acc/accMagazine.json",
-    "sourceTier": "historical-public-archive"
+    "sourceTier": "historical-public-archive",
+    "fitmentEvidence": {
+      "status": "candidate",
+      "type": "third-party-derived",
+      "reference": "https://github.com/jiansenc/DeltaForceData/blob/main/public/json/acc/accMagazine.json",
+      "platform": "mobile-not-individually-verified",
+      "checkedAt": null
+    },
+    "effectEvidence": {
+      "status": "historical",
+      "reference": "https://github.com/jiansenc/DeltaForceData/blob/main/public/json/acc/accMagazine.json",
+      "asOf": "2024-12-21",
+      "formulaValidated": false
+    }
   },
   {
     "id": "akm-40-mag",
@@ -245,7 +375,20 @@
     "platformValidated": false,
     "dataAsOf": "2024-12-21",
     "source": "https://github.com/jiansenc/DeltaForceData/blob/main/public/json/acc/accMagazine.json",
-    "sourceTier": "historical-public-archive"
+    "sourceTier": "historical-public-archive",
+    "fitmentEvidence": {
+      "status": "candidate",
+      "type": "third-party-derived",
+      "reference": "https://github.com/jiansenc/DeltaForceData/blob/main/public/json/acc/accMagazine.json",
+      "platform": "mobile-not-individually-verified",
+      "checkedAt": null
+    },
+    "effectEvidence": {
+      "status": "historical",
+      "reference": "https://github.com/jiansenc/DeltaForceData/blob/main/public/json/acc/accMagazine.json",
+      "asOf": "2024-12-21",
+      "formulaValidated": false
+    }
   },
   {
     "id": "akm-70-drum",
@@ -267,7 +410,20 @@
     "platformValidated": false,
     "dataAsOf": "2024-12-21",
     "source": "https://github.com/jiansenc/DeltaForceData/blob/main/public/json/acc/accMagazine.json",
-    "sourceTier": "historical-public-archive"
+    "sourceTier": "historical-public-archive",
+    "fitmentEvidence": {
+      "status": "candidate",
+      "type": "third-party-derived",
+      "reference": "https://github.com/jiansenc/DeltaForceData/blob/main/public/json/acc/accMagazine.json",
+      "platform": "mobile-not-individually-verified",
+      "checkedAt": null
+    },
+    "effectEvidence": {
+      "status": "historical",
+      "reference": "https://github.com/jiansenc/DeltaForceData/blob/main/public/json/acc/accMagazine.json",
+      "asOf": "2024-12-21",
+      "formulaValidated": false
+    }
   },
   {
     "id": "ak-heavy-tower-grip",
@@ -288,7 +444,20 @@
     "platformValidated": false,
     "dataAsOf": "2024-12-21",
     "source": "https://github.com/jiansenc/DeltaForceData/blob/main/public/json/acc/accBackGrip.json",
-    "sourceTier": "historical-public-archive"
+    "sourceTier": "historical-public-archive",
+    "fitmentEvidence": {
+      "status": "candidate",
+      "type": "third-party-derived",
+      "reference": "https://github.com/jiansenc/DeltaForceData/blob/main/public/json/acc/accBackGrip.json",
+      "platform": "mobile-not-individually-verified",
+      "checkedAt": null
+    },
+    "effectEvidence": {
+      "status": "historical",
+      "reference": "https://github.com/jiansenc/DeltaForceData/blob/main/public/json/acc/accBackGrip.json",
+      "asOf": "2024-12-21",
+      "formulaValidated": false
+    }
   },
   {
     "id": "ak-openwork-grip",
@@ -308,7 +477,20 @@
     "platformValidated": false,
     "dataAsOf": "2024-12-21",
     "source": "https://github.com/jiansenc/DeltaForceData/blob/main/public/json/acc/accBackGrip.json",
-    "sourceTier": "historical-public-archive"
+    "sourceTier": "historical-public-archive",
+    "fitmentEvidence": {
+      "status": "candidate",
+      "type": "third-party-derived",
+      "reference": "https://github.com/jiansenc/DeltaForceData/blob/main/public/json/acc/accBackGrip.json",
+      "platform": "mobile-not-individually-verified",
+      "checkedAt": null
+    },
+    "effectEvidence": {
+      "status": "historical",
+      "reference": "https://github.com/jiansenc/DeltaForceData/blob/main/public/json/acc/accBackGrip.json",
+      "asOf": "2024-12-21",
+      "formulaValidated": false
+    }
   },
   {
     "id": "ak-practical-reargrip",
@@ -327,7 +509,20 @@
     "platformValidated": false,
     "dataAsOf": "2024-12-21",
     "source": "https://github.com/jiansenc/DeltaForceData/blob/main/public/json/acc/accBackGrip.json",
-    "sourceTier": "historical-public-archive"
+    "sourceTier": "historical-public-archive",
+    "fitmentEvidence": {
+      "status": "candidate",
+      "type": "third-party-derived",
+      "reference": "https://github.com/jiansenc/DeltaForceData/blob/main/public/json/acc/accBackGrip.json",
+      "platform": "mobile-not-individually-verified",
+      "checkedAt": null
+    },
+    "effectEvidence": {
+      "status": "historical",
+      "reference": "https://github.com/jiansenc/DeltaForceData/blob/main/public/json/acc/accBackGrip.json",
+      "asOf": "2024-12-21",
+      "formulaValidated": false
+    }
   },
   {
     "id": "ak-shooter-reargrip",
@@ -345,7 +540,20 @@
     "platformValidated": false,
     "dataAsOf": "2024-12-21",
     "source": "https://github.com/jiansenc/DeltaForceData/blob/main/public/json/acc/accBackGrip.json",
-    "sourceTier": "historical-public-archive"
+    "sourceTier": "historical-public-archive",
+    "fitmentEvidence": {
+      "status": "candidate",
+      "type": "third-party-derived",
+      "reference": "https://github.com/jiansenc/DeltaForceData/blob/main/public/json/acc/accBackGrip.json",
+      "platform": "mobile-not-individually-verified",
+      "checkedAt": null
+    },
+    "effectEvidence": {
+      "status": "historical",
+      "reference": "https://github.com/jiansenc/DeltaForceData/blob/main/public/json/acc/accBackGrip.json",
+      "asOf": "2024-12-21",
+      "formulaValidated": false
+    }
   },
   {
     "id": "ak-stock-endcap",
@@ -366,7 +574,20 @@
     "platformValidated": false,
     "dataAsOf": "2024-12-21",
     "source": "https://github.com/jiansenc/DeltaForceData/blob/main/public/json/acc/accStock.json",
-    "sourceTier": "historical-public-archive"
+    "sourceTier": "historical-public-archive",
+    "fitmentEvidence": {
+      "status": "candidate",
+      "type": "third-party-derived",
+      "reference": "https://github.com/jiansenc/DeltaForceData/blob/main/public/json/acc/accStock.json",
+      "platform": "mobile-not-individually-verified",
+      "checkedAt": null
+    },
+    "effectEvidence": {
+      "status": "historical",
+      "reference": "https://github.com/jiansenc/DeltaForceData/blob/main/public/json/acc/accStock.json",
+      "asOf": "2024-12-21",
+      "formulaValidated": false
+    }
   },
   {
     "confidence": "weapon-named",
@@ -387,7 +608,20 @@
       "aimStability": -6,
       "hipFireAccuracy": 8
     },
-    "source": "https://gamegrids.io/delta-force/zh/attachments/akm-beaver-barrel-assembly/"
+    "source": "https://gamegrids.io/delta-force/zh/attachments/akm-beaver-barrel-assembly/",
+    "fitmentEvidence": {
+      "status": "candidate",
+      "type": "third-party-derived",
+      "reference": "https://gamegrids.io/delta-force/zh/attachments/akm-beaver-barrel-assembly/",
+      "platform": "mobile-not-individually-verified",
+      "checkedAt": null
+    },
+    "effectEvidence": {
+      "status": "secondary",
+      "reference": "https://gamegrids.io/delta-force/zh/attachments/akm-beaver-barrel-assembly/",
+      "asOf": "2026-09-23",
+      "formulaValidated": false
+    }
   },
   {
     "confidence": "weapon-named",
@@ -410,7 +644,20 @@
       "effectiveRangePct": 30,
       "muzzleVelocityPct": 30
     },
-    "source": "https://gamegrids.io/delta-force/zh/attachments/akm-beaver-long-barrel-assembly/"
+    "source": "https://gamegrids.io/delta-force/zh/attachments/akm-beaver-long-barrel-assembly/",
+    "fitmentEvidence": {
+      "status": "candidate",
+      "type": "third-party-derived",
+      "reference": "https://gamegrids.io/delta-force/zh/attachments/akm-beaver-long-barrel-assembly/",
+      "platform": "mobile-not-individually-verified",
+      "checkedAt": null
+    },
+    "effectEvidence": {
+      "status": "secondary",
+      "reference": "https://gamegrids.io/delta-force/zh/attachments/akm-beaver-long-barrel-assembly/",
+      "asOf": "2026-09-23",
+      "formulaValidated": false
+    }
   },
   {
     "confidence": "slot-inferred",
@@ -428,7 +675,20 @@
     "effects": {
       "recoilControl": 4
     },
-    "source": "https://gamegrids.io/delta-force/zh/attachments/stable-ak-pistol-grip/"
+    "source": "https://gamegrids.io/delta-force/zh/attachments/stable-ak-pistol-grip/",
+    "fitmentEvidence": {
+      "status": "candidate",
+      "type": "third-party-derived",
+      "reference": "https://gamegrids.io/delta-force/zh/attachments/stable-ak-pistol-grip/",
+      "platform": "mobile-not-individually-verified",
+      "checkedAt": null
+    },
+    "effectEvidence": {
+      "status": "secondary",
+      "reference": "https://gamegrids.io/delta-force/zh/attachments/stable-ak-pistol-grip/",
+      "asOf": "2026-09-23",
+      "formulaValidated": false
+    }
   },
   {
     "confidence": "slot-inferred",
@@ -453,6 +713,19 @@
     "researchOnly": true,
     "sourceCategory": "stock",
     "mountValidation": "unresolved",
-    "lastChecked": "2026-10-24"
+    "lastChecked": "2026-10-24",
+    "fitmentEvidence": {
+      "status": "candidate",
+      "type": "third-party-derived",
+      "reference": "https://gamegrids.io/delta-force/zh/attachments/ak-stock-recoil-pad/",
+      "platform": "mobile-not-individually-verified",
+      "checkedAt": null
+    },
+    "effectEvidence": {
+      "status": "secondary",
+      "reference": "https://gamegrids.io/delta-force/zh/attachments/ak-stock-recoil-pad/",
+      "asOf": "2026-09-23",
+      "formulaValidated": false
+    }
   }
 ]

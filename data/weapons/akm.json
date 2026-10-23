@@ -77,5 +77,35 @@
     "asOf": "2026-09-18",
     "verification": "third-party-derived"
   },
-  "researchCatalogAsOf": "2026-10-24"
+  "researchCatalogAsOf": "2026-10-24",
+  "mountAuthority": {
+    "baseSlotConfidence": "in-game-visible-and-third-party-open; exact root vs inherited mount still requires validation",
+    "observedInGame": [
+      "muzzle",
+      "barrel",
+      "foregrip",
+      "charging",
+      "optic",
+      "canted",
+      "buttpad",
+      "stock",
+      "reargrip",
+      "magazine",
+      "magwell"
+    ],
+    "thirdPartyRootCandidates": [
+      "muzzle",
+      "barrel",
+      "optic",
+      "canted",
+      "foregrip",
+      "magazine",
+      "magwell",
+      "stock",
+      "buttpad",
+      "reargrip"
+    ],
+    "dynamicallyVerifiedChildEdges": 0,
+    "disclaimer": "Slot existence does not by itself demonstrate that every similarly labelled attachment fits."
+  }
 }

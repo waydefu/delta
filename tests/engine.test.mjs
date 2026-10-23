@@ -70,8 +70,8 @@ test("父槽位提供子槽位，拆掉父配件後自動卸除子孫",async()=>
  const {getAvailableSlots,reconcileSelection}=await import("../src/attachment-graph.mjs");
  const fakeWeapon={id:"test",openSlots:["barrel"]};
  const fake=[
-  {id:"barrel-a",slot:"barrel",compatibleWeapons:["test"],providesSlots:["rail"]},
-  {id:"rail-a",slot:"rail",compatibleWeapons:["test"],providesSlots:["optic"]},
+  {id:"barrel-a",slot:"barrel",compatibleWeapons:["test"],platformValidated:true,mountValidation:"verified",fitmentEvidence:{type:"in-game-screenshot",reference:"FIXTURE-BARREL",checkedAt:"2026-10-24",platform:"mobile"},providesSlots:[{slot:"rail",evidence:{type:"in-game-screenshot",reference:"FIXTURE-RAIL",checkedAt:"2026-10-24",platform:"mobile"}}]},
+  {id:"rail-a",slot:"rail",compatibleWeapons:["test"],platformValidated:true,mountValidation:"verified",fitmentEvidence:{type:"in-game-screenshot",reference:"FIXTURE-RAIL-BASE",checkedAt:"2026-10-24",platform:"mobile"},providesSlots:[{slot:"optic",evidence:{type:"in-game-screenshot",reference:"FIXTURE-OPTIC",checkedAt:"2026-10-24",platform:"mobile"}}]},
   {id:"optic-a",slot:"optic",compatibleWeapons:["test"]}
  ];
  const initial={barrel:"barrel-a",rail:"rail-a",optic:"optic-a"};
@@ -306,4 +306,58 @@ test("2026 槍托緩衝墊分類模糊，不能直接當作 AKM 可裝配件",as
  assert.equal(result.selected.stock,"ak-polymer-stock");
  assert.equal(result.selected.buttpad,undefined);
  assert.ok(readFileSync(new URL("../src/gunsmith.mjs",import.meta.url),"utf8").includes("a.researchOnly!==true"));
+});
+
+test("P0：未驗證提供子槽位不得自行解鎖，verifiedMount 布林不可繞過",async()=>{
+ const {getAvailableSlots,reconcileSelection}=await import("../src/attachment-graph.mjs");
+ const fx={id:"test",openSlots:["barrel"]};
+ const fake=[
+  {id:"barrel",slot:"barrel",compatibleWeapons:["test"],platformValidated:false,
+   providesSlots:["rail",{slot:"optic",evidence:{type:"official-game",reference:"fake",checkedAt:"2026-10-24",platform:"mobile"}}]},
+  {id:"rail",slot:"rail",compatibleWeapons:["test"],verifiedMount:true},
+  {id:"optic",slot:"optic",compatibleWeapons:["test"],verifiedMount:true}
+ ];
+ const sel={barrel:"barrel",rail:"rail",optic:"optic"};
+ assert.deepEqual([...getAvailableSlots(fx,fake,sel)],["barrel"]);
+ const clean=reconcileSelection(fx,fake,sel);
+ assert.deepEqual(clean.selected,{barrel:"barrel"});
+ assert.deepEqual(new Set(clean.removed.map(x=>x.slot)),new Set(["rail","optic"]));
+ const legitProof={type:"in-game-screenshot",reference:"TEST-EVIDENCE-FIXTURE",checkedAt:"2026-10-24",platform:"mobile"};
+ fake[0].platformValidated=true;fake[0].mountValidation="verified";fake[0].fitmentEvidence=legitProof;
+ fake[0].providesSlots=[{slot:"rail",evidence:legitProof}];
+ fake[1].platformValidated=true;fake[1].mountValidation="verified";fake[1].fitmentEvidence=legitProof;
+ fake[1].providesSlots=[{slot:"optic",evidence:legitProof}];
+ assert.deepEqual([...getAvailableSlots(fx,fake,sel)].sort(),["barrel","optic","rail"]);
+ assert.deepEqual(reconcileSelection(fx,fake,sel).removed,[]);
+});
+test("P0：引擎嚴格模式禁止任何未驗證配件，不可偽造父槽掛載",()=>{
+ const a=attachments.find(x=>x.id==="akm-beaver-long-barrel");
+ assert.throws(()=>resolveBuild(weapon,attachments,{barrel:a.id},{mode:"verified"}),/嚴格模式拒絕/);
+ assert.throws(()=>resolveBuild(weapon,attachments,{barrel:a.id},{mode:"bad"}),/未知的配裝計算模式/);
+ const child={id:"bad-child",slot:"charging",compatibleWeapons:["akm"],verifiedMount:true,effects:{handling:100}};
+ assert.throws(()=>resolveBuild(weapon,[...attachments,child],{charging:child.id}),/未確認可直接掛載/);
+});
+test("P0：所有研究配件都有證據分類，沒有偽造的實機驗證",async()=>{
+ const {auditAttachments,assessAttachment,isVerifiedEvidence}=await import("../src/data-governance.mjs");
+ const audit=auditAttachments(weapon,attachments);
+ assert.deepEqual(audit.issues,[]);
+ assert.equal(audit.counts.total,21);
+ assert.equal(audit.counts.verified,0);
+ assert.equal(audit.counts.blocked,1);
+ assert.equal(audit.counts.provisional,20);
+ assert.equal(audit.counts.conflicts,2);
+ assert.equal(audit.counts.providesVerifiedSlots,0);
+ assert.equal(isVerifiedEvidence({type:"third-party-derived",reference:"https://foo",checkedAt:"2026-10-24",platform:"mobile"}),false);
+ const pad=attachments.find(p=>p.researchOnly);
+ assert.equal(assessAttachment(pad,weapon.id).eligible,false);
+});
+test("P0：數值衝突必須提供兩組情境邊界，並揭露試算公式",()=>{
+ const item=attachments.find(x=>x.objectId===13020000357);
+ const result=resolveBuild(weapon,attachments,{barrel:item.id});
+ assert.equal(result.stats.recoilControl,47);
+ assert.equal(result.scenarioBounds.recoilControl.min,45);
+ assert.equal(result.scenarioBounds.recoilControl.max,47);
+ assert.equal(result.scenarioBounds.muzzleVelocityMps.min,619.5);
+ assert.equal(result.scenarioBounds.muzzleVelocityMps.max,682.5);
+ assert.ok(result.assumptionDetails.length>=3);
 });
