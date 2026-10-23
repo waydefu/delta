@@ -1,0 +1,19 @@
+{
+  "model": "Weathered AKM",
+  "source": "https://opengameart.org/content/weathered-akm-rifle",
+  "creator": "LonesomeDucky",
+  "license": "CC0 1.0 Universal",
+  "originalSha256": "f021188c0bd8b17bc28f7ac5e3152409c3a912b60ecacc72a2366c6abed2b9a1",
+  "webSha256": "639df1894fe362554646010eba90c1aacd7ac26be2e7e1d67fa8e174904b2f9b",
+  "bytes": 1092960,
+  "sourceBytes": 44293464,
+  "meshCount": 1,
+  "separablePartsVerified": 0,
+  "visualAccuracy": "unverified against mobile in-game AKM",
+  "role": "static rotate/zoom PBR reference only",
+  "doesNotSupport": [
+    "equip animations",
+    "real attachment swapping",
+    "game-accurate nodes"
+  ]
+}
