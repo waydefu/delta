@@ -196,3 +196,19 @@ test("3D 模型僅載入允許的作者來源，提供授權與退出解除 ifra
  assert.match(js,/模型原作者／授權/);
  assert.match(readFileSync(new URL("../src/gunsmith.mjs",import.meta.url),"utf8"),/initModelReference\(stage\)/);
 });
+
+test("3D 原生檢視器不虛構分件；需本機 GLB 與使用者主動載入",async()=>{
+ const {findPartNodes,mountLocalGLB}=await import("../src/local-viewer.mjs");
+ assert.equal(typeof mountLocalGLB,"function");
+ const result=findPartNodes(["AKM","Magazine.001","Barrel","Grip","buttstock","magazine_socket","Handguard"]);
+ assert.deepEqual(result.magazine,["Magazine.001","magazine_socket"]);
+ assert.deepEqual(result.barrel,["Barrel"]);
+ assert.deepEqual(result.stock,["buttstock"]);
+ assert.deepEqual(result.handguard,["Handguard"]);
+ const source=readFileSync(new URL("../src/local-viewer.mjs",import.meta.url),"utf8");
+ assert.match(source,/GLTFLoader/);
+ assert.match(source,/PMREMGenerator/);
+ assert.match(source,/enableDamping=false/);
+ assert.match(source,/texture\.dispose/);
+ assert.match(readFileSync(new URL("../index.html",import.meta.url),"utf8"),/three@0\.180\.0/);
+});

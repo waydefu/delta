@@ -614,3 +614,9 @@ body {
 .reference-model-footer a{color:#d8e5cf;text-decoration:underline;white-space:nowrap;font-size:11px}
 @media(max-width:1000px){.reference-model-toolbar{top:54px;left:10px;right:10px}}
 @media(max-width:600px){.model-reference-controls{top:8px;left:8px}.model-view-button{font-size:11px;padding:8px 10px}.reference-model-heading{display:none}.reference-model-choices{margin-left:auto}.reference-choice{font-size:10px;padding:7px}.reference-model-footer{left:6px;right:6px;bottom:6px;padding:7px;display:block}.reference-model-footer p{max-width:none;font-size:9px}.reference-model-footer a{display:inline-block;margin-top:3px;font-size:10px}}
+
+/* True, lazily-mounted native PBR glTF viewport; only visible after licensed GLB upload */
+.local-glb-viewport{position:absolute;inset:0;z-index:1;background:#141c1e;overflow:hidden}
+.local-glb-canvas{width:100%;height:100%;display:block;outline:none;touch-action:pan-y}
+.local-glb-status{position:absolute;z-index:8;left:11px;bottom:52px;right:11px;padding:8px 11px;background:#171e21e8;border:1px solid #43594f;color:#d5e6d4;font-size:11px;line-height:1.6;pointer-events:none}
+.model-view-button:disabled{opacity:.6;cursor:wait}
