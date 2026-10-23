@@ -21,8 +21,8 @@ export function initModelReference(stage){
  if(!stage)throw new TypeError("Missing weapon stage");
  const bar=el("div","model-reference-controls");
  const schematic=el("button","model-view-button selected","2D 改槍");
- const modelButton=el("button","model-view-button","3D 槍模");
- const nativeButton=el("button","model-view-button","本機 PBR 3D");nativeButton.hidden=true;
+ const modelButton=el("button","model-view-button","Sketchfab 參考");
+ const nativeButton=el("button","model-view-button","真實 AKM 3D");nativeButton.hidden=true;nativeButton.type="button";
  schematic.type=modelButton.type="button";
  bar.append(schematic,modelButton,nativeButton);stage.append(bar);
  const layer=el("div","model-reference-layer");layer.hidden=true;stage.append(layer);
@@ -93,6 +93,22 @@ export function initModelReference(stage){
    });
    if(loadGeneration!==generation){instance.dispose();return;}
    localViewer=instance;
+   const controls=el("div","local-viewer-toolbar");
+   const reset=el("button","local-viewer-action","重設視角");
+   reset.type="button";reset.addEventListener("click",()=>instance.resetCamera());
+   const wireframe=el("button","local-viewer-action","查看網格");
+   wireframe.type="button";wireframe.setAttribute("aria-pressed","false");
+   wireframe.addEventListener("click",()=>{
+     const on=wireframe.getAttribute("aria-pressed")!=="true";
+     instance.setWireframe(on);
+     wireframe.setAttribute("aria-pressed",String(on));
+     wireframe.textContent=on?"查看材質":"查看網格";
+   });
+   const warning=el("p","local-viewer-caveat",
+    "CC0 真實 3D · "+instance.meshCount+" 個網格 · "+instance.materialCount+
+    " 種材質 · 不支援 3D 配件替換，遊戲內比例仍需對照");
+   controls.append(reset,wireframe,warning);
+   layer.append(controls);
   }catch(error){
    if(loadGeneration===generation){
     console.warn("Local AKM preview failed:",error);

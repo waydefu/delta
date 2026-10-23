@@ -683,3 +683,10 @@ body {
 .detail-live-note{font-size:11px;line-height:1.7;padding:10px 12px;background:#292c28;color:#d1c49e;border-left:2px solid #a8a280;margin:12px 0}
 .detail-score-base{display:block;color:#aab7a8;font:10px/1.6 monospace;margin-top:5px}
 .graphics-recoil .graphic-overlay-note{left:15%;right:15%;top:40%;border:1px solid #60776b;background:#121c20e8}
+
+/* P1 non-glossy 3D inspection toolbar */
+.local-viewer-toolbar{position:absolute;z-index:6;top:60px;left:12px;right:12px;display:flex;align-items:center;flex-wrap:wrap;gap:7px;pointer-events:none}
+.local-viewer-action{border:1px solid #718577;background:#202a2adf;color:#e2eadf;font-size:11px;font-weight:650;min-height:36px;padding:7px 10px;pointer-events:auto;cursor:pointer}
+.local-viewer-action:hover,.local-viewer-action[aria-pressed="true"]{border-color:#acc5a5;background:#34463b}
+.local-viewer-caveat{font-size:10px;color:#d2d4c5;background:#182122e6;border-left:2px solid #9b9f89;margin:0;padding:8px 10px;line-height:1.4;max-width:410px}
+@media(max-width:600px){.local-viewer-toolbar{top:57px;left:7px;right:7px;gap:4px}.local-viewer-action{min-height:33px;padding:6px 8px}.local-viewer-caveat{font-size:9px;flex-basis:100%;padding:6px 8px}}

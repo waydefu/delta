@@ -38,15 +38,15 @@ export async function mountLocalGLB(host,{url="./assets/models/akm.glb",onStatus
   renderer=new THREE.WebGLRenderer({canvas,alpha:false,antialias:!(documentWindow.matchMedia?.("(max-width:760px)")?.matches??false),powerPreference:"low-power"});
   renderer.outputColorSpace=THREE.SRGBColorSpace;
   renderer.toneMapping=THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure=.94;
+  renderer.toneMappingExposure=.82;
   renderer.setClearColor(0x141c1e,1);
   renderer.setPixelRatio(Math.min(documentWindow.devicePixelRatio||1,(documentWindow.innerWidth<=760?1:1.5)));
   scene=new THREE.Scene();
   scene.background=new THREE.Color(0x141c1e);
   const camera=new THREE.PerspectiveCamera(33,1,.005,500);
-  scene.add(new THREE.HemisphereLight(0xbecfc3,0x292f31,1.25));
-  const key=new THREE.DirectionalLight(0xf0eadc,2.1);key.position.set(2.5,4,5);scene.add(key);
-  const rim=new THREE.DirectionalLight(0xb4cbd0,.65);rim.position.set(-4,2,-4);scene.add(rim);
+  scene.add(new THREE.HemisphereLight(0xc3c8bf,0x303638,.95));
+  const key=new THREE.DirectionalLight(0xe3ddd0,1.55);key.position.set(2.5,4,5);scene.add(key);
+  const rim=new THREE.DirectionalLight(0xa4b6b5,.45);rim.position.set(-4,2,-4);scene.add(rim);
   // PMREM is required to make metal/roughness materials readable, but keep
   // highlights subdued; don't replace artist-authored roughness or metalness.
   const env=new RoomEnvironment();
@@ -73,7 +73,12 @@ export async function mountLocalGLB(host,{url="./assets/models/akm.glb",onStatus
   const distance=Math.max(1.5*maxDim,(maxDim/(2*Math.tan(fov/2)))*1.26);
   camera.near=Math.max(.001,distance/1000);
   camera.far=Math.max(100,distance*10);
-  camera.position.set(distance*.25,distance*.18,distance);
+  const longestX=dims.x>=Math.max(dims.y,dims.z);
+  const longestY=dims.y>Math.max(dims.x,dims.z);
+  const defaultView=longestX?new THREE.Vector3(distance*.08,distance*.12,distance):
+    longestY?new THREE.Vector3(distance,distance*.14,distance*.08):
+      new THREE.Vector3(distance,distance*.12,distance*.08);
+  camera.position.copy(defaultView);
   camera.lookAt(0,0,0);camera.updateProjectionMatrix();
   controls.target.set(0,0,0);controls.minDistance=distance*.5;controls.maxDistance=distance*3;
   controls.update();
@@ -86,9 +91,22 @@ export async function mountLocalGLB(host,{url="./assets/models/akm.glb",onStatus
    }
   });
   const parts=findPartNodes(names);
+  function setWireframe(enabled){
+    for(const mesh of meshes){
+      for(const mat of Array.isArray(mesh.material)?mesh.material:[mesh.material]){
+        if(mat&&"wireframe" in mat){mat.wireframe=Boolean(enabled);mat.needsUpdate=true;}
+      }
+    }
+    render();
+  }
+  function resetCamera(){
+    camera.position.copy(defaultView);controls.target.set(0,0,0);controls.update();render();
+  }
   function resize(){
    if(disposed||!renderer)return;
    const width=Math.max(1,host.clientWidth),height=Math.max(1,host.clientHeight);
+   const ratio=Math.min(documentWindow.devicePixelRatio||1,width>760?1.5:1,1440/width,900/height);
+   renderer.setPixelRatio(Math.max(.5,ratio));
    camera.aspect=width/height;camera.updateProjectionMatrix();
    renderer.setSize(width,height,false);render();
   }
@@ -99,8 +117,8 @@ export async function mountLocalGLB(host,{url="./assets/models/akm.glb",onStatus
   resize();
   onStatus("載入完成："+meshes.length+" 個網格、"+materials.size+" 種材質。已辨識彈匣節點："+parts.magazine.length+" 個；無法僅依名稱保證可拆件。");
   return {
-   root:rootGroup,parts,meshCount:meshes.length,
-   render,resize,
+   root:rootGroup,parts,meshCount:meshes.length,materialCount:materials.size,
+   setWireframe,resetCamera,render,resize,
    dispose(){
     disposed=true;resizeObserver?.disconnect();
     controls?.dispose();

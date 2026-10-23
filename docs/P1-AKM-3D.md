@@ -9,3 +9,7 @@
 另設「Publish reviewed CC0 AKM preview」工作流程，必須下載上述成功產物、檢查來源、強制 1 網格與 0 可拆分件、壓縮貼圖為 WebP、驗證二進位 GLB 和小於 25MB 才發布 `assets/models/akm.glb`。授權和 checksum 會在 `assets/models/akm-provenance.json` 登記。
 
 **限制：** 渲染資料仍需目視對照遊戲內 AKM 的槍長、機匣與彈匣位置，且尚未完成手機 GPU/記憶體實測。不能拿這個模型偽裝成原遊戲槍模。
+## 實際模型發布（2026-10-24）
+- 成功 [Blender GLB 匯出](https://github.com/waydefu/delta/actions/runs/40024755786)；成功 [WebP 優化發佈](https://github.com/waydefu/delta/actions/runs/40025116885)。
+- 模型已存在 `assets/models/akm.glb`，大小 1,092,960 B（來源 44,293,464 B）。物件數 1、材質數 1、圖片數 6、可確認獨立拆件 0。
+- 真實 3D Viewer 會在支援的裝置按需載入，並提供側視角重置、材質／網格模式。分件及遊戲精準幾何需要另外建模與驗收。
