@@ -1,0 +1,53 @@
+{
+  "date": "2026-10-24",
+  "source": "https://github.com/jiansenc/DeltaForceData",
+  "upstreamDate": "2024-12-21",
+  "historicalAccessoryTotal": 392,
+  "categories": {
+    "accBarrel": 104,
+    "accMuzzle": 34,
+    "accMagazine": 58,
+    "accHandGuard": 24,
+    "accForeGrip": 21,
+    "accScope": 31,
+    "accStock": 57,
+    "accFunctional": 36,
+    "accBackGrip": 27
+  },
+  "akmCurated": 17,
+  "matchedIds": 17,
+  "verifiedCurrentMobileAttachments": 0,
+  "sourceConflicts": [
+    {
+      "objectId": 13020000357,
+      "archive": {
+        "recoilControl": 6,
+        "effectiveRangePct": 18,
+        "muzzleVelocityPct": 18
+      },
+      "snapshot": {
+        "recoilControl": 8,
+        "effectiveRangePct": 30,
+        "muzzleVelocityPct": 30
+      },
+      "file": "accBarrel.json"
+    },
+    {
+      "objectId": 13130000176,
+      "archive": {
+        "handling": -10,
+        "aimStability": 4
+      },
+      "snapshot": {
+        "handling": -4,
+        "aimStability": 3
+      },
+      "file": "accMuzzle.json"
+    }
+  ],
+  "warnings": [
+    "392 是 2024 年全槍系的配件記錄，非 AKM 適配數。",
+    "第三方 AKM 頁面宣稱的 531 件相容候選由槽位推導，並非官方逐件確認。",
+    "不能把歷史數值當成現在正確，數值衝突不會自動覆蓋。"
+  ]
+}

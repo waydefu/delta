@@ -53,7 +53,7 @@ async function main() {
       select.id = "select-" + slot;
       select.append(new Option("未安裝（裸槍基準）", ""));
       for(const part of attachments.filter(a => a.slot === slot)) {
-        select.append(new Option(part.name + (part.dataStatus==="historical-unverified"?" · 2024 歷史": " · 待核驗"), part.id));
+        select.append(new Option(part.name + (part.dataStatus==="source-conflict"?" · ⚠ 來源衝突":part.dataStatus==="historical-unverified"?" · 2024 歷史": " · 待核驗"), part.id));
       }
       select.value = attachments.some(a=>a.id===selections[slot] && a.slot===slot) ? selections[slot] : "";
       selections[slot] = select.value;
@@ -139,12 +139,13 @@ async function main() {
           return map[key]+" "+(key==="magazineCapacity"?val+" 發":describeDelta(val,key.endsWith("Pct")?"%":""));
         }).join("  ·  "));
         item.append(top,info);
-        if(part.platformValidated!==true) item.append(el("small","provisional",part.dataStatus==="historical-unverified"?"⚠ 2024 歷史資料；遊戲版本與數值待核驗":"⚠ 社群配件數值／相容性尚未由 2026 手遊核驗"));
+        if(part.platformValidated!==true) item.append(el("small","provisional",part.dataStatus==="source-conflict"?"⚠ 來源衝突，尚未核實":part.dataStatus==="historical-unverified"?"⚠ 2024 歷史資料；遊戲版本與數值待核驗":"⚠ 社群配件數值／相容性尚未由 2026 手遊核驗"));
         breakdown.append(item);
       }
       setText("model-note",result.calculationStatus + "。實際彈道下墜與連射後座力仍待實測。" +
         (result.compatibilityProvisional?" 所有已選配件均未獲得手遊完整實機驗證。":"")+
-        (result.sourceWarnings.some(s=>s.includes("2024"))?" ⚠ 包含 2024 歷史數值，不能當作現行版本。":""));
+        (result.sourceWarnings.some(s=>s.includes("2024"))?" ⚠ 包含 2024 歷史數值，不能當作現行版本。":"")+
+        (result.sourceWarnings.some(s=>s.includes("衝突"))?" ⚠ 有數值來源衝突，待實機確認。":""));
       const params = new URLSearchParams();
       for(const slot of SLOTS) if(selections[slot]) params.set(slot,selections[slot]);
       params.set("distance",String(distance));

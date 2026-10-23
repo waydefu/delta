@@ -63,8 +63,18 @@
     ],
     "dataAsOf": "2026-09-23",
     "platformValidated": false,
-    "dataStatus": "community-unverified",
-    "sourceTier": "community-secondary"
+    "dataStatus": "source-conflict",
+    "sourceTier": "community-secondary",
+    "archiveComparison": {
+      "asOf": "2024-12-21",
+      "effects": {
+        "recoilControl": 6,
+        "effectiveRangePct": 18,
+        "muzzleVelocityPct": 18
+      },
+      "source": "https://github.com/jiansenc/DeltaForceData/blob/main/public/json/acc/accBarrel.json"
+    },
+    "reviewNote": "2024 舊資料與研究樣本有數值差異；尚未取得 2026 手遊實機證據。"
   },
   {
     "id": "akm-transcendent-barrel",
@@ -125,8 +135,17 @@
     ],
     "dataAsOf": "2026-09-23",
     "platformValidated": false,
-    "dataStatus": "community-unverified",
-    "sourceTier": "community-secondary"
+    "dataStatus": "source-conflict",
+    "sourceTier": "community-secondary",
+    "archiveComparison": {
+      "asOf": "2024-12-21",
+      "effects": {
+        "handling": -10,
+        "aimStability": 4
+      },
+      "source": "https://github.com/jiansenc/DeltaForceData/blob/main/public/json/acc/accMuzzle.json"
+    },
+    "reviewNote": "2024 舊資料與研究樣本有數值差異；尚未取得 2026 手遊實機證據。"
   },
   {
     "id": "ak-polymer-stock",

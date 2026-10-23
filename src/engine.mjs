@@ -36,6 +36,7 @@ export function resolveBuild(weapon,attachments,selected={}){
         overrides[key]=amount;
       }else deltas[key]+=amount;
     }
+    if(item.dataStatus==="source-conflict")sourceWarnings.push(item.name+" 存在來源數值衝突，未經手遊核實");
     if(item.dataStatus==="historical-unverified")
       sourceWarnings.push(item.name+" 為 2024 年歷史快照，未確認 2026 手遊數值");
     else if(item.platformValidated!==true)sourceWarnings.push(item.name+" 尚未經手遊核驗");

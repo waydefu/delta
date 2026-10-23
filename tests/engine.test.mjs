@@ -252,3 +252,17 @@ test("不能用未確認的掛載槽位或未知效果偷渡配件",()=>{
  assert.throws(()=>resolveBuild(weapon,[...attachments,{id:"unverified",slot:"charging",effects:{recoilControl:10},compatibleWeapons:["akm"]}],{charging:"unverified"}),/未確認可直接掛載/);
  assert.throws(()=>resolveBuild(weapon,[...attachments,{id:"wrongstat",slot:"foregrip",effects:{magicPower:10},compatibleWeapons:["akm"]}],{foregrip:"wrongstat"}),/未知或無效/);
 });
+
+test("偵測到兩件跨來源數值衝突且保存完整證據",()=>{
+ const audit=JSON.parse(readFileSync(new URL("../data/research/akm-coverage.json",import.meta.url)));
+ assert.equal(audit.historicalAccessoryTotal,392);
+ assert.equal(audit.akmCurated,attachments.length);
+ assert.equal(audit.sourceConflicts.length,2);
+ for(const record of audit.sourceConflicts){
+  const item=attachments.find(x=>x.objectId===record.objectId);
+  assert.ok(item);
+  assert.equal(item.dataStatus,"source-conflict");
+  assert.deepEqual(item.archiveComparison.effects,record.archive);
+  assert.equal(item.platformValidated,false);
+ }
+});

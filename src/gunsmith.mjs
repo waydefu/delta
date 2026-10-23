@@ -147,7 +147,7 @@ export function initGunsmith(mount,selections,attachments,onPick,weapon){
   const keyName={recoilControl:"後座",handling:"操控",aimStability:"穩定",hipFireAccuracy:"腰射",effectiveRangePct:"射程",muzzleVelocityPct:"初速"};
   for(const choice of choices){
    const desc=Object.entries(choice.effects).map(([k,v])=>(keyName[k]||k)+" "+(v>0?"+":"")+v+(k.endsWith("Pct")?"%":"")).join(" · ");
-   makeOption(choice.id,choice.name,desc,choice.confidence==="slot-inferred");
+   makeOption(choice.id,choice.name+(choice.dataStatus==="source-conflict"?" ⚠ 來源衝突":choice.dataStatus==="historical-unverified"?" [2024 歷史]":""),desc,choice.platformValidated!==true);
   }
   drawer.append(wrap);
  }
