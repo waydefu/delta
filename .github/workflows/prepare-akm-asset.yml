@@ -18,7 +18,7 @@ jobs:
       - name: Install Blender
         run: |
           sudo apt-get update -qq
-          sudo apt-get install -y --no-install-recommends blender
+          sudo apt-get install -y --no-install-recommends blender zstd
       - name: Download source from the author's CC0 OpenGameArt page
         run: |
           mkdir -p .model-work model-output
@@ -27,14 +27,25 @@ jobs:
             --output .model-work/akm54.blend \
             https://opengameart.org/sites/default/files/akm54.blend
           file .model-work/akm54.blend
-          od -An -tx1 -N32 .model-work/akm54.blend
+          # The artist's .blend download is wrapped in a Zstd stream.
+          # Detect by magic, safely decompress, then validate the Blender header.
           python3 - <<'PY'
           from pathlib import Path
-          data=Path(".model-work/akm54.blend").read_bytes()[:64]
-          print("Detected file prefix repr:",repr(data))
-          assert data.startswith(b"BLENDER"),"Source URL returned a non-Blender file; must inspect archive/compression before conversion"
+          p=Path(".model-work/akm54.blend")
+          prefix=p.read_bytes()[:8]
+          assert prefix.startswith((b"BLENDER",b"\x28\xb5\x2f\xfd")), "Unexpected file magic, source changed"
+          print("Source magic:",prefix.hex())
           PY
-          test "$(stat -c %s .model-work/akm54.blend)" -le 65000000
+          if [ "$(od -An -tx1 -N4 .model-work/akm54.blend | tr -d ' \n')" = "28b52ffd" ]; then
+            mv .model-work/akm54.blend .model-work/akm54.blend.zst
+            sha256sum .model-work/akm54.blend.zst | tee model-output/download-sha256.txt
+            zstd --decompress --force .model-work/akm54.blend.zst \
+              --output .model-work/akm54.blend
+          fi
+          test "$(head -c 7 .model-work/akm54.blend)" = "BLENDER"
+          test "$(stat -c %s .model-work/akm54.blend)" -le 300000000
+          file .model-work/akm54.blend
+          blender --version | head -n 2
           sha256sum .model-work/akm54.blend | tee model-output/source-sha256.txt
       - name: Inspect meshes and export glTF
         run: |
@@ -63,5 +74,6 @@ jobs:
             model-output/akm.glb
             model-output/inspection.json
             model-output/source-sha256.txt
+            model-output/download-sha256.txt
           if-no-files-found: error
           retention-days: 7

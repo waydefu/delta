@@ -9,3 +9,5 @@
 - Blender `--disable-autoexec`，僅允許 HTTPS 來源下載；來源仍是第三方檔案，部署前需人工審查。
 
 網站目前沒有採用任何來歷不明的《三角洲行動》遊戲拆包模型。
+## 已驗證下載格式（2026-10-23）
+GitHub Actions 實際下載的來源檔為約 40.5 MiB，檔案 magic bytes `28 b5 2f fd`，即 **Zstandard 壓縮串流**。因此不能以副檔名推斷其內容是直接可讀的 Blender 檔。轉換工作流程現在先依 magic 檢查、解壓，然後再次驗證 `BLENDER` 檔頭；同時保留下載檔與解壓檔各自的 SHA-256，以便追溯。
