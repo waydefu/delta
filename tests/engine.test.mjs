@@ -95,3 +95,17 @@ test("premium UI 需要的視覺化容器均存在",()=>{
   assert.ok(html.includes('id="'+id+'"'),"Missing UI block: "+id);
  }
 });
+
+test("動效模組可在無 DOM 的 Node 環境匯入",async()=>{
+ const m=await import("../src/motion.mjs");
+ assert.equal(m.getMotionPreference(),"system");
+ assert.equal(m.shouldAnimate(),true);
+ assert.throws(()=>m.setMotionPreference("fast"),TypeError);
+ assert.equal(typeof m.sheetExit,"function");
+});
+test("動效切換鈕連接到 HTML 及 JS",()=>{
+ const html=readFileSync(new URL("../index.html",import.meta.url),"utf8");
+ const js=readFileSync(new URL("../src/app.mjs",import.meta.url),"utf8");
+ assert.match(html,/id="motion-toggle"/);
+ assert.match(js,/setupMotionToggle/);
+});

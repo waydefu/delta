@@ -1,3 +1,4 @@
+import { setupMotionToggle, initializeEntrance, countTo, drawLine } from "./motion.mjs";
 import { reconcileSelection } from "./attachment-graph.mjs";
 import { initGunsmith } from "./gunsmith.mjs";
 import { renderMountGraph, renderContributions, renderFlightChart } from "./visualizations.mjs";
@@ -29,6 +30,7 @@ function describeDelta(value, unit = "") {
 function setText(id, value) { $(id).textContent = value; }
 async function main() {
   try {
+    setupMotionToggle($("motion-toggle"));
     const [wr, ar] = await Promise.all([fetch("./data/weapons/akm.json"),fetch("./data/attachments/akm-sample.json")]);
     if(!wr.ok || !ar.ok) throw new Error("資料載入失敗（需透過 HTTP 伺服器開啟）");
     const weapon = await wr.json();
@@ -84,6 +86,7 @@ async function main() {
       renderMountGraph($("mount-graph"), result.equipped.find(x=>x.slot==="barrel"));
       renderContributions($("contribution-viz"),weapon,result);
       renderFlightChart($("flight-chart"),weapon.base.muzzleVelocityMps,result.stats.muzzleVelocityMps);
+      for(const path of $("flight-chart").querySelectorAll("polyline:not([stroke-dasharray])"))drawLine(path);
       const stats = result.stats;
       setText("distance-label", distance + " m");
       setText("flight-time", format(idealFlightTimeMs(distance,stats.muzzleVelocityMps)) + " ms");
@@ -110,8 +113,8 @@ async function main() {
         bar.style.width=Math.max(0,Math.min(100,stats[field]/scale*100))+"%";
         track.append(bar); row.append(head,track); statWrap.append(row);
       }
-      setText("handling-summary",format(stats.handling));
-      setText("recoil-summary",format(stats.recoilControl));
+      countTo($("handling-summary"),format(stats.handling));
+      countTo($("recoil-summary"),format(stats.recoilControl));
       setText("range-summary",format(stats.effectiveRangeM) + " m");
       setText("velocity-summary",format(stats.muzzleVelocityMps) + " m/s");
       setText("equipped-count",result.equipped.length + " 件配件");
@@ -137,6 +140,7 @@ async function main() {
       history.replaceState(null,"",location.pathname + "?" + params);
     }
     update();
+    initializeEntrance();
   } catch (error) {
     console.error(error); setText("error",error.message); $("error").hidden = false;
   }
