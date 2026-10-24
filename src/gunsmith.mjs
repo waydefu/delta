@@ -53,6 +53,18 @@ export function initGunsmith(mount,selections,attachments,onPick,weapon,options=
   button.append(number,title,icon,status);
   button.addEventListener("click",()=>open(id));rail.append(button);buttons.set(id,{button,status});
  }
+ // Inspector arrows navigate neighboring slots without opening an option sheet.
+ rail.addEventListener("keydown",event=>{
+  if(!["ArrowUp","ArrowDown","Home","End"].includes(event.key))return;
+  const items=[...rail.querySelectorAll(".bench-slot")];
+  const current=items.indexOf(document.activeElement);
+  if(current<0)return;
+  event.preventDefault();
+  const next=event.key==="Home"?0:event.key==="End"?items.length-1:
+   (current+(event.key==="ArrowDown"?1:-1)+items.length)%items.length;
+  items[next]?.focus({preventScroll:true});
+  items[next]?.scrollIntoView({block:"nearest",inline:"nearest"});
+ });
  const overlay=node("div","bench-overlay");
  overlay.append(node("span","bench-model-kind","AKM SIDE PROFILE / CALIBRATED"),node("span","bench-model-measure","880 mm PHYSICAL REFERENCE"));
  stage.append(overlay,node("span","bench-watermark","AKM / CALIBRATED PROFILE"));
