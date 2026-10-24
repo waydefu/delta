@@ -155,6 +155,24 @@ try{
      assert.notEqual((await page.locator("#stat-list").innerText()).trim(),baseline,"Live performance stats did not update");
      record.partLabelVerified=true;
      record.liveMetricsUpdated=true;
+     const originalSummary=(await page.locator("#recoil-summary").innerText()).trim();
+     const compare=page.getByRole("button",{name:"兩者比較"});
+     await compare.click();
+     assert.equal(await compare.getAttribute("aria-pressed"),"true","Compare mode not selected");
+     assert.equal(new URL(page.url()).searchParams.get("tuning"),"compare","Comparison view not shareable");
+     await page.getByRole("tab",{name:"後座力控制"}).click();
+     const vertical=page.locator('[data-detail-metric="autoVerticalRecoilMultiplier"]');
+     await vertical.waitFor({state:"visible"});
+     const precise=(await vertical.innerText()).replace(/\\s+/g,"");
+     assert.match(precise,/未精調：待驗證/,"Equipped uncalibrated multiplier was incorrectly shown as verified");
+     assert.match(precise,/精調後：待驗證/,"No per-stock calibration data is available");
+     assert.equal((await page.locator("#recoil-summary").innerText()).trim(),originalSummary,
+       "Toggle must not alter hypothetical main-panel calculations");
+     await page.getByRole("button",{name:"精調後",exact:true}).click();
+     assert.equal(new URL(page.url()).searchParams.get("tuning"),"tuned");
+     await page.getByRole("button",{name:"未精調",exact:true}).click();
+     assert.equal(new URL(page.url()).searchParams.has("tuning"),false);
+     record.precisionComparisonVerified=true;
    }
    if(config.name==="desktop"){
      const mag=page.locator('.bench-slot[data-slot="magazine"]');

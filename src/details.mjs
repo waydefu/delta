@@ -1,5 +1,6 @@
 import {validateObservationSet,findMeasuredRecoil} from "./measurements.mjs";
 import { swapContents } from "./motion.mjs";
+import {parsePrecisionMode,resolvePrecisionView,validatePrecisionCatalog} from "./precision.mjs";
 
 const el=(tag,cls,value)=>{
  const e=document.createElement(tag);
@@ -82,22 +83,39 @@ function hipfire(){
 }
 const GRAPHICS={damage,handling,stability,hipfire};
 const SCORE={damage:"40",recoil:"39",handling:"54",stability:"55",hipfire:"53"};
-export async function initDetails(mount){
- const [response,measured]=await Promise.all([
+export async function initDetails(mount,options={}){
+ const [response,measured,protocolResponse,observationResponse]=await Promise.all([
   fetch("./data/weapons/akm-details.json"),
-  fetch("./data/research/akm-measurements.json")
+  fetch("./data/research/akm-measurements.json"),
+  fetch("./data/research/akm-precision-protocol.json"),
+  fetch("./data/research/akm-precision-observations.json")
  ]);
- if(!response.ok||!measured.ok)throw new Error("AKM 詳細屬性或實測資料讀取失敗");
+ if(!response.ok||!measured.ok||!protocolResponse.ok||!observationResponse.ok)
+  throw new Error("AKM 詳細屬性、精調規則或實測來源讀取失敗");
  const data=await response.json();
  const observations=validateObservationSet(await measured.json());
+ const protocol=await protocolResponse.json();
+ const precisionArchive=await observationResponse.json();
+ validatePrecisionCatalog(protocol,precisionArchive);
  const tabs=el("div","details-tabs"),body=el("div","detail-body");
  tabs.setAttribute("role","tablist");tabs.setAttribute("aria-label","AKM 五類詳細屬性");
  body.setAttribute("role","tabpanel");
- mount.append(tabs,body);
+ const toolbar=el("div","precision-toolbar");
+ const modeGroup=el("div","precision-mode-controls");
+ modeGroup.setAttribute("role","group");
+ modeGroup.setAttribute("aria-label","精調比較模式");
+ const intro=el("div","precision-intro");
+ intro.append(el("strong","","精調／詳細倍率"),el("small","","未精調與精調後分開呈現；不以控制點數換算垂直或水平倍率"));
+ const note=el("p","precision-evidence-note");
+ const guideBox=el("div","precision-guide-box");
+ toolbar.append(intro,modeGroup,note,guideBox);
+ mount.append(toolbar,tabs,body);
  let active=data.groups[0].id;
  let currentStats={...data.base};
  let installedIds=[];
- let provisional=false;
+ let currentParts=[];
+ let precisionMode=parsePrecisionMode(options.initialMode);
+ const modeButtons=[];
  const buttons=[];
  const render=()=>{
   const group=data.groups.find(g=>g.id===active);
@@ -109,6 +127,29 @@ export async function initDetails(mount){
    b.tabIndex=chosen?0:-1;
   }
   body.replaceChildren();
+  const precision=resolvePrecisionView(protocol,precisionArchive,currentParts,precisionMode);
+  for(const b of modeButtons){
+   const selected=b.dataset.mode===precisionMode;
+   b.classList.toggle("selected",selected);
+   b.setAttribute("aria-pressed",String(selected));
+  }
+  note.textContent=!precision.selectedCount?
+   "裸槍細項來自實機截圖；未裝配件時無從精調。":
+   precisionMode==="default"?
+    "當前僅顯示配件的研究面板分數；裝配後詳細倍率尚無相同配裝的實測證據。":
+    "目前沒有符合「同版手機烽火、同配裝、同精調設定」的實測結果；精調後數值一律顯示待驗證。";
+  guideBox.replaceChildren();
+  if(precision.selectedCount&&precisionMode!=="default"){
+   if(precision.guides.length){
+    guideBox.append(el("strong","precision-guide-title","常見精調維度（不代表每款配件皆可調）"));
+    for(const item of precision.guides.slice(0,5)){
+     const desc=item.dimensions.map(d=>d.label+"："+d.tradeoff).join("；");
+     guideBox.append(el("p","precision-guide-line",item.partName+" · "+desc));
+    }
+    if(precision.guides.length>5)guideBox.append(el("small","", "另有 "+(precision.guides.length-5)+" 個待核對部位"));
+   }else guideBox.append(el("p","precision-guide-line","目前選擇的部位沒有足夠的精調維度資料。"));
+   guideBox.append(el("small","precision-guide-caution","精調幅度、可調範圍和效果公式均未核驗，暫不提供虛構滑桿。"));
+  }
   const layout=el("div","detail-layout");
   const copy=el("div","detail-copy");
   const header=el("div","detail-heading");
@@ -126,9 +167,31 @@ export async function initDetails(mount){
   if(installedIds.length){
     copy.append(el("p","detail-live-note","目前選裝 "+installedIds.length+" 件候選；主面板值會更新，但下列細項仍是裸槍實測值，不能從單一控制分數推算開鏡、彈道或散布。"));
   }
+  const mapping=new Map((protocol.rawDetailedMetricGroups.find(x=>x.id===group.id)?.fields||[])
+    .map(([key,label])=>[label,key]));
   for(const [label,value] of group.values){
    const row=el("div","detail-value");
-   row.append(el("span","",label),el("strong","",value));list.append(row);
+   row.append(el("span","",label));
+   const field=mapping.get(label);
+   if(field){
+    const comparison=precision.compareRow(field,value);
+    const values=el("div","precision-detail-values");
+    const baseline=el("strong","precision-baseline",comparison.baseline);
+    baseline.title="來自裸槍實機截圖";
+    values.append(baseline);
+    if(precision.selectedCount||precisionMode==="compare"){
+     const labels=precisionMode==="compare"?
+      [["default","未精調",comparison.default],["tuned","精調後",comparison.tuned]]:
+      [[precisionMode,precisionMode==="default"?"配裝後":"精調後",
+        precisionMode==="default"?comparison.default:comparison.tuned]];
+     for(const [,title,measured] of labels)
+      values.append(el("span",measured===null?"precision-unverified":"precision-observed",
+        title+"："+(measured??"待驗證")));
+    }
+    row.dataset.detailMetric=field;
+    row.append(values);
+   }else row.append(el("strong","",value));
+   list.append(row);
   }
   copy.append(list,el("p","detail-caution","注意："+group.note));
   const visual=el("div","detail-visuals");
@@ -136,6 +199,15 @@ export async function initDetails(mount){
   layout.append(copy,visual);body.append(layout);
   swapContents(visual);
  };
+ for(const [id,label] of [["default","未精調"],["tuned","精調後"],["compare","兩者比較"]]){
+  const button=el("button","precision-mode-button",label);
+  button.type="button";button.dataset.mode=id;
+  button.addEventListener("click",()=>{
+   precisionMode=id;render();
+   if(typeof options.onModeChange==="function")options.onModeChange(id);
+  });
+  modeButtons.push(button);modeGroup.append(button);
+ }
  data.groups.forEach((g,index)=>{
   const button=el("button","detail-tab",g.label);
   button.type="button";button.dataset.key=g.id;
@@ -156,9 +228,11 @@ export async function initDetails(mount){
   update(stats,result){
    if(!stats||!Number.isFinite(stats.recoilControl))throw new TypeError("未提供改槍數值");
    currentStats={...stats};
-   installedIds=(result?.equipped||[]).map(p=>p.objectId).filter(Number.isSafeInteger);
-   provisional=result?.verified!==true;
+   currentParts=result?.equipped||[];
+   installedIds=currentParts.map(p=>p.objectId).filter(Number.isSafeInteger);
    render();
-  }
+  },
+  setMode(mode){precisionMode=parsePrecisionMode(mode);render();},
+  getMode(){return precisionMode;}
  };
 }

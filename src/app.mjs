@@ -21,6 +21,7 @@ const selections = Object.fromEntries(SLOTS.map(slot => [slot, query.get(slot) |
 let distance = Math.min(200, Math.max(10, Number(query.get("distance")) || 80));
 let buildMode="research";
 let latestChangedSlot=null;
+let calibrationView=["default","tuned","compare"].includes(query.get("tuning"))?query.get("tuning"):"default";
 const el = (tag, className, text) => {
   const node = document.createElement(tag);
   if(className) node.className = className;
@@ -97,7 +98,7 @@ async function main() {
       }
       $("mode-description").textContent=buildMode==="verified"?
         "嚴格模式：只允許有同版手遊掛載與參數證據的配件。當前 0 件；可切回研究試算。":
-        "研究模式：可試算尚未實機核實的 20 件候選，可能與正式遊戲不同。";
+        "研究模式：可試算 "+attachments.filter(p=>p.researchOnly!==true).length+" 件尚未實機核實的候選，可能與正式遊戲不同。";
       bench.refresh();
     }
     $("verified-only").addEventListener("change",event=>{
@@ -110,12 +111,17 @@ async function main() {
       refreshMode();update();
     });
     refreshMode();
-    const details=await initDetails($("detail-explorer"));
+    const details=await initDetails($("detail-explorer"),{
+      initialMode:calibrationView,
+      onModeChange(mode){calibrationView=mode;update();}
+    });
     $("distance").value = distance;
     $("distance").addEventListener("input", event => { distance = Number(event.target.value); update(false); });
     $("reset").addEventListener("click", () => {
       for(const slot of SLOTS) { selections[slot] = ""; $("select-" + slot).value = ""; }
-      distance = 80; $("distance").value = 80; update();
+      distance = 80; $("distance").value = 80;
+      calibrationView="default";details.setMode("default");
+      latestChangedSlot=null;update();
     });
     $("copy").addEventListener("click", async () => {
       try { await navigator.clipboard.writeText(location.href); setText("copy", "已複製 ✓"); setTimeout(()=>setText("copy","分享配置"),1600); }
@@ -212,6 +218,7 @@ async function main() {
       const params = new URLSearchParams();
       for(const slot of SLOTS) if(selections[slot]) params.set(slot,selections[slot]);
       params.set("distance",String(distance));
+      if(calibrationView!=="default")params.set("tuning",calibrationView);
       history.replaceState(null,"",location.pathname + "?" + params);
     }
     update();

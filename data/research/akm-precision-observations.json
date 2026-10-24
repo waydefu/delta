@@ -1,0 +1,10 @@
+{
+  "context": {
+    "weaponId": "akm",
+    "platform": "mobile",
+    "gameMode": "operations"
+  },
+  "reviewedAt": "2026-10-25",
+  "status": "No documented same-version, same-build and known tuning-profile measurements. Deliberately empty.",
+  "observations": []
+}
