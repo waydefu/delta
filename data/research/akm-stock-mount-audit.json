@@ -1,0 +1,53 @@
+{
+  "auditedAt": "2026-10-24",
+  "focus": "AKM main stock versus stock pad / intermediary mount relationship",
+  "confirmed": {
+    "objectId": 13240000006,
+    "partId": "ak-recoil-buttpad",
+    "name": "AK 槍托緩衝墊",
+    "sourceCategory": "stock",
+    "recordedSiteSlot": "buttpad",
+    "researchOnly": true,
+    "source": "https://gamegrids.io/delta-force/zh/attachments/ak-stock-recoil-pad/",
+    "effects": {
+      "recoilControl": 3,
+      "handling": -3,
+      "aimStability": 1
+    }
+  },
+  "unresolved": [
+    {
+      "relationship": "AKM stock slot -> AK stock recoil pad",
+      "status": "not-verified",
+      "reason": "public index maps by generic stock category, but project shows an independent buttpad UI slot; no verifiable attachment-node evidence"
+    },
+    {
+      "relationship": "AKM poly stock -> AK stock recoil pad",
+      "status": "not-verified",
+      "reason": "a third-party AKM build mentions both, but does not show exact mobile UI parent-child fitting node",
+      "source": "https://topbuilds.gg/delta-force/weapons/akm/"
+    },
+    {
+      "relationship": "AKM stock adapter/buffer tube -> specialized stocks",
+      "status": "not-verified",
+      "reason": "same category stock indices cannot establish parent adapter requirements"
+    }
+  ],
+  "enforcement": {
+    "canShowAsResearch": true,
+    "canEquip": false,
+    "canApplyStatEffects": false,
+    "canTreatAsCompatible": false
+  },
+  "evidenceNeeded": [
+    "AKM weapon + selected stock + installed pad in same current mobile Gunsmith screenshot",
+    "observed mount slot ID and any parent item ID",
+    "game platform, build or season and date",
+    "effect values after equip"
+  ],
+  "excludedCategories": [
+    "other-weapon-specific stock caps",
+    "cheek rests with unproven AKM mounting",
+    "generic rail stocks requiring unverified adapters"
+  ]
+}
