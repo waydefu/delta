@@ -93,7 +93,7 @@ try{
    }
    await page.screenshot({path:resolve(output,"2d-"+config.name+".png"),fullPage:false});
    if(config.name==="desktop"||config.name==="mobile-390")
-    await page.screenshot({path:resolve(output,"2d-"+config.name+"-full.png"),fullPage:true});
+    await page.locator(".armory-experience").screenshot({path:resolve(output,"2d-"+config.name+"-armory.png"),timeout:15000});
    const trigger=page.locator(".bench-slot").first();
    await trigger.focus();
    await page.keyboard.press("ArrowDown");
