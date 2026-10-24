@@ -1,8 +1,5 @@
 name: Build reviewed AKM artifact for PR
 on:
-  push:
-    paths:
-      - .github/workflows/publish-akm-model.yml
   workflow_dispatch:
 
 permissions:
