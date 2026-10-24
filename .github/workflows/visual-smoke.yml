@@ -1,10 +1,12 @@
 name: P1 real-browser 3D smoke test
 on:
   workflow_dispatch:
+  pull_request:
   push:
     paths:
       - .github/workflows/visual-smoke.yml
       - scripts/p1-browser-check.mjs
+      - scripts/p2-2d-browser-check.mjs
       - src/**
       - assets/**
       - index.html
@@ -23,7 +25,9 @@ jobs:
         run: |
           npm install --no-save --no-package-lock playwright@1.56.1
           npx playwright install chromium
-      - name: Exercise actual 2D and local GLB on desktop and mobile
+      - name: Validate 2D AKM lifecycle / mobile / accessibility
+        run: node scripts/p2-2d-browser-check.mjs
+      - name: Exercise local GLB on desktop and mobile
         run: node scripts/p1-browser-check.mjs
       - name: Browser evidence screenshots and report
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02

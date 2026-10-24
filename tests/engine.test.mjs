@@ -213,11 +213,10 @@ test("3D 原生檢視器不虛構分件；需本機 GLB 與使用者主動載入
  assert.match(readFileSync(new URL("../index.html",import.meta.url),"utf8"),/three@0\.180\.0/);
 });
 
-test("原生 GLB 模式只有資產存在時才曝光，不取代原有 2D／Sketchfab 介面",()=>{
+test("原生 GLB 維持使用者主動載入，2D 首屏不預先探測模型",()=>{
  const src=readFileSync(new URL("../src/model-reference.mjs",import.meta.url),"utf8");
- assert.match(src,/method:"HEAD"/);
- assert.match(src,/nativeButton\.hidden=true/);
- assert.match(src,/nativeButton\.hidden=false/);
+ assert.doesNotMatch(src,/method:"HEAD"/);
+ assert.match(src,/nativeButton\.type="button"/);
  assert.match(src,/await import\("\.\/local-viewer\.mjs"\)/);
  assert.match(src,/loadGeneration!==generation/);
  assert.match(src,/clearLocal\(\)/);
