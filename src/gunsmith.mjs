@@ -173,11 +173,37 @@ export function initGunsmith(mount,selections,attachments,onPick,weapon,options=
     preview.append(metrics);
   };
   const wrap=node("div","bench-options");
+  if(choices.length>=8){
+    const search=node("input","bench-option-search");
+    search.type="search";search.placeholder="搜尋配件名稱（"+choices.length+" 件研究候選）";
+    search.setAttribute("aria-label","搜尋"+slot[1]+"配件");
+    const count=node("small","bench-option-count",choices.length+" 件研究候選 · 非逐件實機驗證");
+    search.addEventListener("input",()=>{
+      const term=search.value.trim().toLocaleLowerCase("zh-TW");
+      let visible=0;
+      for(const option of wrap.querySelectorAll(".bench-option")){
+        const match=option.dataset.search.includes(term);
+        option.hidden=!match;if(match)visible++;
+      }
+      count.textContent=visible+" / "+(choices.length+1)+" 項（含不安裝）";
+    });
+    drawer.append(search,count);
+  }
   function makeOption(id,label,desc,provisional,part=null){
    const item=node("button","bench-option"+(selections[active]===id?" selected":""));item.type="button";
+   item.dataset.search=label.toLocaleLowerCase("zh-TW");
    const name=node("span","option-line"),strong=node("strong","",label);
    name.append(strong,node("small","",provisional?"相容待核驗":"示範資料"));
    item.append(name,node("span","option-effects",desc));
+   if(part?.accessoryDetails){
+     const m=part.accessoryDetails;
+     item.append(node("span","option-magazine-meta",
+       [m.weightKg+" kg","品質 "+m.rarityGrade,
+        Array.isArray(m.inventoryCells)?m.inventoryCells.join("×")+" 格":"格數待核",
+        m.quickDetach?"可快拆":"快拆待核"].join(" · ")));
+     item.append(node("small","option-magazine-uncertainty",
+       part.fitmentEvidence?.scope?.startsWith("AKM build")?"有 AKM 配裝案例 · 手遊待核":"僅按通用槽位推算 · AKM 相容待核"));
+   }
    if(part?.magazineDetails){
      const meta=part.magazineDetails;
      const dimensions=Array.isArray(meta.inventoryCells)?meta.inventoryCells.join("×"):"未知";
