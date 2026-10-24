@@ -173,7 +173,7 @@ export function initGunsmith(mount,selections,attachments,onPick,weapon,options=
     preview.append(metrics);
   };
   const wrap=node("div","bench-options");
-  if(choices.length>=8){
+  if(choices.length>=7){
     const search=node("input","bench-option-search");
     search.type="search";search.placeholder="搜尋配件名稱（"+choices.length+" 件研究候選）";
     search.setAttribute("aria-label","搜尋"+slot[1]+"配件");
