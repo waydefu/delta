@@ -55,10 +55,26 @@ try{
    await page.locator("#recoil-summary").waitFor({state:"visible",timeout:12000});
    await page.locator(".bench-canvas").scrollIntoViewIfNeeded();
    await page.waitForTimeout(150);
-   const background=await page.locator(".bench-canvas").evaluate(el=>getComputedStyle(el).backgroundImage);
-   assert.match(background,/armory-environment\.svg/,"ACFH 2D armory scene not applied");
-   const environmentLoaded=await page.evaluate(async()=> (await fetch("./assets/armory-environment.svg")).ok);
-   assert.equal(environmentLoaded,true,"Local cinematic backdrop failed to load");
+   const preview=page.locator(".bench-illustration");
+   await preview.waitFor({state:"visible",timeout:7000});
+   const illustration=await preview.evaluate(el=>({loaded:el.complete&&el.naturalWidth>0,
+     width:el.naturalWidth,height:el.naturalHeight}));
+   assert.ok(illustration.loaded&&illustration.width>=800,"New AKM artwork failed to decode");
+   assert.equal(await page.locator(".bench-magazine").evaluate(el=>getComputedStyle(el).visibility),
+     "hidden","Showcase duplicates the independent SVG magazine");
+   const toggle=page.locator(".bench-art-toggle");
+   await toggle.click();
+   const schematic=await page.locator(".bench-canvas").evaluate(el=>({
+     preview:el.classList.contains("is-art-preview"),background:getComputedStyle(el).backgroundImage
+   }));
+   assert.equal(schematic.preview,false,"SVG structural mode did not activate");
+   assert.match(schematic.background,/armory-environment\.svg/,"Original schematic background missing");
+   assert.equal(await page.locator(".bench-magazine").evaluate(el=>getComputedStyle(el).visibility),
+     "visible","Independent SVG magazine unavailable in schematic mode");
+   await toggle.click();
+   assert.equal(await page.locator(".bench-canvas").evaluate(el=>el.classList.contains("is-art-preview")),true,
+     "Artwork mode did not return");
+   record.artworkToggleWorks=true;
    const editorial=await page.evaluate(()=>{
     const summary=document.querySelector(".summary-card");
     const config=document.querySelector(".workspace .configuration");
