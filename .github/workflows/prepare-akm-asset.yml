@@ -1,10 +1,6 @@
 name: Research AKM model conversion
 on:
   workflow_dispatch:
-  push:
-    paths:
-      - .github/workflows/prepare-akm-asset.yml
-      - scripts/inspect-export-akm.py
 
 permissions:
   contents: read
