@@ -23,7 +23,7 @@ export function initModelReference(stage){
  const schematic=el("button","model-view-button selected","2D 改槍");
  const modelButton=el("button","model-view-button","Sketchfab 參考");
  const partReview=new URLSearchParams(location.search).get("partReview")==="1";
- const nativeButton=el("button","model-view-button",partReview?"分件測試 3D":"真實 AKM 3D");nativeButton.hidden=true;nativeButton.type="button";
+ const nativeButton=el("button","model-view-button",partReview?"分件測試 3D":"真實 AKM 3D");nativeButton.type="button";
  schematic.type=modelButton.type="button";
  bar.append(schematic,modelButton,nativeButton);stage.append(bar);
  const layer=el("div","model-reference-layer");layer.hidden=true;stage.append(layer);
@@ -147,11 +147,8 @@ export function initModelReference(stage){
  schematic.addEventListener("click",show2D);
  modelButton.addEventListener("click",show3D);
  nativeButton.addEventListener("click",showNative);
- // Do not expose an empty GLB mode. A real asset must first exist in the repo.
- fetch(assetUrl,{method:"HEAD",cache:"no-store"}).then(response=>{
-  const type=response.headers.get("content-type")||"";
-  if(response.ok&&!type.includes("text/html"))nativeButton.hidden=false;
- }).catch(()=>{});
+ // GLB presence is covered by CI integrity checks; avoid an eager network probe in 2D.
+ // On-demand 3D load already exposes a recoverable failure state.
  sync();
  return {show3D,show2D,showNative,get is3D(){return showing;},get isNative(){return mode==="native";}};
 }
