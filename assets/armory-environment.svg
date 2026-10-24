@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 840" preserveAspectRatio="xMidYMid slice" role="img" aria-labelledby="title desc">
+<title id="title">ACFH Cinematic Armory Environment</title>
+<desc id="desc">Original non-animated industrial armory backdrop: matte charcoal panels, recessed structural beams, subdued overhead practical lights and a low-contrast metal floor. No weapon silhouette or gameplay assets.</desc>
+<defs>
+ <linearGradient id="room" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#0b1114"/><stop offset=".47" stop-color="#202c2c"/><stop offset="1" stop-color="#070c0e"/></linearGradient>
+ <linearGradient id="leftwall"><stop stop-color="#050b0d"/><stop offset="1" stop-color="#1c292a"/></linearGradient>
+ <linearGradient id="rightwall"><stop stop-color="#1d2829"/><stop offset="1" stop-color="#080d10"/></linearGradient>
+ <linearGradient id="floor" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#26302d"/><stop offset=".5" stop-color="#111b1d"/><stop offset="1" stop-color="#05090b"/></linearGradient>
+ <radialGradient id="ambient"><stop stop-color="#8fa897" stop-opacity=".13"/><stop offset=".42" stop-color="#455c53" stop-opacity=".08"/><stop offset="1" stop-color="#0b1113" stop-opacity="0"/></radialGradient>
+ <radialGradient id="pool"><stop stop-color="#b9c4ac" stop-opacity=".21"/><stop offset=".28" stop-color="#768d7f" stop-opacity=".08"/><stop offset="1" stop-color="#020507" stop-opacity="0"/></radialGradient>
+ <linearGradient id="beam" x1=".5" y1="0" x2=".5" y2="1"><stop stop-color="#c9c8a8" stop-opacity=".095"/><stop offset="1" stop-color="#8da99f" stop-opacity="0"/></linearGradient>
+ <linearGradient id="vignette"><stop stop-color="#030809" stop-opacity=".94"/><stop offset=".16" stop-color="#04090b" stop-opacity=".15"/><stop offset=".83" stop-color="#05090a" stop-opacity=".12"/><stop offset="1" stop-color="#020507" stop-opacity=".96"/></linearGradient>
+ <pattern id="brushed" width="8" height="22" patternUnits="userSpaceOnUse"><path d="M0 4H8 M2 10H8 M0 18H6" stroke="#bcc7b4" stroke-opacity=".022" stroke-width=".7"/></pattern>
+ <pattern id="slots" width="145" height="95" patternUnits="userSpaceOnUse"><path d="M0 0H145V95" stroke="#93a698" stroke-opacity=".055" fill="none" stroke-width="1"/><path d="M5 8V87" stroke="#03080a" stroke-opacity=".35"/><circle cx="8" cy="8" r="1.8" fill="#7a9186" fill-opacity=".20"/></pattern>
+</defs>
+<rect width="1600" height="840" fill="url(#room)"/>
+<!-- A restrained industrial chamber with symmetrical vanishing geometry. -->
+<path d="M0 0H480L280 490H0Z" fill="url(#leftwall)"/>
+<path d="M1120 0H1600V490H1320Z" fill="url(#rightwall)"/>
+<path d="M255 74H1345L1290 528H310Z" fill="#162123" stroke="#3d4b46" stroke-opacity=".54" stroke-width="3"/>
+<path d="M303 110H1297V514H303Z" fill="#1b2527" stroke="#42504b" stroke-opacity=".35" stroke-width="2"/>
+<rect x="306" y="112" width="988" height="397" fill="url(#slots)"/>
+<rect x="306" y="112" width="988" height="397" fill="url(#brushed)"/>
+<!-- Rail ribs provide architectural scale but stay subordinate to AKM. -->
+<g fill="#0b1214" stroke="#4d5d55" stroke-opacity=".25">
+ <rect x="359" y="112" width="17" height="396"/><rect x="615" y="112" width="17" height="396"/>
+ <rect x="970" y="112" width="17" height="396"/><rect x="1226" y="112" width="17" height="396"/>
+</g>
+<g stroke="#718777" stroke-opacity=".10" stroke-width="3">
+ <path d="M318 228H1280 M318 366H1280 M318 479H1280"/>
+ <path d="M306 122H1294"/>
+</g>
+<!-- Ceiling beams and safe, subdued practical lighting. -->
+<path d="M0 0H1600L1330 112H270Z" fill="#090e10"/>
+<path d="M0 48H1600L1440 76H160Z" fill="#192123" stroke="#4b5a52" stroke-opacity=".38"/>
+<path d="M220 0L305 112M1380 0L1295 112" stroke="#44514b" stroke-opacity=".45" stroke-width="12"/>
+<rect x="593" y="39" width="414" height="15" rx="2" fill="#323c39" stroke="#778777" stroke-opacity=".30"/>
+<rect x="632" y="49" width="338" height="2" fill="#b9b89b" opacity=".48"/>
+<path d="M628 56H972L1182 515H418Z" fill="url(#beam)"/>
+<rect x="0" y="0" width="1600" height="610" fill="url(#ambient)"/>
+<!-- Subtle wall utilities and enclosed equipment lockers. -->
+<g fill="#111b1c" stroke="#34433d" stroke-width="2" opacity=".50">
+ <path d="M15 145H232L194 490H15Z"/>
+ <path d="M1368 145H1585V490H1405Z"/>
+ <path d="M36 170H206L175 470H36Z"/>
+ <path d="M1394 170H1562V470H1424Z"/>
+</g>
+<g stroke="#5e7568" stroke-opacity=".28" stroke-width="2">
+ <path d="M53 225H197M43 313H188M42 401H176"/>
+ <path d="M1406 225H1548M1416 313H1558M1424 401H1558"/>
+</g>
+<g fill="#9c9d81" opacity=".35"><rect x="51" y="448" width="23" height="3"/><rect x="1526" y="448" width="23" height="3"/></g>
+<!-- Floor perspective and restrained diffuse reflected pool. -->
+<path d="M310 511H1290L1600 840H0Z" fill="url(#floor)" stroke="#425349" stroke-opacity=".35"/>
+<ellipse cx="800" cy="618" rx="560" ry="148" fill="url(#pool)"/>
+<g stroke="#90a497" stroke-opacity=".12" stroke-width="2">
+ <path d="M800 511L800 840 M620 511L300 840 M980 511L1300 840 M437 511L0 750 M1163 511L1600 750"/>
+ <path d="M150 682H1450 M65 764H1535 M300 568H1300"/>
+</g>
+<path d="M312 510H1288" stroke="#76887c" stroke-opacity=".20" stroke-width="4"/>
+<rect width="1600" height="840" fill="url(#vignette)"/>
+</svg>
