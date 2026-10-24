@@ -14,7 +14,7 @@
     "accFunctional": 36,
     "accBackGrip": 27
   },
-  "akmCurated": 35,
+  "akmCurated": 45,
   "matchedIds": 17,
   "verifiedCurrentMobileAttachments": 0,
   "sourceConflicts": [
@@ -50,7 +50,8 @@
     "第三方 AKM 頁面宣稱的 531 件相容候選由槽位推導，並非官方逐件確認。",
     "不能把歷史數值當成現在正確，數值衝突不會自動覆蓋。",
     "2026 資料另有 4 件 AK/AKM 具名配件，但尚未逐件手遊驗證，特別是槍托緩衝墊的插槽關係。",
-    "本次新增 14 件 2026-09-23 社群候選：槍口 11、槍托 3；僅研究模式、未取得 2026 手遊實裝證據。"
+    "本次新增 14 件 2026-09-23 社群候選：槍口 11、槍托 3；僅研究模式、未取得 2026 手遊實裝證據。",
+    "第二輪再補 3 槍口及 7 槍托，全部按單件 ID 與 2026-09-23 參數索引；不能由共享的槽位推導 AKM 實裝。"
   ],
   "newer2026OnlyIds": [
     13020000490,
@@ -58,7 +59,16 @@
     13030000122,
     13240000006
   ],
-  "newMuzzleCandidates2026": 11,
-  "newStockCandidates2026": 3,
-  "matchedIdsDefinition": "matchedIds = 2024 archive intersection at initial audit; not recalculated for current 2026 additions"
+  "newMuzzleCandidates2026": 14,
+  "newStockCandidates2026": 10,
+  "matchedIdsDefinition": "matchedIds = 2024 archive intersection at initial audit; not recalculated for current 2026 additions",
+  "coverageBySlot": {
+    "muzzle": 16,
+    "barrel": 6,
+    "stock": 14,
+    "magazine": 3,
+    "reargrip": 5,
+    "buttpad": 1
+  },
+  "coverageSourceNote": "2026-10-24 curated 45 = initial 21 + 14 round one + 10 round two; 2026 mobile individually verified = 0; full-game categories are not fitment."
 }
