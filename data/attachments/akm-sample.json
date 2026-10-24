@@ -1525,5 +1525,496 @@
     "secondarySources": [
       "https://deltaforcetools.gg/tw/wiki/attachment/stock"
     ]
+  },
+  {
+    "id": "birdcage-flash-hider",
+    "objectId": 13130000178,
+    "slot": "muzzle",
+    "name": "鳥籠消焰器",
+    "effects": {
+      "recoilControl": 2,
+      "aimStability": 1
+    },
+    "compatibleWeapons": [
+      "akm"
+    ],
+    "confidence": "slot-inferred",
+    "source": "https://gamegrids.io/delta-force/zh/attachments/birdcage-flash-hider/",
+    "dataAsOf": "2026-09-23",
+    "lastChecked": "2026-10-24",
+    "dataStatus": "community-unverified",
+    "sourceTier": "community-secondary",
+    "platformValidated": false,
+    "parameterValidated": false,
+    "accessoryDetails": {
+      "weightKg": 0.71,
+      "rarityGrade": 2,
+      "inventoryCells": [
+        1,
+        1
+      ],
+      "quickDetach": true
+    },
+    "fitmentEvidence": {
+      "status": "candidate",
+      "type": "third-party-derived",
+      "reference": "https://gamegrids.io/delta-force/zh/attachments/birdcage-flash-hider/",
+      "platform": "mobile-not-individually-verified",
+      "checkedAt": null,
+      "scope": "generic-slot-only, not AKM individual proof"
+    },
+    "effectEvidence": {
+      "status": "secondary",
+      "reference": "https://gamegrids.io/delta-force/zh/attachments/birdcage-flash-hider/",
+      "asOf": "2026-09-23",
+      "formulaValidated": false
+    },
+    "reviewNote": "個別物品 ID 與面板修正來自 2026-09-23 社群轉載資料；來源的 AKM 相容表由槽位類別推算，不是當期手遊逐件安裝證據。只供研究模式情境計算。",
+    "secondarySources": [
+      "https://deltaforcetools.gg/wiki/attachment/muzzle"
+    ]
+  },
+  {
+    "id": "ember-suppressor",
+    "objectId": 13130000182,
+    "slot": "muzzle",
+    "name": "餘燼消音器",
+    "effects": {
+      "recoilControl": 10,
+      "handling": -4,
+      "aimStability": 4,
+      "hipFireAccuracy": -8
+    },
+    "compatibleWeapons": [
+      "akm"
+    ],
+    "confidence": "slot-inferred",
+    "source": "https://gamegrids.io/delta-force/zh/attachments/ember-suppressor/",
+    "dataAsOf": "2026-09-23",
+    "lastChecked": "2026-10-24",
+    "dataStatus": "community-unverified",
+    "sourceTier": "community-secondary",
+    "platformValidated": false,
+    "parameterValidated": false,
+    "accessoryDetails": {
+      "weightKg": 0.8,
+      "rarityGrade": 4,
+      "inventoryCells": [
+        1,
+        1
+      ],
+      "quickDetach": true
+    },
+    "fitmentEvidence": {
+      "status": "candidate",
+      "type": "third-party-derived",
+      "reference": "https://gamegrids.io/delta-force/zh/attachments/ember-suppressor/",
+      "platform": "mobile-not-individually-verified",
+      "checkedAt": null,
+      "scope": "generic-slot-only, not AKM individual proof"
+    },
+    "effectEvidence": {
+      "status": "secondary",
+      "reference": "https://gamegrids.io/delta-force/zh/attachments/ember-suppressor/",
+      "asOf": "2026-09-23",
+      "formulaValidated": false
+    },
+    "reviewNote": "個別物品 ID 與面板修正來自 2026-09-23 社群轉載資料；來源的 AKM 相容表由槽位類別推算，不是當期手遊逐件安裝證據。只供研究模式情境計算。",
+    "secondarySources": [
+      "https://deltaforcetools.gg/wiki/attachment/muzzle"
+    ],
+    "qualitativeEffects": [
+      "槍聲抑制：弱（社群來源文字效果，未納入計算）"
+    ]
+  },
+  {
+    "id": "ops-suppressor",
+    "objectId": 13130000201,
+    "slot": "muzzle",
+    "name": "OPS 消音器",
+    "effects": {
+      "recoilControl": 10,
+      "handling": -8,
+      "aimStability": -3
+    },
+    "compatibleWeapons": [
+      "akm"
+    ],
+    "confidence": "slot-inferred",
+    "source": "https://gamegrids.io/delta-force/zh/attachments/ops-suppressor/",
+    "dataAsOf": "2026-09-23",
+    "lastChecked": "2026-10-24",
+    "dataStatus": "community-unverified",
+    "sourceTier": "community-secondary",
+    "platformValidated": false,
+    "parameterValidated": false,
+    "accessoryDetails": {
+      "weightKg": 0.7,
+      "rarityGrade": 3,
+      "inventoryCells": [
+        1,
+        1
+      ],
+      "quickDetach": true
+    },
+    "fitmentEvidence": {
+      "status": "candidate",
+      "type": "third-party-derived",
+      "reference": "https://gamegrids.io/delta-force/zh/attachments/ops-suppressor/",
+      "platform": "mobile-not-individually-verified",
+      "checkedAt": null,
+      "scope": "generic-slot-only, not AKM individual proof"
+    },
+    "effectEvidence": {
+      "status": "secondary",
+      "reference": "https://gamegrids.io/delta-force/zh/attachments/ops-suppressor/",
+      "asOf": "2026-09-23",
+      "formulaValidated": false
+    },
+    "reviewNote": "個別物品 ID 與面板修正來自 2026-09-23 社群轉載資料；來源的 AKM 相容表由槽位類別推算，不是當期手遊逐件安裝證據。只供研究模式情境計算。",
+    "secondarySources": [
+      "https://deltaforcetools.gg/wiki/attachment/muzzle"
+    ],
+    "qualitativeEffects": [
+      "槍聲抑制：弱（社群來源文字效果，未納入計算）"
+    ]
+  },
+  {
+    "id": "ak19-stock",
+    "objectId": 13040000182,
+    "slot": "stock",
+    "name": "AK19 槍托",
+    "effects": {
+      "recoilControl": 6,
+      "handling": 4,
+      "aimStability": -2,
+      "hipFireAccuracy": -8
+    },
+    "compatibleWeapons": [
+      "akm"
+    ],
+    "confidence": "slot-inferred",
+    "source": "https://gamegrids.io/delta-force/zh/attachments/ak19-stock/",
+    "dataAsOf": "2026-09-23",
+    "lastChecked": "2026-10-24",
+    "dataStatus": "community-unverified",
+    "sourceTier": "community-secondary",
+    "platformValidated": false,
+    "parameterValidated": false,
+    "accessoryDetails": {
+      "weightKg": 0.1,
+      "rarityGrade": 3,
+      "inventoryCells": [
+        2,
+        1
+      ],
+      "quickDetach": true
+    },
+    "fitmentEvidence": {
+      "status": "candidate",
+      "type": "third-party-derived",
+      "reference": "https://gamegrids.io/delta-force/zh/attachments/ak19-stock/",
+      "platform": "mobile-not-individually-verified",
+      "checkedAt": null,
+      "scope": "generic-slot-only, not AKM individual proof"
+    },
+    "effectEvidence": {
+      "status": "secondary",
+      "reference": "https://gamegrids.io/delta-force/zh/attachments/ak19-stock/",
+      "asOf": "2026-09-23",
+      "formulaValidated": false
+    },
+    "reviewNote": "個別物品 ID 與面板修正來自 2026-09-23 社群轉載資料；來源的 AKM 相容表由槽位類別推算，不是當期手遊逐件安裝證據。只供研究模式情境計算。",
+    "secondarySources": [
+      "https://deltaforcetools.gg/wiki/attachment/stock"
+    ]
+  },
+  {
+    "id": "qr-high-performance-rear-stock",
+    "objectId": 13040000225,
+    "slot": "stock",
+    "name": "QR 高性能後托",
+    "effects": {
+      "recoilControl": 3,
+      "handling": -2,
+      "aimStability": 3,
+      "hipFireAccuracy": 16
+    },
+    "compatibleWeapons": [
+      "akm"
+    ],
+    "confidence": "slot-inferred",
+    "source": "https://gamegrids.io/delta-force/zh/attachments/qr-high-performance-rear-stock/",
+    "dataAsOf": "2026-09-23",
+    "lastChecked": "2026-10-24",
+    "dataStatus": "community-unverified",
+    "sourceTier": "community-secondary",
+    "platformValidated": false,
+    "parameterValidated": false,
+    "accessoryDetails": {
+      "weightKg": 0.53,
+      "rarityGrade": 2,
+      "inventoryCells": [
+        1,
+        1
+      ],
+      "quickDetach": true
+    },
+    "fitmentEvidence": {
+      "status": "candidate",
+      "type": "third-party-derived",
+      "reference": "https://gamegrids.io/delta-force/zh/attachments/qr-high-performance-rear-stock/",
+      "platform": "mobile-not-individually-verified",
+      "checkedAt": null,
+      "scope": "generic-slot-only, not AKM individual proof"
+    },
+    "effectEvidence": {
+      "status": "secondary",
+      "reference": "https://gamegrids.io/delta-force/zh/attachments/qr-high-performance-rear-stock/",
+      "asOf": "2026-09-23",
+      "formulaValidated": false
+    },
+    "reviewNote": "個別物品 ID 與面板修正來自 2026-09-23 社群轉載資料；來源的 AKM 相容表由槽位類別推算，不是當期手遊逐件安裝證據。只供研究模式情境計算。",
+    "secondarySources": [
+      "https://deltaforcetools.gg/wiki/attachment/stock"
+    ]
+  },
+  {
+    "id": "practical-tactical-stock",
+    "objectId": 13040000105,
+    "slot": "stock",
+    "name": "實用戰術槍托",
+    "effects": {
+      "recoilControl": 4
+    },
+    "compatibleWeapons": [
+      "akm"
+    ],
+    "confidence": "slot-inferred",
+    "source": "https://gamegrids.io/delta-force/zh/attachments/practical-tactical-stock/",
+    "dataAsOf": "2026-09-23",
+    "lastChecked": "2026-10-24",
+    "dataStatus": "community-unverified",
+    "sourceTier": "community-secondary",
+    "platformValidated": false,
+    "parameterValidated": false,
+    "accessoryDetails": {
+      "weightKg": 0.54,
+      "rarityGrade": 2,
+      "inventoryCells": [
+        2,
+        1
+      ],
+      "quickDetach": true
+    },
+    "fitmentEvidence": {
+      "status": "candidate",
+      "type": "third-party-derived",
+      "reference": "https://gamegrids.io/delta-force/zh/attachments/practical-tactical-stock/",
+      "platform": "mobile-not-individually-verified",
+      "checkedAt": null,
+      "scope": "generic-slot-only, not AKM individual proof"
+    },
+    "effectEvidence": {
+      "status": "secondary",
+      "reference": "https://gamegrids.io/delta-force/zh/attachments/practical-tactical-stock/",
+      "asOf": "2026-09-23",
+      "formulaValidated": false
+    },
+    "reviewNote": "個別物品 ID 與面板修正來自 2026-09-23 社群轉載資料；來源的 AKM 相容表由槽位類別推算，不是當期手遊逐件安裝證據。只供研究模式情境計算。",
+    "secondarySources": [
+      "https://deltaforcetools.gg/wiki/attachment/stock"
+    ]
+  },
+  {
+    "id": "practical-stable-stock",
+    "objectId": 13040000104,
+    "slot": "stock",
+    "name": "實用穩定槍托",
+    "effects": {
+      "recoilControl": 2
+    },
+    "compatibleWeapons": [
+      "akm"
+    ],
+    "confidence": "slot-inferred",
+    "source": "https://gamegrids.io/delta-force/zh/attachments/practical-stable-stock/",
+    "dataAsOf": "2026-09-23",
+    "lastChecked": "2026-10-24",
+    "dataStatus": "community-unverified",
+    "sourceTier": "community-secondary",
+    "platformValidated": false,
+    "parameterValidated": false,
+    "accessoryDetails": {
+      "weightKg": 0.53,
+      "rarityGrade": 2,
+      "inventoryCells": [
+        2,
+        1
+      ],
+      "quickDetach": true
+    },
+    "fitmentEvidence": {
+      "status": "candidate",
+      "type": "third-party-derived",
+      "reference": "https://gamegrids.io/delta-force/zh/attachments/practical-stable-stock/",
+      "platform": "mobile-not-individually-verified",
+      "checkedAt": null,
+      "scope": "generic-slot-only, not AKM individual proof"
+    },
+    "effectEvidence": {
+      "status": "secondary",
+      "reference": "https://gamegrids.io/delta-force/zh/attachments/practical-stable-stock/",
+      "asOf": "2026-09-23",
+      "formulaValidated": false
+    },
+    "reviewNote": "個別物品 ID 與面板修正來自 2026-09-23 社群轉載資料；來源的 AKM 相容表由槽位類別推算，不是當期手遊逐件安裝證據。只供研究模式情境計算。",
+    "secondarySources": [
+      "https://deltaforcetools.gg/wiki/attachment/stock"
+    ]
+  },
+  {
+    "id": "practical-lightweight-stock",
+    "objectId": 13040000106,
+    "slot": "stock",
+    "name": "實用輕型槍托",
+    "effects": {
+      "handling": 2
+    },
+    "compatibleWeapons": [
+      "akm"
+    ],
+    "confidence": "slot-inferred",
+    "source": "https://gamegrids.io/delta-force/zh/attachments/practical-lightweight-stock/",
+    "dataAsOf": "2026-09-23",
+    "lastChecked": "2026-10-24",
+    "dataStatus": "community-unverified",
+    "sourceTier": "community-secondary",
+    "platformValidated": false,
+    "parameterValidated": false,
+    "accessoryDetails": {
+      "weightKg": 0.47,
+      "rarityGrade": 2,
+      "inventoryCells": [
+        2,
+        1
+      ],
+      "quickDetach": true
+    },
+    "fitmentEvidence": {
+      "status": "candidate",
+      "type": "third-party-derived",
+      "reference": "https://gamegrids.io/delta-force/zh/attachments/practical-lightweight-stock/",
+      "platform": "mobile-not-individually-verified",
+      "checkedAt": null,
+      "scope": "generic-slot-only, not AKM individual proof"
+    },
+    "effectEvidence": {
+      "status": "secondary",
+      "reference": "https://gamegrids.io/delta-force/zh/attachments/practical-lightweight-stock/",
+      "asOf": "2026-09-23",
+      "formulaValidated": false
+    },
+    "reviewNote": "個別物品 ID 與面板修正來自 2026-09-23 社群轉載資料；來源的 AKM 相容表由槽位類別推算，不是當期手遊逐件安裝證據。只供研究模式情境計算。",
+    "secondarySources": [
+      "https://deltaforcetools.gg/wiki/attachment/stock"
+    ]
+  },
+  {
+    "id": "core-rail-stock",
+    "objectId": 13040000009,
+    "slot": "stock",
+    "name": "核心導軌槍托",
+    "effects": {
+      "recoilControl": 2,
+      "handling": 2
+    },
+    "compatibleWeapons": [
+      "akm"
+    ],
+    "confidence": "slot-inferred",
+    "source": "https://gamegrids.io/delta-force/zh/attachments/core-rail-stock/",
+    "dataAsOf": "2026-09-23",
+    "lastChecked": "2026-10-24",
+    "dataStatus": "community-unverified",
+    "sourceTier": "community-secondary",
+    "platformValidated": false,
+    "parameterValidated": false,
+    "accessoryDetails": {
+      "weightKg": 0.47,
+      "rarityGrade": 2,
+      "inventoryCells": [
+        2,
+        1
+      ],
+      "quickDetach": true
+    },
+    "fitmentEvidence": {
+      "status": "candidate",
+      "type": "third-party-derived",
+      "reference": "https://gamegrids.io/delta-force/zh/attachments/core-rail-stock/",
+      "platform": "mobile-not-individually-verified",
+      "checkedAt": null,
+      "scope": "generic-slot-only, not AKM individual proof"
+    },
+    "effectEvidence": {
+      "status": "secondary",
+      "reference": "https://gamegrids.io/delta-force/zh/attachments/core-rail-stock/",
+      "asOf": "2026-09-23",
+      "formulaValidated": false
+    },
+    "reviewNote": "個別物品 ID 與面板修正來自 2026-09-23 社群轉載資料；來源的 AKM 相容表由槽位類別推算，不是當期手遊逐件安裝證據。只供研究模式情境計算。",
+    "secondarySources": [
+      "https://deltaforcetools.gg/wiki/attachment/stock"
+    ]
+  },
+  {
+    "id": "ur-special-tactical-stock",
+    "objectId": 13040000110,
+    "slot": "stock",
+    "name": "UR 特種戰術槍托",
+    "effects": {
+      "recoilControl": 8,
+      "handling": -4,
+      "aimStability": 4
+    },
+    "compatibleWeapons": [
+      "akm"
+    ],
+    "confidence": "slot-inferred",
+    "source": "https://gamegrids.io/delta-force/zh/attachments/ur-special-tactical-stock/",
+    "dataAsOf": "2026-09-23",
+    "lastChecked": "2026-10-24",
+    "dataStatus": "community-unverified",
+    "sourceTier": "community-secondary",
+    "platformValidated": false,
+    "parameterValidated": false,
+    "accessoryDetails": {
+      "weightKg": 0.52,
+      "rarityGrade": 4,
+      "inventoryCells": [
+        2,
+        1
+      ],
+      "quickDetach": true
+    },
+    "fitmentEvidence": {
+      "status": "candidate",
+      "type": "third-party-derived",
+      "reference": "https://gamegrids.io/delta-force/zh/attachments/ur-special-tactical-stock/",
+      "platform": "mobile-not-individually-verified",
+      "checkedAt": null,
+      "scope": "generic-slot-only, not AKM individual proof"
+    },
+    "effectEvidence": {
+      "status": "secondary",
+      "reference": "https://gamegrids.io/delta-force/zh/attachments/ur-special-tactical-stock/",
+      "asOf": "2026-09-23",
+      "formulaValidated": false
+    },
+    "reviewNote": "個別物品 ID 與面板修正來自 2026-09-23 社群轉載資料；來源的 AKM 相容表由槽位類別推算，不是當期手遊逐件安裝證據。只供研究模式情境計算。",
+    "secondarySources": [
+      "https://deltaforcetools.gg/wiki/attachment/stock"
+    ]
   }
 ]
