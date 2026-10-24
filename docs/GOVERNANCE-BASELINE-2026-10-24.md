@@ -14,7 +14,7 @@
 
 | ID | 觀察 | 處置與完成證據 |
 |---|---|---|
-| GOV-P0-01 | GitHub branches/main API 回傳 `protected:false`；Rulesets=[] | 需管理權限啟用 main required checks / PR gate（repo settings 實際驗證）。寫文件不能代替平台保護 |
+| GOV-P0-01 | GitHub branches/main API 回傳 `protected:false`；Rulesets=[] | 建議有權限時啟用 main required checks / PR gate；既有 GitHub App 無法直接變更 Rulesets；**不要求額外人工審批** |
 | GOV-P0-02 | `publish-akm-model.yml` 與 `publish-akm-magazine-candidate.yml` 給 `contents:write` 並 `git push origin HEAD:main` | 把發布改為唯讀、產生待審核 artifact。真正發布需另開經檢查的 PR |
 | GOV-P0-03 | 5 個 workflows 以可移動 `@v4`/`@v5` 指向 GitHub Actions | 鎖到 40 字元完整 commit SHA；可用 Dependabot 更新 SHA、人工審查差異 |
 | GOV-P0-04 | 目前 CI 不含針對危險 CI 權限／push main 的定向防回歸檢查 | 加上零外部依賴 governance guard + tests；CI 必跑，fail closed |
@@ -32,7 +32,7 @@
 
 ## Agent 與交付契約
 
-- 最終權限：使用者。未來若要求先審核，先交付 PR；若明確允許直接推送，也要先完成機械驗收，提供 commit 與回退點。
+- 正常節奏：**獨立分支提交 → PR → CI 全綠 → 合併**，無需逐次人工批准。未過 CI 不合併，提交必有回退點。
 - 說明及驗證記錄需區分 **觀察**／**推論**／**未完成**，不得把 CI 測試取代手遊實測。
 - 不得無證據改寫 AKM 兼容、效果或數據。新效果必須可以退化且可停用。
 - 任何「技術債全部清完」均須逐條有可重現證據，並註明仍無法由工具證實的項目。
@@ -41,7 +41,7 @@
 
 ## 驗收待辦
 
-- [ ] 平台分支保護已啟用並由 API／設定頁驗證
+- [ ] （治理強化建議）平台 main required checks 已啟用並由 API／設定頁驗證；不引入額外人工審批
 - [ ] 資產 Workflow 不再直接 push main
 - [ ] 所有 GitHub Actions 用完整 SHA
 - [ ] Governance guard Node 測試與 CI 通過
@@ -50,3 +50,6 @@
 - [ ] 當季手機遊戲資料來源逐件校準
 
 **P0 工程修復與 P0 遊戲資料驗收是兩件不同的事，不能混淆。**
+
+## 治理簡化決策（2026-10-24）
+高階治理框架僅作為可借鑑的工程方法，不增加多重簽核、形式審核或沉重流程。**常規實作維持 PR → CI 全綠 → 合併**；未過 CI 則停止合併、修正後重新執行。既有主分支目前 `protected:false` 是可追蹤風險，不用文件假裝已解決。
