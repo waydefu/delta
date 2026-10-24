@@ -25,6 +25,8 @@ export function setMotionPreference(preference) {
   if(!["system","off"].includes(preference)) throw new TypeError("Unknown motion preference");
   userPreference = preference;
   try { localStorage.setItem("delta.motion",preference); } catch { /* optional */ }
+  if(typeof window!=="undefined"&&typeof CustomEvent!=="undefined")
+    window.dispatchEvent(new CustomEvent("delta:motionchange"));
 }
 function play(element,frames,options) {
   if(!element || !shouldAnimate() || typeof element.animate !== "function") return null;
