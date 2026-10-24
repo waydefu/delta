@@ -27,6 +27,14 @@ export function initGunsmith(mount,selections,attachments,onPick,weapon,options=
  const grid=node("div","bench-grid");
  const img=node("img","bench-gun");img.src="./assets/akm-side.svg";img.alt="AKM 側面示意（彈匣已獨立分件）";img.draggable=false;
  const magazine=node("img","bench-magazine");magazine.src="./assets/akm-magazine.svg";magazine.alt="";magazine.draggable=false;magazine.setAttribute("aria-hidden","true");
+ const illustration=node("img","bench-illustration");
+ illustration.src="./assets/akm-redraw-showcase.webp";
+ illustration.alt="重新繪製的 AKM 側視插畫，包含彈匣；此展示圖不會隨選用配件變更";
+ illustration.draggable=false;
+ const artToggle=node("button","bench-art-toggle","查看可拆件 SVG");
+ artToggle.type="button";
+ artToggle.setAttribute("aria-label","切換 AKM 2D 插畫與可拆件 SVG 結構示意");
+ const artNote=node("p","bench-art-note","精細 2D 插畫 · 固定外觀，配件效果以左側數值為準");
  const lines=document.createElementNS("http://www.w3.org/2000/svg","svg");
  lines.classList.add("bench-lines");lines.setAttribute("viewBox","0 0 1000 560");lines.setAttribute("preserveAspectRatio","none");
  const buttons=new Map();
@@ -38,7 +46,19 @@ export function initGunsmith(mount,selections,attachments,onPick,weapon,options=
  const railCaption=node("p","bench-rail-caption","選取部位以檢視可用配件");
  railHead.append(railCaption);
  rail.append(railHead);
- stage.append(grid,img,magazine,lines,rail);
+ stage.append(grid,img,magazine,illustration,lines,artToggle,artNote,rail);
+ stage.classList.add("is-art-preview");
+ const setArtPreview=enabled=>{
+  stage.classList.toggle("is-art-preview",enabled);
+  artToggle.textContent=enabled?"查看可拆件 SVG":"查看精細 2D 插畫";
+  artToggle.setAttribute("aria-pressed",String(enabled));
+ };
+ artToggle.addEventListener("click",()=>setArtPreview(!stage.classList.contains("is-art-preview")));
+ illustration.addEventListener("error",()=>{
+  setArtPreview(false);
+  artToggle.hidden=true;
+  artNote.hidden=true;
+ });
  for(const [index,[id,label,x,y,tx,ty]] of SLOTS.entries()){
   const line=document.createElementNS("http://www.w3.org/2000/svg","line");
   for(const [key,value] of [["x1",x*10],["y1",y*5.6],["x2",tx*10],["y2",ty*5.6]])line.setAttribute(key,String(value));
@@ -66,7 +86,7 @@ export function initGunsmith(mount,selections,attachments,onPick,weapon,options=
   items[next]?.scrollIntoView({block:"nearest",inline:"nearest"});
  });
  const overlay=node("div","bench-overlay");
- overlay.append(node("span","bench-model-kind","AKM SIDE PROFILE / CALIBRATED"),node("span","bench-model-measure","880 mm PHYSICAL REFERENCE"));
+ overlay.append(node("span","bench-model-kind","AKM / VECTOR STRUCTURE"),node("span","bench-model-measure","RESEARCH SCHEMATIC ONLY"));
  stage.append(overlay,node("span","bench-watermark","AKM / CALIBRATED PROFILE"));
  initModelReference(stage);
  const shade=node("button","bench-shade");shade.type="button";shade.hidden=true;shade.setAttribute("aria-label","關閉配件選單");
@@ -81,6 +101,7 @@ export function initGunsmith(mount,selections,attachments,onPick,weapon,options=
  let active=null;
  let closing=false,opener=null;
  function inspectMagazine(){
+   setArtPreview(false); // independent magazine animation only exists in schematic SVG
    if(typeof magazine.animate!=="function"||!shouldAnimate()){
      magazine.classList.add("magazine-inspected");
      magazine.addEventListener("transitionend",()=>magazine.classList.remove("magazine-inspected"),{once:true});
