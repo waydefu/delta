@@ -1,13 +1,10 @@
-name: Publish reviewed CC0 AKM preview
+name: Build reviewed AKM artifact for PR
 on:
-  push:
-    paths:
-      - .github/workflows/publish-akm-model.yml
   workflow_dispatch:
 
 permissions:
   actions: read
-  contents: write
+  contents: read
 
 concurrency:
   group: akm-reviewed-preview
@@ -18,12 +15,12 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 12
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:
           node-version: "22"
       - name: Download known successful CC0 GLB and inspection
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
         with:
           name: akm-cc0-glb-unreviewed
           run-id: 40024755786
@@ -83,11 +80,12 @@ jobs:
           pathlib.Path("assets/models/akm-provenance.json").write_text(json.dumps(provenance,indent=2)+"\n")
           print("AKM_MODEL_OPTIMIZED",json.dumps(provenance))
           PY
-      - name: Commit reviewed static 3D asset (not a modular gunsmith)
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add assets/models/akm.glb assets/models/akm-provenance.json
-          git diff --cached --quiet && exit 0
-          git commit -m "assets(p1): publish optimized CC0 AKM non-modular PBR preview"
-          git push origin HEAD:main
+      - name: Upload reviewed model for PR-based publication
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: akm-static-review-candidate
+          path: |
+            assets/models/akm.glb
+            assets/models/akm-provenance.json
+          if-no-files-found: error
+          retention-days: 14
