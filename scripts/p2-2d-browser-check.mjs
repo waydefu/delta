@@ -178,7 +178,7 @@ try{
      await muzzle.click();await drawer.waitFor({state:"visible"});
      const search=drawer.getByRole("searchbox",{name:"搜尋槍口配件"});
      assert.ok(await search.isVisible(),"Muzzle candidate search missing");
-     assert.equal(await drawer.locator(".bench-option").count(),14,"Expected 13 muzzles + reset");
+     assert.equal(await drawer.locator(".bench-option").count(),17,"Expected 16 muzzles + reset");
      await search.fill("沙暴");
      assert.equal(await drawer.locator(".bench-option:visible").count(),1,"Search did not narrow candidates");
      await drawer.locator(".bench-option:visible").click();
@@ -187,7 +187,7 @@ try{
      assert.match(await page.locator("#metrics-current-part").innerText(),/沙暴垂直補償器/);
      const stock=page.locator('.bench-slot[data-slot="stock"]');
      await stock.click();await drawer.waitFor({state:"visible"});
-     assert.equal(await drawer.locator(".bench-option").count(),8,"Expected 7 stocks + reset");
+     assert.equal(await drawer.locator(".bench-option").count(),15,"Expected 14 stocks + reset");
      await drawer.getByRole("searchbox",{name:"搜尋槍托配件"}).fill("MRGS");
      assert.equal(await drawer.locator(".bench-option:visible").count(),1,"Stock search did not narrow candidates");
      await drawer.locator(".bench-option:visible").click();
