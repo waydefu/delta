@@ -186,7 +186,9 @@ export function initGunsmith(mount,selections,attachments,onPick,weapon,options=
    button.classList.toggle("installed",!!installed);button.classList.toggle("active",active===id);
    button.classList.toggle("not-ready",!ready);
    button.setAttribute("aria-pressed",String(active===id));
-   status.textContent=installed?"已安裝":ready?"可選配件":open.has(id)?"待建檔":"需掛載";
+   status.textContent=installed?installed.name:ready?"可選配件":open.has(id)?"待建檔":"需掛載";
+   button.setAttribute("aria-label",installed?label+"配件槽："+installed.name:label+"配件槽");
+   button.title=installed?label+"： "+installed.name:label+"配件槽";
   }
  }
  refresh();return {refresh};
