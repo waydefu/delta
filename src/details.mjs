@@ -230,7 +230,6 @@ export async function initDetails(mount,options={}){
    currentStats={...stats};
    currentParts=result?.equipped||[];
    installedIds=currentParts.map(p=>p.objectId).filter(Number.isSafeInteger);
-   provisional=result?.verified!==true;
    render();
   },
   setMode(mode){precisionMode=parsePrecisionMode(mode);render();},
