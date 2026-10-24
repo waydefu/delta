@@ -690,3 +690,195 @@ body {
 .local-viewer-action:hover,.local-viewer-action[aria-pressed="true"]{border-color:#acc5a5;background:#34463b}
 .local-viewer-caveat{font-size:10px;color:#d2d4c5;background:#182122e6;border-left:2px solid #9b9f89;margin:0;padding:8px 10px;line-height:1.4;max-width:410px}
 @media(max-width:600px){.local-viewer-toolbar{top:57px;left:7px;right:7px;gap:4px}.local-viewer-action{min-height:33px;padding:6px 8px}.local-viewer-caveat{font-size:9px;flex-basis:100%;padding:6px 8px}}
+
+
+/* === ACFH V1 / CINEMATIC ARMORY (2D-FIRST, NO PERPETUAL ANIMATION) ===
+ * Environment uses a small original vector, not a running 3D scene.
+ * Keep genuine AKM SVG geometry and all research/evidence interfaces intact.
+ */
+:root{
+  --acfh-dark:#090e10;
+  --acfh-slate:#172225;
+  --acfh-steel:#33433f;
+  --acfh-sage:#bccbb3;
+  --acfh-amber:#c4a177;
+}
+html{background:var(--acfh-dark)}
+body{
+  background:
+    radial-gradient(ellipse 48% 440px at 84% 0%,#35423d3b,transparent 80%),
+    linear-gradient(180deg,#0c1215 0,#090e10 720px,#0c1213 100%);
+  color:#e5ede6;
+}
+.site-header{
+  background:linear-gradient(90deg,#121b1b,#0d1416);
+  border-bottom:1px solid #39433e;
+}
+.site-header:before{width:94px;background:var(--acfh-amber)}
+.brand-symbol,.brand-accent{color:var(--acfh-sage)}
+.beta-pill{background:#172221;border-color:#526052;color:#c7d4be}
+.hero.hero-editorial{
+  position:relative;
+  isolation:isolate;
+  border-bottom:1px solid #283732;
+  padding:13px 0 39px;
+}
+.hero.hero-editorial:after{
+  content:"";
+  position:absolute;
+  inset:0 0 0 42%;
+  pointer-events:none;
+  z-index:-1;
+  background:
+    linear-gradient(135deg,transparent 6%,#52645409 35%,transparent 65%),
+    radial-gradient(ellipse 70% 82% at 58% 28%,#879b7d16,transparent 70%);
+}
+.hero-eyebrow-row{color:#92a59c}
+.overline{color:#b6c7b5;letter-spacing:2.7px}
+.hero h1{color:#f0f3eb;text-shadow:0 3px 22px #050a0b70}
+.hero h1 em{color:#b9c8b7;letter-spacing:.4px}
+.hero-sub{color:#c9d2c5;letter-spacing:2px}
+.hero-description{color:#a6b5ab}
+.hero-period{color:var(--acfh-amber)}
+.hero-metadata{color:#9baa9c;border-color:#49554b}
+.micro-rule{background:var(--acfh-amber)}
+.hero-action{
+  background:#c7d4b8;
+  border:1px solid #d7e0c3;
+  color:#141d19;
+  transition:background .16s ease;
+}
+.hero-action:hover{background:#e1ead3;transform:none}
+.snapshot{color:#9cad9c}
+.gunsmith-section{
+  background:#0e1718;
+  border-color:#48584e;
+  box-shadow:0 18px 55px #0007,inset 0 1px #b9cbb20a;
+}
+.gunsmith-section:before{
+  background:linear-gradient(90deg,var(--acfh-amber),transparent);
+  opacity:.8;
+}
+.gunsmith-intro{
+  background:linear-gradient(110deg,#1c2828 0,#121c1f 72%,#162323 100%);
+  border-bottom:1px solid #49564c;
+}
+.gunsmith-heading h2{color:#e8eee6;font-size:clamp(22px,2.6vw,29px);letter-spacing:.4px}
+.gunsmith-heading p{color:#aebbb0}
+.workbench-badge{border-color:#506153;color:#b1c0b2}
+.badge-live{background:#23332b;border-color:#68816b;color:#d6e5ce}
+.badge-live span{box-shadow:none}
+.bench-scroll{background:#0b1315}
+.bench-canvas{
+  background-color:#0b1213;
+  background-image:
+    linear-gradient(180deg,#090e11aa 0,transparent 35%,#03070822 72%,#030607aa 100%),
+    url("./armory-environment.svg");
+  background-position:center,center;
+  background-size:cover,cover;
+  background-repeat:no-repeat;
+  box-shadow:inset 0 32px 42px -42px #0009,inset 0 -35px 36px -42px #000;
+}
+.bench-canvas:before{
+  content:"";position:absolute;inset:0;
+  left:0;right:0;top:0;height:auto;z-index:0;
+  background:
+    radial-gradient(ellipse 32% 35% at 49% 24%,#e0ddba10,transparent 95%),
+    linear-gradient(90deg,#05090b55,transparent 16%,transparent 85%,#05090b66);
+  box-shadow:none;pointer-events:none;
+}
+.bench-canvas:after{
+  content:"";position:absolute;inset:0;z-index:0;
+  pointer-events:none;
+  background:linear-gradient(180deg,#121e1c15,transparent 30%,#04080824);
+}
+.bench-grid{
+  opacity:.23;
+  background:linear-gradient(#b7c3a00e 1px,transparent 1px),linear-gradient(90deg,#b7c3a00e 1px,transparent 1px);
+  background-size:50px 50px;
+}
+.bench-gun{
+  filter:drop-shadow(0 12px 5px #000b) drop-shadow(0 1px 12px #0006)!important;
+  transform:none;
+}
+.bench-magazine{filter:drop-shadow(-1px 4px 2px #0008)}
+.bench-watermark{color:#b4c2af;font-size:9px;letter-spacing:2px;text-shadow:0 1px 2px #000}
+.bench-model-kind,.bench-model-measure{color:#bdcbbb}
+.bench-lines line{stroke:#a6b9a4;stroke-opacity:.44;stroke-dasharray:4 5}
+.bench-slot{
+  color:#e5ece1;
+  border:1px solid #647468;
+  background:linear-gradient(135deg,#21302de9,#131f20f5);
+  box-shadow:0 8px 18px #0006;
+  backdrop-filter:none;
+  border-radius:2px;
+  transition:border-color .14s ease,background .14s ease;
+}
+.bench-slot:before{background:#9eac8a}
+.bench-slot:hover,.bench-slot:focus-visible{
+  background:#273a33;
+  border-color:#ced8b8;
+  transform:translate(-50%,-50%);
+  box-shadow:0 8px 18px #0006;
+}
+.bench-slot.active{
+  background:#304036;
+  border-color:#c7d7af;
+  box-shadow:inset 3px 0 #bed3a8;
+}
+.bench-slot.installed{background:#22382d;border-color:#8db49a}
+.bench-slot.not-ready{background:#152022df;border-color:#4a5a54}
+.bench-slot-name{color:#eef0e6}
+.bench-slot-state{color:#b0c1b5}
+.bench-slot:focus-visible{outline:2px solid #d7e7b8;outline-offset:2px}
+.model-reference-controls{
+  background:#111d1dec;
+  border:1px solid #617165;
+}
+.model-view-button{background:#1b2929;color:#bfcec0}
+.model-view-button.selected{background:#344739;border-color:#94b49b;color:#eef4e7}
+.panel,.details-panel{
+  background:#141e20;
+  border:1px solid #364740;
+}
+.panel h2,.panel h3{color:#e7efe7}
+.summary-card{
+  background:#172224;
+  border:1px solid #405048;
+  box-shadow:inset 0 1px #d5e5cb08;
+}
+.summary-card:before{width:30px;height:2px;background:var(--acfh-amber)}
+.summary-card strong{color:#eaf2e7;font-variant-numeric:tabular-nums}
+.summary-card span{color:#b4c3b8}
+.summary-card small{color:#92a499}
+.bench-footer{border-top:1px solid #3b4c44}
+.bench-drawer{background:#182322;border-color:#647569}
+.bench-option:focus-visible,.drawer-close:focus-visible{outline:2px solid #c2dbad;outline-offset:2px}
+@media(max-width:1000px){
+  .bench-canvas{background-position:center,center top;background-size:cover,auto 360px;background-color:#0b1213}
+  .bench-canvas:before{height:265px;inset:0 0 auto}
+  .bench-canvas:after{height:265px;inset:0 0 auto}
+  .bench-grid{height:260px;opacity:.15}
+  .bench-slot{box-shadow:none}
+  .bench-slot:hover,.bench-slot:focus-visible{transform:none!important;box-shadow:none}
+}
+@media(max-width:530px){
+  .hero.hero-editorial{padding-bottom:28px}
+  .hero h1{letter-spacing:-3.5px;text-shadow:none}
+  .hero h1 em{letter-spacing:.5px}
+  .gunsmith-intro{padding:20px 17px}
+  .bench-canvas{background-size:cover,auto 245px;background-position:center,center top}
+  .bench-canvas:before,.bench-canvas:after{height:216px}
+  .bench-grid{height:214px}
+  .bench-slot{background:#192725f5;border-color:#59695c}
+  .bench-slot-name{font-size:12px}
+  .bench-watermark{color:#a9bbaa}
+}
+@media(prefers-reduced-motion:reduce){
+  .bench-canvas,.bench-slot,.hero-action{transition:none!important}
+}
+@media(prefers-contrast:more){
+  .bench-slot{border-color:#b2c6b6}
+  .bench-slot.not-ready .bench-slot-state{color:#c3ccc4}
+  .bench-gun{filter:none!important}
+}
