@@ -841,5 +841,689 @@
       "formulaValidated": false
     },
     "parameterValidated": false
+  },
+  {
+    "id": "sandstorm-vertical-compensator",
+    "objectId": 13130000168,
+    "slot": "muzzle",
+    "name": "沙暴垂直補償器",
+    "effects": {
+      "recoilControl": 9
+    },
+    "compatibleWeapons": [
+      "akm"
+    ],
+    "confidence": "slot-inferred",
+    "source": "https://gamegrids.io/delta-force/zh/attachments/sandstorm-vertical-compensator/",
+    "dataAsOf": "2026-09-23",
+    "lastChecked": "2026-10-24",
+    "dataStatus": "community-unverified",
+    "sourceTier": "community-secondary",
+    "platformValidated": false,
+    "parameterValidated": false,
+    "accessoryDetails": {
+      "weightKg": 0.58,
+      "rarityGrade": 4,
+      "inventoryCells": [
+        1,
+        1
+      ],
+      "quickDetach": true
+    },
+    "fitmentEvidence": {
+      "status": "candidate",
+      "type": "third-party-derived",
+      "reference": "https://topbuilds.gg/delta-force/weapons/akm/",
+      "platform": "mobile-not-individually-verified",
+      "checkedAt": null,
+      "scope": "AKM build cited, different platform/version possible"
+    },
+    "effectEvidence": {
+      "status": "secondary",
+      "reference": "https://gamegrids.io/delta-force/zh/attachments/sandstorm-vertical-compensator/",
+      "asOf": "2026-09-23",
+      "formulaValidated": false
+    },
+    "reviewNote": "AKM 配裝攻略有列此名稱，但不等同 2026 手遊核驗，僅研究模式試算。",
+    "secondarySources": [
+      "https://topbuilds.gg/delta-force/weapons/akm/"
+    ]
+  },
+  {
+    "id": "titan-suppressor",
+    "objectId": 13130000183,
+    "slot": "muzzle",
+    "name": "泰坦消音器",
+    "effects": {
+      "recoilControl": 16,
+      "handling": -8,
+      "aimStability": 4,
+      "hipFireAccuracy": -16
+    },
+    "compatibleWeapons": [
+      "akm"
+    ],
+    "confidence": "slot-inferred",
+    "source": "https://gamegrids.io/delta-force/zh/attachments/titan-suppressor/",
+    "dataAsOf": "2026-09-23",
+    "lastChecked": "2026-10-24",
+    "dataStatus": "community-unverified",
+    "sourceTier": "community-secondary",
+    "platformValidated": false,
+    "parameterValidated": false,
+    "accessoryDetails": {
+      "weightKg": 1.2,
+      "rarityGrade": 4,
+      "inventoryCells": [
+        1,
+        1
+      ],
+      "quickDetach": true
+    },
+    "fitmentEvidence": {
+      "status": "candidate",
+      "type": "third-party-derived",
+      "reference": "https://gamegrids.io/delta-force/zh/attachments/titan-suppressor/",
+      "platform": "mobile-not-individually-verified",
+      "checkedAt": null,
+      "scope": "generic-slot-only, not AKM individual proof"
+    },
+    "effectEvidence": {
+      "status": "secondary",
+      "reference": "https://gamegrids.io/delta-force/zh/attachments/titan-suppressor/",
+      "asOf": "2026-09-23",
+      "formulaValidated": false
+    },
+    "reviewNote": "第三方頁面將 AKM 相容性依通用槽位推導，未經手遊逐件核對；僅研究模式試算。",
+    "secondarySources": [
+      "https://deltaforcetools.gg/tw/wiki/attachment/muzzle"
+    ]
+  },
+  {
+    "id": "titan-compensator",
+    "objectId": 13130000166,
+    "slot": "muzzle",
+    "name": "泰坦補償器",
+    "effects": {
+      "recoilControl": 10,
+      "handling": -4,
+      "hipFireAccuracy": 12
+    },
+    "compatibleWeapons": [
+      "akm"
+    ],
+    "confidence": "slot-inferred",
+    "source": "https://gamegrids.io/delta-force/zh/attachments/titan-compensator/",
+    "dataAsOf": "2026-09-23",
+    "lastChecked": "2026-10-24",
+    "dataStatus": "community-unverified",
+    "sourceTier": "community-secondary",
+    "platformValidated": false,
+    "parameterValidated": false,
+    "accessoryDetails": {
+      "weightKg": 0.73,
+      "rarityGrade": 4,
+      "inventoryCells": [
+        1,
+        1
+      ],
+      "quickDetach": true
+    },
+    "fitmentEvidence": {
+      "status": "candidate",
+      "type": "third-party-derived",
+      "reference": "https://gamegrids.io/delta-force/zh/attachments/titan-compensator/",
+      "platform": "mobile-not-individually-verified",
+      "checkedAt": null,
+      "scope": "generic-slot-only, not AKM individual proof"
+    },
+    "effectEvidence": {
+      "status": "secondary",
+      "reference": "https://gamegrids.io/delta-force/zh/attachments/titan-compensator/",
+      "asOf": "2026-09-23",
+      "formulaValidated": false
+    },
+    "reviewNote": "第三方頁面將 AKM 相容性依通用槽位推導，未經手遊逐件核對；僅研究模式試算。",
+    "secondarySources": [
+      "https://deltaforcetools.gg/tw/wiki/attachment/muzzle"
+    ]
+  },
+  {
+    "id": "bastion-horizontal-compensator",
+    "objectId": 13130000167,
+    "slot": "muzzle",
+    "name": "堡壘水平補償器",
+    "effects": {
+      "recoilControl": 9
+    },
+    "compatibleWeapons": [
+      "akm"
+    ],
+    "confidence": "slot-inferred",
+    "source": "https://gamegrids.io/delta-force/zh/attachments/bastion-horizontal-compensator/",
+    "dataAsOf": "2026-09-23",
+    "lastChecked": "2026-10-24",
+    "dataStatus": "community-unverified",
+    "sourceTier": "community-secondary",
+    "platformValidated": false,
+    "parameterValidated": false,
+    "accessoryDetails": {
+      "weightKg": 0.57,
+      "rarityGrade": 4,
+      "inventoryCells": [
+        1,
+        1
+      ],
+      "quickDetach": true
+    },
+    "fitmentEvidence": {
+      "status": "candidate",
+      "type": "third-party-derived",
+      "reference": "https://gamegrids.io/delta-force/zh/attachments/bastion-horizontal-compensator/",
+      "platform": "mobile-not-individually-verified",
+      "checkedAt": null,
+      "scope": "generic-slot-only, not AKM individual proof"
+    },
+    "effectEvidence": {
+      "status": "secondary",
+      "reference": "https://gamegrids.io/delta-force/zh/attachments/bastion-horizontal-compensator/",
+      "asOf": "2026-09-23",
+      "formulaValidated": false
+    },
+    "reviewNote": "第三方頁面將 AKM 相容性依通用槽位推導，未經手遊逐件核對；僅研究模式試算。",
+    "secondarySources": [
+      "https://deltaforcetools.gg/tw/wiki/attachment/muzzle"
+    ]
+  },
+  {
+    "id": "ffc-dual-flow-brake",
+    "objectId": 13130000224,
+    "slot": "muzzle",
+    "name": "FFC 雙流制退器",
+    "effects": {
+      "recoilControl": 10,
+      "handling": -4,
+      "aimStability": 3
+    },
+    "compatibleWeapons": [
+      "akm"
+    ],
+    "confidence": "slot-inferred",
+    "source": "https://gamegrids.io/delta-force/zh/attachments/ffc-dual-flow-muzzle-brake/",
+    "dataAsOf": "2026-09-23",
+    "lastChecked": "2026-10-24",
+    "dataStatus": "community-unverified",
+    "sourceTier": "community-secondary",
+    "platformValidated": false,
+    "parameterValidated": false,
+    "accessoryDetails": {
+      "weightKg": 0.25,
+      "rarityGrade": 4,
+      "inventoryCells": [
+        1,
+        1
+      ],
+      "quickDetach": true
+    },
+    "fitmentEvidence": {
+      "status": "candidate",
+      "type": "third-party-derived",
+      "reference": "https://gamegrids.io/delta-force/zh/attachments/ffc-dual-flow-muzzle-brake/",
+      "platform": "mobile-not-individually-verified",
+      "checkedAt": null,
+      "scope": "generic-slot-only, not AKM individual proof"
+    },
+    "effectEvidence": {
+      "status": "secondary",
+      "reference": "https://gamegrids.io/delta-force/zh/attachments/ffc-dual-flow-muzzle-brake/",
+      "asOf": "2026-09-23",
+      "formulaValidated": false
+    },
+    "reviewNote": "第三方頁面將 AKM 相容性依通用槽位推導，未經手遊逐件核對；僅研究模式試算。",
+    "secondarySources": [
+      "https://deltaforcetools.gg/tw/wiki/attachment/muzzle"
+    ]
+  },
+  {
+    "id": "pbs-russian-suppressor",
+    "objectId": 13130000173,
+    "slot": "muzzle",
+    "name": "PBS 俄式消音器",
+    "effects": {
+      "recoilControl": 10,
+      "handling": -4
+    },
+    "compatibleWeapons": [
+      "akm"
+    ],
+    "confidence": "slot-inferred",
+    "source": "https://gamegrids.io/delta-force/zh/attachments/pbs-russian-suppressor/",
+    "dataAsOf": "2026-09-23",
+    "lastChecked": "2026-10-24",
+    "dataStatus": "community-unverified",
+    "sourceTier": "community-secondary",
+    "platformValidated": false,
+    "parameterValidated": false,
+    "accessoryDetails": {
+      "weightKg": 1.1,
+      "rarityGrade": 4,
+      "inventoryCells": [
+        1,
+        1
+      ],
+      "quickDetach": true
+    },
+    "fitmentEvidence": {
+      "status": "candidate",
+      "type": "third-party-derived",
+      "reference": "https://gamegrids.io/delta-force/zh/attachments/pbs-russian-suppressor/",
+      "platform": "mobile-not-individually-verified",
+      "checkedAt": null,
+      "scope": "generic-slot-only, not AKM individual proof"
+    },
+    "effectEvidence": {
+      "status": "secondary",
+      "reference": "https://gamegrids.io/delta-force/zh/attachments/pbs-russian-suppressor/",
+      "asOf": "2026-09-23",
+      "formulaValidated": false
+    },
+    "reviewNote": "第三方頁面將 AKM 相容性依通用槽位推導，未經手遊逐件核對；僅研究模式試算。",
+    "secondarySources": [
+      "https://deltaforcetools.gg/tw/wiki/attachment/muzzle"
+    ]
+  },
+  {
+    "id": "whisper-tactical-suppressor",
+    "objectId": 13130000164,
+    "slot": "muzzle",
+    "name": "輕語戰術消音器",
+    "effects": {
+      "recoilControl": 6,
+      "handling": -5,
+      "aimStability": 2,
+      "hipFireAccuracy": -4,
+      "effectiveRangePct": 18,
+      "muzzleVelocityPct": 18
+    },
+    "compatibleWeapons": [
+      "akm"
+    ],
+    "confidence": "slot-inferred",
+    "source": "https://gamegrids.io/delta-force/zh/attachments/whisper-tactical-suppressor/",
+    "dataAsOf": "2026-09-23",
+    "lastChecked": "2026-10-24",
+    "dataStatus": "community-unverified",
+    "sourceTier": "community-secondary",
+    "platformValidated": false,
+    "parameterValidated": false,
+    "accessoryDetails": {
+      "weightKg": 1.02,
+      "rarityGrade": 4,
+      "inventoryCells": [
+        1,
+        1
+      ],
+      "quickDetach": true
+    },
+    "fitmentEvidence": {
+      "status": "candidate",
+      "type": "third-party-derived",
+      "reference": "https://gamegrids.io/delta-force/zh/attachments/whisper-tactical-suppressor/",
+      "platform": "mobile-not-individually-verified",
+      "checkedAt": null,
+      "scope": "generic-slot-only, not AKM individual proof"
+    },
+    "effectEvidence": {
+      "status": "secondary",
+      "reference": "https://gamegrids.io/delta-force/zh/attachments/whisper-tactical-suppressor/",
+      "asOf": "2026-09-23",
+      "formulaValidated": false
+    },
+    "reviewNote": "第三方頁面將 AKM 相容性依通用槽位推導，未經手遊逐件核對；僅研究模式試算。",
+    "secondarySources": [
+      "https://deltaforcetools.gg/tw/wiki/attachment/muzzle"
+    ]
+  },
+  {
+    "id": "practical-flash-hider",
+    "objectId": 13130000155,
+    "slot": "muzzle",
+    "name": "實用消焰器",
+    "effects": {
+      "recoilControl": 2
+    },
+    "compatibleWeapons": [
+      "akm"
+    ],
+    "confidence": "slot-inferred",
+    "source": "https://gamegrids.io/delta-force/zh/attachments/practical-flash-hider/",
+    "dataAsOf": "2026-09-23",
+    "lastChecked": "2026-10-24",
+    "dataStatus": "community-unverified",
+    "sourceTier": "community-secondary",
+    "platformValidated": false,
+    "parameterValidated": false,
+    "accessoryDetails": {
+      "weightKg": 0.65,
+      "rarityGrade": 2,
+      "inventoryCells": [
+        1,
+        1
+      ],
+      "quickDetach": true
+    },
+    "fitmentEvidence": {
+      "status": "candidate",
+      "type": "third-party-derived",
+      "reference": "https://gamegrids.io/delta-force/zh/attachments/practical-flash-hider/",
+      "platform": "mobile-not-individually-verified",
+      "checkedAt": null,
+      "scope": "generic-slot-only, not AKM individual proof"
+    },
+    "effectEvidence": {
+      "status": "secondary",
+      "reference": "https://gamegrids.io/delta-force/zh/attachments/practical-flash-hider/",
+      "asOf": "2026-09-23",
+      "formulaValidated": false
+    },
+    "reviewNote": "第三方頁面將 AKM 相容性依通用槽位推導，未經手遊逐件核對；僅研究模式試算。",
+    "secondarySources": [
+      "https://deltaforcetools.gg/tw/wiki/attachment/muzzle"
+    ]
+  },
+  {
+    "id": "steel-muzzle-brake",
+    "objectId": 13130000158,
+    "slot": "muzzle",
+    "name": "鋼製膛口制退器",
+    "effects": {
+      "recoilControl": 6,
+      "aimStability": -1
+    },
+    "compatibleWeapons": [
+      "akm"
+    ],
+    "confidence": "slot-inferred",
+    "source": "https://gamegrids.io/delta-force/zh/attachments/steel-muzzle-brake/",
+    "dataAsOf": "2026-09-23",
+    "lastChecked": "2026-10-24",
+    "dataStatus": "community-unverified",
+    "sourceTier": "community-secondary",
+    "platformValidated": false,
+    "parameterValidated": false,
+    "accessoryDetails": {
+      "weightKg": 0.37,
+      "rarityGrade": 3,
+      "inventoryCells": [
+        1,
+        1
+      ],
+      "quickDetach": true
+    },
+    "fitmentEvidence": {
+      "status": "candidate",
+      "type": "third-party-derived",
+      "reference": "https://gamegrids.io/delta-force/zh/attachments/steel-muzzle-brake/",
+      "platform": "mobile-not-individually-verified",
+      "checkedAt": null,
+      "scope": "generic-slot-only, not AKM individual proof"
+    },
+    "effectEvidence": {
+      "status": "secondary",
+      "reference": "https://gamegrids.io/delta-force/zh/attachments/steel-muzzle-brake/",
+      "asOf": "2026-09-23",
+      "formulaValidated": false
+    },
+    "reviewNote": "第三方頁面將 AKM 相容性依通用槽位推導，未經手遊逐件核對；僅研究模式試算。",
+    "secondarySources": [
+      "https://deltaforcetools.gg/tw/wiki/attachment/muzzle"
+    ]
+  },
+  {
+    "id": "titanium-competition-brake",
+    "objectId": 13130000160,
+    "slot": "muzzle",
+    "name": "鈦金競賽制退器",
+    "effects": {
+      "recoilControl": 12,
+      "handling": -3
+    },
+    "compatibleWeapons": [
+      "akm"
+    ],
+    "confidence": "slot-inferred",
+    "source": "https://gamegrids.io/delta-force/zh/attachments/titanium-competition-muzzle-brake/",
+    "dataAsOf": "2026-09-23",
+    "lastChecked": "2026-10-24",
+    "dataStatus": "community-unverified",
+    "sourceTier": "community-secondary",
+    "platformValidated": false,
+    "parameterValidated": false,
+    "accessoryDetails": {
+      "weightKg": 0.75,
+      "rarityGrade": 4,
+      "inventoryCells": [
+        1,
+        1
+      ],
+      "quickDetach": true
+    },
+    "fitmentEvidence": {
+      "status": "candidate",
+      "type": "third-party-derived",
+      "reference": "https://gamegrids.io/delta-force/zh/attachments/titanium-competition-muzzle-brake/",
+      "platform": "mobile-not-individually-verified",
+      "checkedAt": null,
+      "scope": "generic-slot-only, not AKM individual proof"
+    },
+    "effectEvidence": {
+      "status": "secondary",
+      "reference": "https://gamegrids.io/delta-force/zh/attachments/titanium-competition-muzzle-brake/",
+      "asOf": "2026-09-23",
+      "formulaValidated": false
+    },
+    "reviewNote": "第三方頁面將 AKM 相容性依通用槽位推導，未經手遊逐件核對；僅研究模式試算。",
+    "secondarySources": [
+      "https://deltaforcetools.gg/tw/wiki/attachment/muzzle"
+    ]
+  },
+  {
+    "id": "advanced-multi-caliber-suppressor",
+    "objectId": 13130000208,
+    "slot": "muzzle",
+    "name": "先進多口徑消音器",
+    "effects": {
+      "recoilControl": 9,
+      "handling": -6,
+      "hipFireAccuracy": -4,
+      "effectiveRangePct": 18,
+      "muzzleVelocityPct": 18
+    },
+    "compatibleWeapons": [
+      "akm"
+    ],
+    "confidence": "slot-inferred",
+    "source": "https://gamegrids.io/delta-force/zh/attachments/advanced-multi-caliber-suppressor/",
+    "dataAsOf": "2026-09-23",
+    "lastChecked": "2026-10-24",
+    "dataStatus": "community-unverified",
+    "sourceTier": "community-secondary",
+    "platformValidated": false,
+    "parameterValidated": false,
+    "accessoryDetails": {
+      "weightKg": 0.1,
+      "rarityGrade": 4,
+      "inventoryCells": [
+        1,
+        1
+      ],
+      "quickDetach": true
+    },
+    "fitmentEvidence": {
+      "status": "candidate",
+      "type": "third-party-derived",
+      "reference": "https://gamegrids.io/delta-force/zh/attachments/advanced-multi-caliber-suppressor/",
+      "platform": "mobile-not-individually-verified",
+      "checkedAt": null,
+      "scope": "generic-slot-only, not AKM individual proof"
+    },
+    "effectEvidence": {
+      "status": "secondary",
+      "reference": "https://gamegrids.io/delta-force/zh/attachments/advanced-multi-caliber-suppressor/",
+      "asOf": "2026-09-23",
+      "formulaValidated": false
+    },
+    "reviewNote": "第三方頁面將 AKM 相容性依通用槽位推導，未經手遊逐件核對；僅研究模式試算。",
+    "secondarySources": [
+      "https://deltaforcetools.gg/tw/wiki/attachment/muzzle"
+    ]
+  },
+  {
+    "id": "pt1-special-stock",
+    "objectId": 13040000118,
+    "slot": "stock",
+    "name": "PT1 特種槍托",
+    "effects": {
+      "recoilControl": 8,
+      "handling": 4,
+      "aimStability": -4
+    },
+    "compatibleWeapons": [
+      "akm"
+    ],
+    "confidence": "slot-inferred",
+    "source": "https://gamegrids.io/delta-force/zh/attachments/pt1-special-stock/",
+    "dataAsOf": "2026-09-23",
+    "lastChecked": "2026-10-24",
+    "dataStatus": "community-unverified",
+    "sourceTier": "community-secondary",
+    "platformValidated": false,
+    "parameterValidated": false,
+    "accessoryDetails": {
+      "weightKg": 0.53,
+      "rarityGrade": 4,
+      "inventoryCells": [
+        2,
+        1
+      ],
+      "quickDetach": true
+    },
+    "fitmentEvidence": {
+      "status": "candidate",
+      "type": "third-party-derived",
+      "reference": "https://gamegrids.io/delta-force/zh/attachments/pt1-special-stock/",
+      "platform": "mobile-not-individually-verified",
+      "checkedAt": null,
+      "scope": "generic-slot-only, not AKM individual proof"
+    },
+    "effectEvidence": {
+      "status": "secondary",
+      "reference": "https://gamegrids.io/delta-force/zh/attachments/pt1-special-stock/",
+      "asOf": "2026-09-23",
+      "formulaValidated": false
+    },
+    "reviewNote": "第三方頁面將 AKM 相容性依通用槽位推導，未經手遊逐件核對；僅研究模式試算。",
+    "secondarySources": [
+      "https://deltaforcetools.gg/tw/wiki/attachment/stock"
+    ]
+  },
+  {
+    "id": "mrgs-skeleton-stock",
+    "objectId": 13040000183,
+    "slot": "stock",
+    "name": "MRGS 鏤空槍托",
+    "effects": {
+      "handling": 4,
+      "aimStability": 6,
+      "hipFireAccuracy": -8
+    },
+    "compatibleWeapons": [
+      "akm"
+    ],
+    "confidence": "slot-inferred",
+    "source": "https://gamegrids.io/delta-force/zh/attachments/mrgs-skeletonized-stock/",
+    "dataAsOf": "2026-09-23",
+    "lastChecked": "2026-10-24",
+    "dataStatus": "community-unverified",
+    "sourceTier": "community-secondary",
+    "platformValidated": false,
+    "parameterValidated": false,
+    "accessoryDetails": {
+      "weightKg": 0.1,
+      "rarityGrade": 4,
+      "inventoryCells": [
+        2,
+        1
+      ],
+      "quickDetach": true
+    },
+    "fitmentEvidence": {
+      "status": "candidate",
+      "type": "third-party-derived",
+      "reference": "https://codmunity.gg/zh-tw/weapon/deltaforce/akm",
+      "platform": "mobile-not-individually-verified",
+      "checkedAt": null,
+      "scope": "AKM build cited, different platform/version possible"
+    },
+    "effectEvidence": {
+      "status": "secondary",
+      "reference": "https://gamegrids.io/delta-force/zh/attachments/mrgs-skeletonized-stock/",
+      "asOf": "2026-09-23",
+      "formulaValidated": false
+    },
+    "reviewNote": "AKM 配裝攻略有列此名稱，但不等同 2026 手遊核驗，僅研究模式試算。",
+    "secondarySources": [
+      "https://codmunity.gg/zh-tw/weapon/deltaforce/akm"
+    ]
+  },
+  {
+    "id": "pt3-deathrider-stock",
+    "objectId": 13040000181,
+    "slot": "stock",
+    "name": "PT3 死士槍托",
+    "effects": {
+      "recoilControl": 3,
+      "handling": 3,
+      "aimStability": 3,
+      "hipFireAccuracy": -4
+    },
+    "compatibleWeapons": [
+      "akm"
+    ],
+    "confidence": "slot-inferred",
+    "source": "https://gamegrids.io/delta-force/zh/attachments/pt3-deathrider-stock/",
+    "dataAsOf": "2026-09-23",
+    "lastChecked": "2026-10-24",
+    "dataStatus": "community-unverified",
+    "sourceTier": "community-secondary",
+    "platformValidated": false,
+    "parameterValidated": false,
+    "accessoryDetails": {
+      "weightKg": 0.1,
+      "rarityGrade": 4,
+      "inventoryCells": [
+        2,
+        1
+      ],
+      "quickDetach": true
+    },
+    "fitmentEvidence": {
+      "status": "candidate",
+      "type": "third-party-derived",
+      "reference": "https://gamegrids.io/delta-force/zh/attachments/pt3-deathrider-stock/",
+      "platform": "mobile-not-individually-verified",
+      "checkedAt": null,
+      "scope": "generic-slot-only, not AKM individual proof"
+    },
+    "effectEvidence": {
+      "status": "secondary",
+      "reference": "https://gamegrids.io/delta-force/zh/attachments/pt3-deathrider-stock/",
+      "asOf": "2026-09-23",
+      "formulaValidated": false
+    },
+    "reviewNote": "第三方頁面將 AKM 相容性依通用槽位推導，未經手遊逐件核對；僅研究模式試算。",
+    "secondarySources": [
+      "https://deltaforcetools.gg/tw/wiki/attachment/stock"
+    ]
   }
 ]
