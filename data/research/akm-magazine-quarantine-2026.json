@@ -1,0 +1,32 @@
+{
+  "scope": "AKM 彈匣類候選：尚無 AKM 逐件手遊實機相容性驗證",
+  "checkedAt": "2026-10-24",
+  "candidates": [
+    {
+      "id": "ak762-wood-30-mag-research-only",
+      "objectId": 13120000240,
+      "slot": "magazine",
+      "name": "AK762 30 發木色彈匣",
+      "status": "blocked-candidate",
+      "researchOnly": true,
+      "reason": "僅找到 AK762 名稱和依照通用槽位推算的相容表；未核對 AKM 實機可裝配",
+      "advertisedEffects": {
+        "handling": 2,
+        "magazineCapacity": 30
+      },
+      "weightKg": 0.17,
+      "inventoryCells": [
+        1,
+        2
+      ],
+      "rarityGrade": 2,
+      "quickDetach": true,
+      "source": "https://gamegrids.io/delta-force/zh/attachments/ak762-30-round-magazine-wood/",
+      "sourceDataAsOf": "2026-09-23",
+      "platformValidated": false,
+      "fitmentVerified": false,
+      "excludedFromBuildCalculations": true,
+      "nextEvidenceNeeded": "AKM 手遊裝配槽實機截圖、裝備後面板數值及平台/版本"
+    }
+  ]
+}
