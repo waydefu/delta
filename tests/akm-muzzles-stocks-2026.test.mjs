@@ -13,12 +13,12 @@ const newIDs=[
  "titanium-competition-brake","advanced-multi-caliber-suppressor",
  "pt1-special-stock","mrgs-skeleton-stock","pt3-deathrider-stock"
 ];
-test("2026 sourced AKM research coverage: 13 muzzle, 7 stock, 35 total",()=>{
- assert.equal(all.length,35);
- assert.equal(all.filter(x=>x.slot==="muzzle").length,13);
- assert.equal(all.filter(x=>x.slot==="stock").length,7);
- assert.equal(new Set(all.map(x=>x.objectId)).size,35);
- assert.equal(new Set(all.map(x=>x.id)).size,35);
+test("2026 sourced AKM research coverage: 16 muzzle, 14 stock, 45 total",()=>{
+ assert.equal(all.length,45);
+ assert.equal(all.filter(x=>x.slot==="muzzle").length,16);
+ assert.equal(all.filter(x=>x.slot==="stock").length,14);
+ assert.equal(new Set(all.map(x=>x.objectId)).size,45);
+ assert.equal(new Set(all.map(x=>x.id)).size,45);
  assert.equal(auditAttachments(weapon,all).issues.length,0);
 });
 test("all 14 additions have stable item IDs, dated individual sources and explicit research-only evidence status",()=>{
