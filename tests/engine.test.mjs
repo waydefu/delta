@@ -235,7 +235,8 @@ test("AKM 彈匣容量覆寫，不應被當作可加總增益",()=>{
  assert.equal(polymer.stats.handling,58);
  assert.equal(drum.stats.magazineCapacity,70);
  assert.equal(drum.stats.handling,39);
- assert.match(drum.sourceWarnings.join(" "),/2024/);
+ assert.match(drum.sourceWarnings.join(" "),/尚未經手遊核驗/);
+ assert.equal(attachments.find(p=>p.id==="akm-70-drum").historicalComparison.asOf,"2024-12-21");
 });
 test("歷史配件清單與已研究數值必須明示來源、日期與驗證程度",()=>{
  assert.equal(attachments.length,21);
