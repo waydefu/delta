@@ -28,5 +28,7 @@ jobs:
           node --check src/local-viewer.mjs
       - name: Verify shipped CC0 GLB, textures and SHA256
         run: node scripts/check-akm-model.mjs
+      - name: Workflow governance policy
+        run: node scripts/governance-check.mjs
       - name: Unit tests
         run: node --test tests/*.test.mjs
