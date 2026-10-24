@@ -692,7 +692,7 @@ body {
 @media(max-width:600px){.local-viewer-toolbar{top:57px;left:7px;right:7px;gap:4px}.local-viewer-action{min-height:33px;padding:6px 8px}.local-viewer-caveat{font-size:9px;flex-basis:100%;padding:6px 8px}}
 
 
-/* === ACFH V1.3 / INTEGRATED EDITORIAL ARMORY ===
+/* === ACFH V1.4 / INTEGRATED WORKBENCH & LIVE METRICS ===
  * One source of truth for this release's art direction.
  * Keep calibrated 2D geometry, research labels and the original DOM data IDs.
  * No external image assets or perpetual animation loops.
@@ -755,6 +755,37 @@ body{background:linear-gradient(180deg,#0a0f11,#0c1314 48%,#090e10);color:var(--
  border:0;border-top:1px solid var(--arm-line);padding:15px 0 0;
  margin:0;color:#91a69a;min-width:0;gap:8px;font:9px monospace;letter-spacing:1.1px;
 }
+.armory-workbench-layout{
+ display:grid;grid-template-columns:minmax(240px,284px) minmax(0,1fr);
+ border-top:1px solid var(--arm-line-strong);
+ align-items:stretch;gap:0;min-width:0;
+}
+.armory-metrics{
+ min-width:0;max-height:663px;overflow-y:auto;
+ padding:14px 21px 18px 0!important;
+ margin:0!important;border:0!important;
+ border-right:1px solid var(--arm-line)!important;
+ scrollbar-color:#8ea29066 transparent;scrollbar-width:thin;
+}
+.armory-metrics .panel-heading{align-items:start;display:block}
+.armory-metrics .panel-heading h2{font-size:22px;margin:5px 0 9px;line-height:1.22}
+.armory-metrics .panel-heading .subtle-tag{display:inline-block;font-size:9px}
+.armory-metrics .muted{margin:10px 0 0;font-size:11px;line-height:1.8}
+.armory-metrics .stats{margin-top:18px;gap:15px}
+.armory-metrics .stat-row{min-width:0}
+.armory-metrics .stat-head{display:flex;align-items:start;flex-wrap:wrap;gap:5px}
+.armory-metrics .stat-values{gap:6px;align-items:baseline;flex-wrap:wrap}
+.armory-metrics .stat-current{font-size:19px;font-variant-numeric:tabular-nums}
+.armory-metrics .stat-track{height:3px;margin-top:7px}
+.armory-metrics .section-heading h3{font-size:12px}
+.armory-metrics .base-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.armory-metrics .base-grid>div{padding:9px 3px!important}
+.armory-metrics .base-grid strong{font-size:15px}
+.metrics-current-part{margin:14px 0 4px;border-left:2px solid var(--arm-sage);
+ padding:5px 0 5px 10px;font-size:11px;color:#d9e9d4;
+ line-height:1.55;overflow-wrap:anywhere}
+.armory-workbench-layout .gunsmith-section{min-width:0;margin:0!important;padding:0 0 0 22px!important}
+.armory-workbench-layout .bench-mount{min-width:0!important;width:100%}
 .gunsmith-section{
  position:relative;background:none!important;border:0!important;
  box-shadow:none!important;margin:0!important;padding:0!important;
@@ -823,7 +854,7 @@ body{background:linear-gradient(180deg,#0a0f11,#0c1314 48%,#090e10);color:var(--
  width:100%;min-height:43px;padding:8px 12px 7px 16px;
  border:0!important;border-bottom:1px solid #697c6a2d!important;border-radius:0;
  background:transparent!important;box-shadow:none!important;backdrop-filter:none;
- display:grid;grid-template-columns:23px minmax(0,1fr) 12px 62px;gap:6px;
+ display:grid;grid-template-columns:23px minmax(0,1fr) 12px;gap:3px 6px;
  align-items:center;text-align:left;color:#dce6db;
  transition:background-color .13s ease,color .13s ease,border-color .13s ease;
  flex-shrink:0;
@@ -839,7 +870,11 @@ body{background:linear-gradient(180deg,#0a0f11,#0c1314 48%,#090e10);color:var(--
 .bench-slot-sequence{font:10px monospace;color:#789687}
 .bench-slot-name{font-size:12px;color:#e1e9de;font-weight:650;letter-spacing:.1px}
 .bench-slot-icon{font-size:12px;color:#a7c5a6;line-height:1;min-width:0;margin:0}
-.bench-slot-state{font-size:10px;white-space:nowrap;text-align:right;color:#8ca99a}
+.bench-slot-state{
+ grid-column:2/-1;font-size:10px;text-align:left;line-height:1.35;
+ white-space:normal;overflow-wrap:anywhere;color:#8ca99a
+}
+.bench-slot.installed .bench-slot-state{color:#d4e5c9;font-weight:590}
 .bench-slot.not-ready .bench-slot-state{color:#71887e}
 .bench-slot.not-ready .bench-slot-icon{color:#71887e}
 .bench-canvas.is-model-preview .bench-slot-rail{display:none}
@@ -896,12 +931,12 @@ body{background:linear-gradient(180deg,#0a0f11,#0c1314 48%,#090e10);color:var(--
 .ammo-banner>span{color:#d9e1d0;font-size:12px}
 .ammo-banner>div{color:#9daea3}
 .workspace{
- display:grid;grid-template-columns:1.1fr 1fr;gap:0;
+ display:grid;grid-template-columns:minmax(0,1fr);gap:0;
  margin-bottom:45px;border-top:1px solid var(--arm-line);
  border-bottom:1px solid var(--arm-line);
 }
 .workspace>.panel{padding:31px clamp(17px,3vw,42px) 36px!important;margin:0!important}
-.workspace>.panel:first-child{padding-left:0!important;border-right:1px solid var(--arm-line)!important}
+.workspace>.panel:first-child{padding-left:0!important;border-right:0!important}
 .workspace>.panel:last-child{padding-right:0!important}
 .panel h2{font-size:clamp(24px,2.3vw,32px);font-weight:630;letter-spacing:-.035em}
 .eyebrow{font:650 10px monospace;letter-spacing:1.5px;color:#acc4ab}
@@ -956,6 +991,17 @@ body{background:linear-gradient(180deg,#0a0f11,#0c1314 48%,#090e10);color:var(--
 .source-panel{margin-bottom:12px!important;padding:27px 0!important;border-top:1px solid var(--arm-line)!important}
 .research-result{background:transparent!important;border-color:var(--arm-line)!important;box-shadow:none!important}
 .bench-drawer{background:#18241f;border-color:#67816b}
+@media(max-width:1180px){
+ .armory-workbench-layout{display:flex;flex-direction:column}
+ .armory-workbench-layout .gunsmith-section{order:1;padding:0!important}
+ .armory-metrics{
+  order:2;max-height:none;overflow:visible;border-right:0!important;
+  border-top:1px solid var(--arm-line)!important;padding:23px 0 22px!important
+ }
+ .armory-metrics .panel-heading{display:flex;align-items:center;flex-wrap:wrap}
+ .armory-metrics .stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:19px 23px}
+ .armory-metrics .base-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+}
 @media(max-width:1000px){
  .armory-experience{margin-bottom:40px}
  .hero.hero-editorial{grid-template-columns:1fr;padding:12px 0 23px}
@@ -1026,6 +1072,11 @@ body{background:linear-gradient(180deg,#0a0f11,#0c1314 48%,#090e10);color:var(--
  .bench-slot-rail{margin-top:228px;grid-template-columns:repeat(3,minmax(0,1fr))}
  .bench-rail-head{min-height:45px}
  .bench-slot,.bench-slot.not-ready,.bench-slot.installed{min-height:62px}
+ .armory-metrics .stats{grid-template-columns:1fr 1fr;gap:17px 13px}
+ .armory-metrics .stat-head{display:block}
+ .armory-metrics .stat-values{margin-top:5px}
+ .armory-metrics .stat-current{font-size:17px}
+ .armory-metrics .base-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
  .bench-watermark{top:205px;font-size:8px;right:10px}
  .bench-overlay{top:199px;left:10px}
  .model-reference-controls{top:6px;left:6px}
