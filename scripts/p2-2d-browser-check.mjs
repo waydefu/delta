@@ -195,6 +195,23 @@ try{
      assert.match(await stock.locator(".bench-slot-state").innerText(),/MRGS 鏤空槍托/);
      assert.match(await page.locator("#metrics-current-part").innerText(),/MRGS 鏤空槍托/);
      record.muzzleStockDataVerified=true;
+     // Round 2: select newly sourced candidates, not only prior entries.
+     await muzzle.click();await drawer.waitFor({state:"visible"});
+     await drawer.getByRole("searchbox",{name:"搜尋槍口配件"}).fill("餘燼");
+     const newMuzzle=drawer.locator(".bench-option:visible");
+     assert.equal(await newMuzzle.count(),1,"New muzzle item missing from filtered list");
+     assert.match(await newMuzzle.locator(".option-magazine-meta").innerText(),/0\\.8 kg/);
+     await newMuzzle.click();await drawer.waitFor({state:"hidden"});
+     assert.match(await muzzle.locator(".bench-slot-state").innerText(),/餘燼消音器/);
+     assert.match(await page.locator("#metrics-current-part").innerText(),/餘燼消音器/);
+     await stock.click();await drawer.waitFor({state:"visible"});
+     await drawer.getByRole("searchbox",{name:"搜尋槍托配件"}).fill("AK19");
+     const newStock=drawer.locator(".bench-option:visible");
+     assert.equal(await newStock.count(),1,"New stock item missing from filtered list");
+     await newStock.click();await drawer.waitFor({state:"hidden"});
+     assert.match(await stock.locator(".bench-slot-state").innerText(),/AK19 槍托/);
+     assert.match(await page.locator("#metrics-current-part").innerText(),/AK19 槍托/);
+     record.round2MuzzleStockVerified=true;
    }
    if(config.name==="desktop"){
     await page.getByRole("button",{name:"切換介面動效"}).click();
