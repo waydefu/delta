@@ -53,6 +53,7 @@ export function initGunsmith(mount,selections,attachments,onPick,weapon,options=
   artToggle.textContent=enabled?"查看可拆件 SVG":"查看精細 2D 插畫";
   artToggle.setAttribute("aria-pressed",String(enabled));
  };
+ setArtPreview(true);
  artToggle.addEventListener("click",()=>setArtPreview(!stage.classList.contains("is-art-preview")));
  illustration.addEventListener("error",()=>{
   setArtPreview(false);
