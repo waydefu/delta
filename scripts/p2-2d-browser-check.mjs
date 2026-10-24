@@ -173,6 +173,29 @@ try{
      assert.match(await page.locator("#metrics-current-part").innerText(),/AKM 70 發大彈鼓/);
      record.magazineDataVerified=true;
    }
+   if(config.name==="desktop"||config.name==="mobile-390"){
+     const muzzle=page.locator('.bench-slot[data-slot="muzzle"]');
+     await muzzle.click();await drawer.waitFor({state:"visible"});
+     const search=drawer.getByRole("searchbox",{name:"搜尋槍口配件"});
+     assert.ok(await search.isVisible(),"Muzzle candidate search missing");
+     assert.equal(await drawer.locator(".bench-option").count(),14,"Expected 13 muzzles + reset");
+     await search.fill("沙暴");
+     assert.equal(await drawer.locator(".bench-option:visible").count(),1,"Search did not narrow candidates");
+     await drawer.locator(".bench-option:visible").click();
+     await drawer.waitFor({state:"hidden"});
+     assert.match(await muzzle.locator(".bench-slot-state").innerText(),/沙暴垂直補償器/);
+     assert.match(await page.locator("#metrics-current-part").innerText(),/沙暴垂直補償器/);
+     const stock=page.locator('.bench-slot[data-slot="stock"]');
+     await stock.click();await drawer.waitFor({state:"visible"});
+     assert.equal(await drawer.locator(".bench-option").count(),8,"Expected 7 stocks + reset");
+     await drawer.getByRole("searchbox",{name:"搜尋槍托配件"}).fill("MRGS");
+     assert.equal(await drawer.locator(".bench-option:visible").count(),1,"Stock search did not narrow candidates");
+     await drawer.locator(".bench-option:visible").click();
+     await drawer.waitFor({state:"hidden"});
+     assert.match(await stock.locator(".bench-slot-state").innerText(),/MRGS 鏤空槍托/);
+     assert.match(await page.locator("#metrics-current-part").innerText(),/MRGS 鏤空槍托/);
+     record.muzzleStockDataVerified=true;
+   }
    if(config.name==="desktop"){
     await page.getByRole("button",{name:"切換介面動效"}).click();
     assert.equal(await page.locator(".studio-light-canvas").count(),0,"Motion off did not release GPU");

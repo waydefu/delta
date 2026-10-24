@@ -1020,6 +1020,14 @@ body{background:linear-gradient(180deg,#0a0f11,#0c1314 48%,#090e10);color:var(--
 .flight-chart-panel{background:none;border:1px solid var(--arm-line)}
 .source-panel{margin-bottom:12px!important;padding:27px 0!important;border-top:1px solid var(--arm-line)!important}
 .research-result{background:transparent!important;border-color:var(--arm-line)!important;box-shadow:none!important}
+.bench-option-search{
+ width:100%;min-height:44px;margin:14px 0 5px;
+ border:1px solid #66806d;border-radius:2px;
+ background:#101b1a;color:#e7efe5;padding:10px 13px;font-size:13px;
+}
+.bench-option-search:focus-visible{outline:2px solid #cce4ba;outline-offset:2px}
+.bench-option-count{display:block;color:#9aafa1;font-size:11px;margin:2px 0 11px}
+.bench-option[hidden]{display:none!important}
 .option-magazine-meta{
  display:block;margin-top:8px;color:#d2e4d3;
  font-size:11px;line-height:1.55;overflow-wrap:anywhere
