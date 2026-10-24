@@ -74,6 +74,18 @@ try{
    if(!config.mobile)assert.equal(editorial.slotBorder,"0px","Desktop callout should be label, not boxed card");
    if(config.mobile)assert.ok(editorial.slotHeight>=44,"Mobile slot touch target too small");
    assert.equal(await page.locator(".studio-light-canvas").count(),0,"GPU canvas allocated before interaction");
+   const sideMetrics=await page.evaluate(()=>{
+    const left=document.querySelector(".armory-metrics")?.getBoundingClientRect();
+    const stage=document.querySelector(".gunsmith-section")?.getBoundingClientRect();
+    const list=document.querySelectorAll("#stat-list").length;
+    return {left:left?{x:left.x,y:left.y,right:left.right,bottom:left.bottom}:null,
+      stage:stage?{x:stage.x,y:stage.y,bottom:stage.bottom}:null,list};
+   });
+   assert.equal(sideMetrics.list,1,"Live metrics must use one source, not copied values");
+   if(config.width>1180)
+    assert.ok(sideMetrics.left.right<=sideMetrics.stage.x+2,"Live metrics must be left of the weapon");
+   else
+    assert.ok(sideMetrics.left.y>=sideMetrics.stage.bottom-2,"Mobile metrics must follow the stage");
    record.lazyCanvas=true;
    assert.equal(await page.locator(".bench-slot-rail .bench-slot").count(),11,"Lost an AKM attachment channel");
    const boxes=await page.evaluate(()=>{
@@ -110,6 +122,24 @@ try{
    await drawer.waitFor({state:"hidden",timeout:6000});
    record.restoresFocus=await trigger.evaluate(element=>document.activeElement===element);
    assert.equal(record.restoresFocus,true,"Drawer must restore focus to selected slot");
+   if(config.name==="desktop"||config.name==="mobile-390"){
+     await trigger.click();
+     await drawer.waitFor({state:"visible"});
+     const option=drawer.locator(".bench-option").nth(1);
+     await option.waitFor({state:"visible"});
+     const chosen=(await option.locator(".option-line strong").innerText()).trim();
+     const baseline=(await page.locator("#stat-list").innerText()).trim();
+     await option.click();
+     await drawer.waitFor({state:"hidden",timeout:7000});
+     const railName=(await trigger.locator(".bench-slot-state").innerText()).trim();
+     assert.ok(railName.length>2&&chosen.includes(railName),"Actual installed accessory name missing in right rail: "+railName);
+     assert.notEqual(railName,"已安裝","Generic installed label must not return");
+     assert.ok((await trigger.getAttribute("aria-label")).includes(railName),"Selected accessory name missing from accessible button label");
+     assert.ok((await page.locator("#metrics-current-part").innerText()).includes(railName),"Left metrics did not immediately show installed accessory");
+     assert.notEqual((await page.locator("#stat-list").innerText()).trim(),baseline,"Live performance stats did not update");
+     record.partLabelVerified=true;
+     record.liveMetricsUpdated=true;
+   }
    if(config.name==="desktop"){
     await page.getByRole("button",{name:"切換介面動效"}).click();
     assert.equal(await page.locator(".studio-light-canvas").count(),0,"Motion off did not release GPU");

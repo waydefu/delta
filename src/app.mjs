@@ -20,6 +20,7 @@ const query = new URLSearchParams(location.search);
 const selections = Object.fromEntries(SLOTS.map(slot => [slot, query.get(slot) || ""]));
 let distance = Math.min(200, Math.max(10, Number(query.get("distance")) || 80));
 let buildMode="research";
+let latestChangedSlot=null;
 const el = (tag, className, text) => {
   const node = document.createElement(tag);
   if(className) node.className = className;
@@ -80,6 +81,7 @@ async function main() {
       const result=reconcileSelection(weapon,attachments,proposed,{mode:buildMode});
       for(const key of Object.keys(selections))delete selections[key];
       Object.assign(selections,result.selected);
+      latestChangedSlot=slot;
       for(const key of SLOTS) $("select-" + key).value = selections[key]||"";
       update();
     },weapon,{getMode:()=>buildMode});
@@ -136,6 +138,9 @@ async function main() {
       renderFlightChart($("flight-chart"),weapon.base.muzzleVelocityMps,result.stats.muzzleVelocityMps);
       for(const path of $("flight-chart").querySelectorAll("polyline:not([stroke-dasharray])"))drawLine(path);
       const stats = result.stats;
+      const recentPart=result.equipped.find(part=>part.slot===latestChangedSlot);
+      setText("metrics-current-part",recentPart?"已選： "+recentPart.name:
+        result.equipped.length?result.equipped.length+" 件研究配件 · 即時試算":"裸槍基準 · 尚未選擇配件");
       details.update(stats,result);
       setText("distance-label", distance + " m");
       setText("flight-time", format(idealFlightTimeMs(distance,stats.muzzleVelocityMps)) + " ms");
