@@ -157,6 +157,23 @@ try{
      record.liveMetricsUpdated=true;
    }
    if(config.name==="desktop"){
+     const mag=page.locator('.bench-slot[data-slot="magazine"]');
+     await mag.click();
+     await drawer.waitFor({state:"visible"});
+     const options=drawer.locator(".bench-option");
+     assert.equal(await options.count(),4,"Expected reset + 3 AKM magazine options");
+     const drum=options.filter({hasText:"AKM 70 發大彈鼓"});
+     assert.equal(await drum.locator(".option-magazine-meta").count(),1);
+     assert.match(await drum.locator(".option-magazine-meta").innerText(),/70 發/);
+     assert.match(await drum.locator(".option-magazine-meta").innerText(),/0\.32 kg/);
+     assert.match(await drum.locator(".option-magazine-market").innerText(),/非即時/);
+     await drum.click();
+     await drawer.waitFor({state:"hidden"});
+     assert.match(await mag.locator(".bench-slot-state").innerText(),/AKM 70 發大彈鼓/);
+     assert.match(await page.locator("#metrics-current-part").innerText(),/AKM 70 發大彈鼓/);
+     record.magazineDataVerified=true;
+   }
+   if(config.name==="desktop"){
     await page.getByRole("button",{name:"切換介面動效"}).click();
     assert.equal(await page.locator(".studio-light-canvas").count(),0,"Motion off did not release GPU");
    }
