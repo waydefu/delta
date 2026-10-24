@@ -239,7 +239,7 @@ test("AKM 彈匣容量覆寫，不應被當作可加總增益",()=>{
  assert.equal(attachments.find(p=>p.id==="akm-70-drum").historicalComparison.asOf,"2024-12-21");
 });
 test("歷史配件清單與已研究數值必須明示來源、日期與驗證程度",()=>{
- assert.equal(attachments.length,35);
+ assert.equal(attachments.length,45);
  for(const x of attachments){
   assert.ok(x.source.startsWith("https://"));
   assert.ok(x.dataAsOf);
@@ -341,10 +341,10 @@ test("P0：所有研究配件都有證據分類，沒有偽造的實機驗證",a
  const {auditAttachments,assessAttachment,isVerifiedEvidence}=await import("../src/data-governance.mjs");
  const audit=auditAttachments(weapon,attachments);
  assert.deepEqual(audit.issues,[]);
- assert.equal(audit.counts.total,35);
+ assert.equal(audit.counts.total,45);
  assert.equal(audit.counts.verified,0);
  assert.equal(audit.counts.blocked,1);
- assert.equal(audit.counts.provisional,34);
+ assert.equal(audit.counts.provisional,44);
  assert.equal(audit.counts.conflicts,2);
  assert.equal(audit.counts.providesVerifiedSlots,0);
  assert.equal(isVerifiedEvidence({type:"third-party-derived",reference:"https://foo",checkedAt:"2026-10-24",platform:"mobile"}),false);
