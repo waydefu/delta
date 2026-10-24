@@ -1,9 +1,6 @@
 name: Build AKM magazine artifact for PR review
 on:
   workflow_dispatch:
-  push:
-    paths:
-      - .github/workflows/publish-akm-magazine-candidate.yml
 
 permissions:
   actions: read
