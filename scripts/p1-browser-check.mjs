@@ -52,6 +52,8 @@ try{
     if(result.loaded){
      if(!result.glbStatus.includes("2 個網格"))errors.push("Expected the visually reviewed body and magazine two-node model");
      const rect=await canvas.boundingBox();result.canvasBounds=rect;
+     if(!rect||rect.width<260||rect.height<220)
+       errors.push("3D viewport is collapsed or too small in "+config.name+" mode");
      await page.getByRole("button",{name:"查看網格"}).click();
      await page.getByRole("button",{name:"查看材質"}).click();
      await page.getByRole("button",{name:"重設視角"}).click();
@@ -80,6 +82,8 @@ try{
      await page.screenshot({path:resolve(out,config.name+"-3d.png"),fullPage:false});
      await page.getByRole("button",{name:"2D 改槍"}).click();
      if(await page.locator(".local-glb-canvas").count())errors.push("Native viewer canvas not removed on exit");
+     if(!(await page.locator(".bench-slot-rail").isVisible()))
+       errors.push("2D attachment inspector did not return after exiting 3D");
     }
    }catch(e){errors.push("native GLB: "+e.message.slice(0,300));}
   }else report.notes.push(config.name+" runner Chromium has no usable WebGL2; native scene execution untestable here");

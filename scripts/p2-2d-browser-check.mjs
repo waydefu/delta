@@ -75,8 +75,30 @@ try{
    if(config.mobile)assert.ok(editorial.slotHeight>=44,"Mobile slot touch target too small");
    assert.equal(await page.locator(".studio-light-canvas").count(),0,"GPU canvas allocated before interaction");
    record.lazyCanvas=true;
+   assert.equal(await page.locator(".bench-slot-rail .bench-slot").count(),11,"Lost an AKM attachment channel");
+   const boxes=await page.evaluate(()=>{
+    const rect=selector=>{
+     const r=document.querySelector(selector)?.getBoundingClientRect();
+     return r?{x:r.x,y:r.y,right:r.right,bottom:r.bottom,width:r.width,height:r.height}:null;
+    };
+    const s=rect(".bench-canvas"),rifle=rect(".bench-gun"),rail=rect(".bench-slot-rail");
+    return {s,rifle,rail,overflow:document.documentElement.scrollWidth-innerWidth};
+   });
+   assert.ok(boxes.s&&boxes.rifle&&boxes.rail,"Integrated stage element missing");
+   if(config.mobile){
+    assert.ok(boxes.rail.y>=boxes.rifle.bottom-5,"Mobile slots overlap the weapon image");
+    assert.ok(boxes.overflow<=2,"Unexpected horizontal page overflow on mobile");
+   }else{
+    assert.ok(boxes.rifle.right<=boxes.rail.x+5,"Desktop inspector obscures rifle");
+   }
    await page.screenshot({path:resolve(output,"2d-"+config.name+".png"),fullPage:false});
+   if(config.name==="desktop"||config.name==="mobile-390")
+    await page.locator(".armory-experience").screenshot({path:resolve(output,"2d-"+config.name+"-armory.png"),timeout:15000});
    const trigger=page.locator(".bench-slot").first();
+   await trigger.focus();
+   await page.keyboard.press("ArrowDown");
+   const focused=await page.locator(".bench-slot").nth(1).evaluate(el=>document.activeElement===el);
+   assert.equal(focused,true,"Inspector arrow navigation failed");
    await trigger.click();
    const drawer=page.locator(".bench-drawer");
    await drawer.waitFor({state:"visible"});

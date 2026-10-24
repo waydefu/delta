@@ -30,17 +30,41 @@ export function initGunsmith(mount,selections,attachments,onPick,weapon,options=
  const lines=document.createElementNS("http://www.w3.org/2000/svg","svg");
  lines.classList.add("bench-lines");lines.setAttribute("viewBox","0 0 1000 560");lines.setAttribute("preserveAspectRatio","none");
  const buttons=new Map();
- stage.append(grid,img,magazine,lines);
- for(const [id,label,x,y,tx,ty] of SLOTS){
+ const rail=node("nav","bench-slot-rail");
+ rail.setAttribute("aria-label","AKM 配件部位導覽");
+ const railHead=node("div","bench-rail-head");
+ railHead.append(node("span","bench-rail-index","02 / COMPONENTS"),
+   node("strong","bench-rail-title","選擇部位"));
+ const railCaption=node("p","bench-rail-caption","選取部位以檢視可用配件");
+ railHead.append(railCaption);
+ rail.append(railHead);
+ stage.append(grid,img,magazine,lines,rail);
+ for(const [index,[id,label,x,y,tx,ty]] of SLOTS.entries()){
   const line=document.createElementNS("http://www.w3.org/2000/svg","line");
   for(const [key,value] of [["x1",x*10],["y1",y*5.6],["x2",tx*10],["y2",ty*5.6]])line.setAttribute(key,String(value));
   lines.append(line);
-  const button=node("button","bench-slot");button.type="button";button.style.left=x+"%";button.style.top=y+"%";
-  button.setAttribute("aria-label",label+"配件槽");const title=node("span","bench-slot-name",label);
+  const button=node("button","bench-slot");button.type="button";
+  button.dataset.slot=id;
+  button.setAttribute("aria-label",label+"配件槽");
+  const number=node("span","bench-slot-sequence",String(index+1).padStart(2,"0"));
+  const title=node("span","bench-slot-name",label);
   const icon=node("span","bench-slot-icon",["muzzle","barrel","stock"].includes(id)?"＋":"◇");icon.setAttribute("aria-hidden","true");
-  const status=node("span","bench-slot-state");button.append(title,icon,status);
-  button.addEventListener("click",()=>open(id));stage.append(button);buttons.set(id,{button,status});
+  const status=node("span","bench-slot-state");
+  button.append(number,title,icon,status);
+  button.addEventListener("click",()=>open(id));rail.append(button);buttons.set(id,{button,status});
  }
+ // Inspector arrows navigate neighboring slots without opening an option sheet.
+ rail.addEventListener("keydown",event=>{
+  if(!["ArrowUp","ArrowDown","Home","End"].includes(event.key))return;
+  const items=[...rail.querySelectorAll(".bench-slot")];
+  const current=items.indexOf(document.activeElement);
+  if(current<0)return;
+  event.preventDefault();
+  const next=event.key==="Home"?0:event.key==="End"?items.length-1:
+   (current+(event.key==="ArrowDown"?1:-1)+items.length)%items.length;
+  items[next]?.focus({preventScroll:true});
+  items[next]?.scrollIntoView({block:"nearest",inline:"nearest"});
+ });
  const overlay=node("div","bench-overlay");
  overlay.append(node("span","bench-model-kind","AKM SIDE PROFILE / CALIBRATED"),node("span","bench-model-measure","880 mm PHYSICAL REFERENCE"));
  stage.append(overlay,node("span","bench-watermark","AKM / CALIBRATED PROFILE"));
@@ -154,6 +178,7 @@ export function initGunsmith(mount,selections,attachments,onPick,weapon,options=
   drawer.append(wrap);
  }
  function refresh(){
+  railCaption.textContent=active?SLOTS.find(s=>s[0]===active)?.[1]+" / 目前選取":"選取部位以檢視可用配件";
   const open=getAvailableSlots(weapon,attachments,selections);
   for(const [id,label] of SLOTS){
    const {button,status}=buttons.get(id),installed=attachments.find(a=>a.id===selections[id]);
