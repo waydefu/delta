@@ -36,12 +36,12 @@ export function attachStudioLight(stage){
  }
  function release(){
   cancel();
-  const previous=gl;
+  const previous=gl,oldProgram=program,oldBuffer=buffer;
   gl=null;program=null;buffer=null;loc=null;
   if(previous){
    try{
-    if(buffer)previous.deleteBuffer(buffer);
-    if(program)previous.deleteProgram(program);
+    if(oldBuffer)previous.deleteBuffer(oldBuffer);
+    if(oldProgram)previous.deleteProgram(oldProgram);
     previous.getExtension("WEBGL_lose_context")?.loseContext();
    }catch{ /* context may already be lost */ }
   }
