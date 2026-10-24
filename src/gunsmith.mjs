@@ -173,11 +173,24 @@ export function initGunsmith(mount,selections,attachments,onPick,weapon,options=
     preview.append(metrics);
   };
   const wrap=node("div","bench-options");
-  function makeOption(id,label,desc,provisional){
+  function makeOption(id,label,desc,provisional,part=null){
    const item=node("button","bench-option"+(selections[active]===id?" selected":""));item.type="button";
    const name=node("span","option-line"),strong=node("strong","",label);
    name.append(strong,node("small","",provisional?"相容待核驗":"示範資料"));
    item.append(name,node("span","option-effects",desc));
+   if(part?.magazineDetails){
+     const meta=part.magazineDetails;
+     const dimensions=Array.isArray(meta.inventoryCells)?meta.inventoryCells.join("×"):"未知";
+     const fields=[meta.capacityRounds+" 發",meta.weightKg+" kg",dimensions+" 格",
+       "品質 "+meta.rarityGrade,meta.quickDetach?"可快拆":"快拆待核驗"];
+     if(meta.reloadTimePenalty)fields.push("換彈懲罰：秒數未知");
+     item.append(node("span","option-magazine-meta",fields.join(" · ")));
+     if(part.marketSnapshot)
+       item.append(node("small","option-magazine-market",
+         "歷史價格 "+part.marketSnapshot.price.toLocaleString("zh-TW")+" 哈夫幣 · "+
+         part.marketSnapshot.observedAt+"（非即時）"));
+     item.append(node("small","option-magazine-uncertainty","2026 社群資料 · 未經手遊逐件核驗"));
+   }
    item.addEventListener("pointerenter",()=>renderPreview(id));
    item.addEventListener("focus",()=>renderPreview(id));
    item.addEventListener("click",()=>{
@@ -195,7 +208,7 @@ export function initGunsmith(mount,selections,attachments,onPick,weapon,options=
   const keyName={recoilControl:"後座",handling:"操控",aimStability:"穩定",hipFireAccuracy:"腰射",effectiveRangePct:"射程",muzzleVelocityPct:"初速"};
   for(const choice of choices){
    const desc=Object.entries(choice.effects).map(([k,v])=>(keyName[k]||k)+" "+(v>0?"+":"")+v+(k.endsWith("Pct")?"%":"")).join(" · ");
-   makeOption(choice.id,choice.name+(choice.dataStatus==="source-conflict"?" ⚠ 來源衝突":choice.dataStatus==="historical-unverified"?" [2024 歷史]":""),desc,choice.platformValidated!==true);
+   makeOption(choice.id,choice.name+(choice.dataStatus==="source-conflict"?" ⚠ 來源衝突":choice.dataStatus==="historical-unverified"?" [2024 歷史]":""),desc,choice.platformValidated!==true,choice);
   }
   drawer.append(wrap);
  }
