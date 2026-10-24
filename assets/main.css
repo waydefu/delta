@@ -1154,3 +1154,44 @@ body{background:linear-gradient(180deg,#0a0f11,#0c1314 48%,#090e10);color:var(--
  .bench-slot-state{color:#d3e2d7}
  .bench-gun{filter:none!important}
 }
+
+
+/* ACFH precision evidence / calibration view: source-backed values only. */
+.precision-toolbar{
+ display:grid;gap:11px;margin:12px 24px 14px;padding:16px 18px;
+ border:1px solid #485d51;border-left:3px solid #b1d397;
+ background:linear-gradient(120deg,#122019ed,#162520df);
+ color:#d7e9d3
+}
+.precision-intro{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.precision-intro strong{font-size:14px;letter-spacing:.02em}
+.precision-intro small{font-size:11px;color:#a2b6a4;line-height:1.7}
+.precision-mode-controls{display:flex;gap:5px;flex-wrap:wrap}
+.precision-mode-button{
+ cursor:pointer;min-height:43px;border:1px solid #435e50;
+ background:#10201a;color:#b6c8b5;
+ padding:9px 13px;font-size:12px;border-radius:2px
+}
+.precision-mode-button:hover,.precision-mode-button.selected{
+ border-color:#d1e6b6;color:#e8f2db;background:#2c4433
+}
+.precision-mode-button:focus-visible{outline:2px solid #d1e6b6;outline-offset:2px}
+.precision-evidence-note{font-size:11px;line-height:1.7;color:#c8d3bd;margin:0}
+.precision-guide-box{display:grid;gap:5px}
+.precision-guide-box:empty{display:none}
+.precision-guide-title{font-size:12px}
+.precision-guide-line{color:#a9c5b2;font-size:11px;line-height:1.65;margin:0}
+.precision-guide-caution{color:#d5b98c;font-size:10px;line-height:1.6}
+.precision-detail-values{display:flex;flex-direction:column;align-items:flex-end;gap:5px;text-align:right;min-width:100px}
+.precision-baseline{font-size:14px}
+.precision-unverified{color:#d9b991;font-size:10px;line-height:1.3}
+.precision-observed{color:#a9e7b0;font-size:10px;line-height:1.3}
+@media(max-width:600px){
+ .precision-toolbar{margin:10px 12px;padding:12px}
+ .precision-intro{display:grid}
+ .precision-mode-controls{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
+ .precision-mode-button{font-size:11px;padding:9px 3px}
+ .detail-value:has(.precision-detail-values){align-items:flex-start;gap:8px}
+ .precision-detail-values{min-width:92px;max-width:54%}
+ .precision-unverified,.precision-observed{font-size:10px}
+}
