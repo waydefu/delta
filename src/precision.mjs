@@ -8,7 +8,7 @@ export const PRECISION_MODES=Object.freeze(["default","tuned","compare"]);
 export const parsePrecisionMode=value=>PRECISION_MODES.includes(value)?value:"default";
 const idsOf=parts=>parts.map(p=>p.objectId).filter(Number.isSafeInteger).sort((a,b)=>a-b);
 const same=(a,b)=>a.length===b.length&&a.every((x,i)=>x===b[i]);
-const stamp=/^\\d{4}-\\d{2}-\\d{2}$/;
+const stamp=/^\d{4}-\d{2}-\d{2}$/;
 
 export function validatePrecisionCatalog(protocol,archive){
  if(!protocol?.context||!Array.isArray(protocol.rawDetailedMetricGroups)||
