@@ -345,25 +345,56 @@
     "compatibleWeapons": [
       "akm"
     ],
-    "dataStatus": "historical-unverified",
+    "dataStatus": "community-unverified",
     "platformValidated": false,
-    "dataAsOf": "2024-12-21",
-    "source": "https://github.com/jiansenc/DeltaForceData/blob/main/public/json/acc/accMagazine.json",
-    "sourceTier": "historical-public-archive",
+    "dataAsOf": "2026-09-23",
+    "source": "https://gamegrids.io/delta-force/zh/attachments/akm-polymer-30-round-magazine/",
+    "sourceTier": "community-secondary",
     "fitmentEvidence": {
       "status": "candidate",
       "type": "third-party-derived",
-      "reference": "https://github.com/jiansenc/DeltaForceData/blob/main/public/json/acc/accMagazine.json",
+      "reference": "https://gamegrids.io/delta-force/zh/attachments/akm-polymer-30-round-magazine/",
       "platform": "mobile-not-individually-verified",
       "checkedAt": null
     },
     "effectEvidence": {
-      "status": "historical",
-      "reference": "https://github.com/jiansenc/DeltaForceData/blob/main/public/json/acc/accMagazine.json",
-      "asOf": "2024-12-21",
+      "status": "secondary",
+      "reference": "https://gamegrids.io/delta-force/zh/attachments/akm-polymer-30-round-magazine/",
+      "asOf": "2026-09-23",
       "formulaValidated": false
     },
-    "parameterValidated": false
+    "parameterValidated": false,
+    "historicalComparison": {
+      "asOf": "2024-12-21",
+      "source": "https://github.com/jiansenc/DeltaForceData/blob/main/public/json/acc/accMagazine.json",
+      "effects": {
+        "handling": 4,
+        "magazineCapacity": 30
+      }
+    },
+    "secondarySources": [
+      "https://deltaforcetools.gg/tw/wiki/attachment/AKM%2030%E7%99%BC%E8%81%9A%E5%90%88%E7%89%A9%E5%BD%88%E5%8C%A3",
+      "https://deltaforcetools.gg/tw/wiki/attachment/mag"
+    ],
+    "lastChecked": "2026-10-24",
+    "magazineDetails": {
+      "capacityRounds": 30,
+      "weightKg": 0.13,
+      "inventoryCells": [
+        1,
+        1
+      ],
+      "rarityGrade": 2,
+      "quickDetach": true,
+      "reloadTimePenalty": false
+    },
+    "marketSnapshot": {
+      "price": 3334,
+      "currency": "哈夫幣",
+      "observedAt": "2026-09-23",
+      "source": "https://gamegrids.io/delta-force/zh/attachments/akm-polymer-30-round-magazine/"
+    },
+    "reviewNote": "名稱/容量與社群來源交叉核對；性能參照 2026-09-23 第三方轉載數值，並非手遊逐件驗證。GameGrids 的 55 武器相容表僅按槽位推導，不作為實裝證據。"
   },
   {
     "id": "akm-40-mag",
@@ -375,31 +406,62 @@
       "magazineCapacity": 40
     },
     "conditionalEffects": [
-      "換彈時間可能增加（未有可驗證秒數）"
+      "換彈時間懲罰（有文字效果，但幅度/秒數未知）"
     ],
     "confidence": "weapon-named",
     "compatibleWeapons": [
       "akm"
     ],
-    "dataStatus": "historical-unverified",
+    "dataStatus": "community-unverified",
     "platformValidated": false,
-    "dataAsOf": "2024-12-21",
-    "source": "https://github.com/jiansenc/DeltaForceData/blob/main/public/json/acc/accMagazine.json",
-    "sourceTier": "historical-public-archive",
+    "dataAsOf": "2026-09-23",
+    "source": "https://gamegrids.io/delta-force/zh/attachments/akm-extended-40-round-magazine/",
+    "sourceTier": "community-secondary",
     "fitmentEvidence": {
       "status": "candidate",
       "type": "third-party-derived",
-      "reference": "https://github.com/jiansenc/DeltaForceData/blob/main/public/json/acc/accMagazine.json",
+      "reference": "https://gamegrids.io/delta-force/zh/attachments/akm-extended-40-round-magazine/",
       "platform": "mobile-not-individually-verified",
       "checkedAt": null
     },
     "effectEvidence": {
-      "status": "historical",
-      "reference": "https://github.com/jiansenc/DeltaForceData/blob/main/public/json/acc/accMagazine.json",
-      "asOf": "2024-12-21",
+      "status": "secondary",
+      "reference": "https://gamegrids.io/delta-force/zh/attachments/akm-extended-40-round-magazine/",
+      "asOf": "2026-09-23",
       "formulaValidated": false
     },
-    "parameterValidated": false
+    "parameterValidated": false,
+    "historicalComparison": {
+      "asOf": "2024-12-21",
+      "source": "https://github.com/jiansenc/DeltaForceData/blob/main/public/json/acc/accMagazine.json",
+      "effects": {
+        "handling": -8,
+        "magazineCapacity": 40
+      }
+    },
+    "secondarySources": [
+      "https://deltaforcetools.gg/wiki/attachment",
+      "https://deltaforcetools.gg/tw/wiki/attachment/mag"
+    ],
+    "lastChecked": "2026-10-24",
+    "magazineDetails": {
+      "capacityRounds": 40,
+      "weightKg": 0.17,
+      "inventoryCells": [
+        1,
+        2
+      ],
+      "rarityGrade": 3,
+      "quickDetach": true,
+      "reloadTimePenalty": true
+    },
+    "marketSnapshot": {
+      "price": 24127,
+      "currency": "哈夫幣",
+      "observedAt": "2026-09-23",
+      "source": "https://gamegrids.io/delta-force/zh/attachments/akm-extended-40-round-magazine/"
+    },
+    "reviewNote": "名稱/容量與社群來源交叉核對；性能參照 2026-09-23 第三方轉載數值，並非手遊逐件驗證。GameGrids 的 55 武器相容表僅按槽位推導，不作為實裝證據。"
   },
   {
     "id": "akm-70-drum",
@@ -411,31 +473,62 @@
       "magazineCapacity": 70
     },
     "conditionalEffects": [
-      "換彈時間可能增加（未有可驗證秒數）"
+      "換彈時間懲罰（有文字效果，但幅度/秒數未知）"
     ],
     "confidence": "weapon-named",
     "compatibleWeapons": [
       "akm"
     ],
-    "dataStatus": "historical-unverified",
+    "dataStatus": "community-unverified",
     "platformValidated": false,
-    "dataAsOf": "2024-12-21",
-    "source": "https://github.com/jiansenc/DeltaForceData/blob/main/public/json/acc/accMagazine.json",
-    "sourceTier": "historical-public-archive",
+    "dataAsOf": "2026-09-23",
+    "source": "https://gamegrids.io/delta-force/zh/attachments/akm-large-70-round-drum/",
+    "sourceTier": "community-secondary",
     "fitmentEvidence": {
       "status": "candidate",
       "type": "third-party-derived",
-      "reference": "https://github.com/jiansenc/DeltaForceData/blob/main/public/json/acc/accMagazine.json",
+      "reference": "https://gamegrids.io/delta-force/zh/attachments/akm-large-70-round-drum/",
       "platform": "mobile-not-individually-verified",
       "checkedAt": null
     },
     "effectEvidence": {
-      "status": "historical",
-      "reference": "https://github.com/jiansenc/DeltaForceData/blob/main/public/json/acc/accMagazine.json",
-      "asOf": "2024-12-21",
+      "status": "secondary",
+      "reference": "https://gamegrids.io/delta-force/zh/attachments/akm-large-70-round-drum/",
+      "asOf": "2026-09-23",
       "formulaValidated": false
     },
-    "parameterValidated": false
+    "parameterValidated": false,
+    "historicalComparison": {
+      "asOf": "2024-12-21",
+      "source": "https://github.com/jiansenc/DeltaForceData/blob/main/public/json/acc/accMagazine.json",
+      "effects": {
+        "handling": -15,
+        "magazineCapacity": 70
+      }
+    },
+    "secondarySources": [
+      "https://deltaforcetools.gg/tw/wiki/attachment/AKM%2070%E7%99%BC%E5%A4%A7%E5%BD%88%E9%BC%93",
+      "https://deltaforcetools.gg/tw/wiki/attachment/mag"
+    ],
+    "lastChecked": "2026-10-24",
+    "magazineDetails": {
+      "capacityRounds": 70,
+      "weightKg": 0.32,
+      "inventoryCells": [
+        2,
+        2
+      ],
+      "rarityGrade": 3,
+      "quickDetach": true,
+      "reloadTimePenalty": true
+    },
+    "marketSnapshot": {
+      "price": 36593,
+      "currency": "哈夫幣",
+      "observedAt": "2026-10-06",
+      "source": "https://gamegrids.io/delta-force/zh/attachments/akm-large-70-round-drum/"
+    },
+    "reviewNote": "名稱/容量與社群來源交叉核對；性能參照 2026-09-23 第三方轉載數值，並非手遊逐件驗證。GameGrids 的 55 武器相容表僅按槽位推導，不作為實裝證據。"
   },
   {
     "id": "ak-heavy-tower-grip",

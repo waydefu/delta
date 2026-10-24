@@ -1020,6 +1020,15 @@ body{background:linear-gradient(180deg,#0a0f11,#0c1314 48%,#090e10);color:var(--
 .flight-chart-panel{background:none;border:1px solid var(--arm-line)}
 .source-panel{margin-bottom:12px!important;padding:27px 0!important;border-top:1px solid var(--arm-line)!important}
 .research-result{background:transparent!important;border-color:var(--arm-line)!important;box-shadow:none!important}
+.option-magazine-meta{
+ display:block;margin-top:8px;color:#d2e4d3;
+ font-size:11px;line-height:1.55;overflow-wrap:anywhere
+}
+.option-magazine-market,.option-magazine-uncertainty{
+ display:block;margin-top:4px;color:#96aea0;
+ font-size:10px;line-height:1.5
+}
+.option-magazine-uncertainty{color:#d2b88a}
 .bench-drawer{background:#18241f;border-color:#67816b}
 @media(max-width:1180px){
  .armory-workbench-layout{display:flex;flex-direction:column}
