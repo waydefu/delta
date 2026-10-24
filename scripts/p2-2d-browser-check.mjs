@@ -55,6 +55,10 @@ try{
    await page.locator("#recoil-summary").waitFor({state:"visible",timeout:12000});
    await page.locator(".bench-canvas").scrollIntoViewIfNeeded();
    await page.waitForTimeout(150);
+   const background=await page.locator(".bench-canvas").evaluate(el=>getComputedStyle(el).backgroundImage);
+   assert.match(background,/armory-environment\.svg/,"ACFH 2D armory scene not applied");
+   const environmentLoaded=await page.evaluate(async()=> (await fetch("./assets/armory-environment.svg")).ok);
+   assert.equal(environmentLoaded,true,"Local cinematic backdrop failed to load");
    assert.equal(await page.locator(".studio-light-canvas").count(),0,"GPU canvas allocated before interaction");
    record.lazyCanvas=true;
    await page.screenshot({path:resolve(output,"2d-"+config.name+".png"),fullPage:false});
