@@ -200,7 +200,7 @@ try{
      await drawer.getByRole("searchbox",{name:"搜尋槍口配件"}).fill("餘燼");
      const newMuzzle=drawer.locator(".bench-option:visible");
      assert.equal(await newMuzzle.count(),1,"New muzzle item missing from filtered list");
-     assert.match(await newMuzzle.locator(".option-magazine-meta").innerText(),/0\\.8 kg/);
+     assert.match(await newMuzzle.locator(".option-magazine-meta").innerText(),/0\.8 kg/);
      await newMuzzle.click();await drawer.waitFor({state:"hidden"});
      assert.match(await muzzle.locator(".bench-slot-state").innerText(),/餘燼消音器/);
      assert.match(await page.locator("#metrics-current-part").innerText(),/餘燼消音器/);
