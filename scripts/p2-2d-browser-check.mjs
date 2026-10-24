@@ -59,6 +59,20 @@ try{
    assert.match(background,/armory-environment\.svg/,"ACFH 2D armory scene not applied");
    const environmentLoaded=await page.evaluate(async()=> (await fetch("./assets/armory-environment.svg")).ok);
    assert.equal(environmentLoaded,true,"Local cinematic backdrop failed to load");
+   const editorial=await page.evaluate(()=>{
+    const summary=document.querySelector(".summary-card");
+    const config=document.querySelector(".workspace .configuration");
+    const slot=document.querySelector(".bench-slot");
+    const color=el=>getComputedStyle(el).backgroundColor;
+    const trans=c=>c==="rgba(0, 0, 0, 0)"||c==="transparent";
+    return {summary:trans(color(summary)),config:trans(color(config)),
+     chapter:document.querySelector(".summary-grid").compareDocumentPosition(document.querySelector(".details-panel"))&Node.DOCUMENT_POSITION_FOLLOWING,
+     slotBorder:getComputedStyle(slot).borderTopWidth,
+     slotHeight:Math.round(slot.getBoundingClientRect().height)};
+   });
+   assert.ok(editorial.summary&&editorial.config&&editorial.chapter,"Editorial surfaces/order regressed");
+   if(!config.mobile)assert.equal(editorial.slotBorder,"0px","Desktop callout should be label, not boxed card");
+   if(config.mobile)assert.ok(editorial.slotHeight>=44,"Mobile slot touch target too small");
    assert.equal(await page.locator(".studio-light-canvas").count(),0,"GPU canvas allocated before interaction");
    record.lazyCanvas=true;
    await page.screenshot({path:resolve(output,"2d-"+config.name+".png"),fullPage:false});
