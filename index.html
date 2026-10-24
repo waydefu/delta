@@ -18,7 +18,7 @@
   <div class="page-shell">
     <header class="site-header">
       <a href="./" class="brand" aria-label="DELTA LAB 首頁"><span class="brand-symbol">△</span><span>DELTA<span class="brand-accent">LAB</span></span></a>
-      <div class="header-right"><button type="button" class="motion-toggle" id="motion-toggle" aria-label="切換介面動效" aria-pressed="false">動效：自動</button><span class="beta-pill">ACFH / V1</span><a href="https://github.com/waydefu/delta" target="_blank" rel="noopener noreferrer" class="github-link">GitHub ↗</a></div>
+      <div class="header-right"><button type="button" class="motion-toggle" id="motion-toggle" aria-label="切換介面動效" aria-pressed="false">動效：自動</button><span class="beta-pill">ACFH / V1.2</span><a href="https://github.com/waydefu/delta" target="_blank" rel="noopener noreferrer" class="github-link">GitHub ↗</a></div>
     </header>
     <main>
       <div class="breadcrumb">武器資料庫 <span>/</span> 突擊步槍 <span>/</span> AKM</div>
@@ -28,24 +28,20 @@
           <div class="hero-eyebrow-row"><span class="micro-rule"></span> LOADOUT 001 <span class="hero-status"><span></span> SYSTEM ONLINE</span></div>
           <h1>AKM<span class="hero-period">.</span><em>模組化槍械實驗室</em></h1>
           <p id="weapon-subtitle" class="hero-sub">7.62 × 39 mm · ASSAULT RIFLE</p>
-          <p class="hero-description">不只是一組改槍數值。選擇零件、拆解性能差異，探索每個配置背後的取捨。</p>
+          <p class="hero-description">一把槍，一個工作台。從部件到性能，在同一個空間看清每次配置的取捨。</p>
           <div class="hero-cta-line"><a href="#gunsmith" class="hero-action">進入改槍工作台 <span aria-hidden="true">↗</span></a><span id="snapshot" class="snapshot">正在讀取資料版本…</span></div>
         </div>
-        <div class="hero-metadata" aria-hidden="true"><span>WEAPON CLASS  /  AR</span><span>CARTRIDGE  /  7.62 × 39</span><span>PLATFORM  /  MOBILE</span><span>RESEARCH BUILD  /  ACFH V1</span></div>
+        <div class="hero-metadata" aria-hidden="true"><span>WEAPON CLASS  /  AR</span><span>CARTRIDGE  /  7.62 × 39</span><span>PLATFORM  /  MOBILE</span><span>RESEARCH BUILD  /  ACFH V1.2</span></div>
       </section>
       <section id="gunsmith" class="panel gunsmith-section" aria-label="AKM 互動改槍台">
         <div class="gunsmith-intro">
-          <div class="gunsmith-heading"><span class="eyebrow">01 — MODULAR CONFIGURATION</span><h2>改槍工作台<span class="slash-title"> / </span><span class="dim-title">AKM</span></h2><p>點擊槍械周圍的部件槽位，選擇配件並即時查看配置影響。</p></div>
+          <div class="gunsmith-heading"><span class="eyebrow">01 — MODULAR CONFIGURATION</span><h2>改槍工作台<span class="slash-title"> / </span><span class="dim-title">AKM</span></h2><p>選擇槍身標註，檢視可用部件與性能變化；尚未核實的資料保留警示。</p></div>
           <div class="workbench-badges"><span class="workbench-badge badge-live"><span></span> LIVE ANALYSIS</span><span class="workbench-badge">11 SLOTS / 2D FIRST</span></div>
         </div>
         <div class="bench-scroll" tabindex="0" aria-label="槍械與配件槽，可左右滑動">
           <div id="gunsmith-workbench" class="bench-mount"></div>
         </div>
         <div class="bench-footer"><span><span class="legend-dot live"></span>可選配件 <span class="legend-dot installed"></span>已安裝 <span class="legend-dot pending"></span>待建檔</span><span>AKM SIDE PROFILE <span class="footer-divider">/</span> SCHEMATIC MODEL, NOT IN-GAME 3D</span></div>
-      </section>
-      <section class="panel details-panel" aria-label="AKM 詳細屬性">
-        <div class="details-header"><span class="eyebrow">02 / ADVANCED ATTRIBUTES</span><h2>AKM 詳細屬性</h2><p class="muted">使用你提供的 2026-10-23 遊戲截圖核對裸槍細項。<strong>配裝後的細項時間、倍率與散布尚未完成公式驗證。</strong></p></div>
-        <div id="detail-explorer"></div>
       </section>
       <div class="section-ribbon"><span>03 / PERFORMANCE OVERVIEW</span><span>BASELINE <span class="ribbon-arrow">↔</span> CURRENT BUILD</span></div>
       <section class="summary-grid" aria-label="主要改裝數值">
@@ -55,6 +51,10 @@
         <div class="summary-card"><span>槍口初速</span><strong id="velocity-summary">—</strong><small>基準 525 m/s</small></div>
       </section>
       <div class="ammo-banner"><span>AKM 支援彈藥（7.62×39 mm）</span><div id="ammo-text">資料載入中…</div></div>
+      <section class="panel details-panel" aria-label="AKM 詳細屬性">
+        <div class="details-header"><span class="eyebrow">02 / ADVANCED ATTRIBUTES</span><h2>AKM 詳細屬性</h2><p class="muted">使用你提供的 2026-10-23 遊戲截圖核對裸槍細項。<strong>配裝後的細項時間、倍率與散布尚未完成公式驗證。</strong></p></div>
+        <div id="detail-explorer"></div>
+      </section>
       <div id="error" class="error" hidden></div>
       <div class="workspace">
         <section class="panel configuration">
@@ -138,7 +138,7 @@
         <p class="tiny">非《三角洲行動》官方網站。資料及介面僅供研究、測試與比較。</p>
       </section>
     </main>
-    <footer><span>DELTA LAB · BUILD 0.6</span><span>DATA FIRST. VERIFY EVERYTHING.</span></footer>
+    <footer><span>DELTA LAB · ACFH 1.2</span><span>DATA FIRST. VERIFY EVERYTHING.</span></footer>
   </div>
   <script type="module" src="./src/app.mjs"></script>
 </body>
