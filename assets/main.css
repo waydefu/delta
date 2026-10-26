@@ -1195,3 +1195,343 @@ body{background:linear-gradient(180deg,#0a0f11,#0c1314 48%,#090e10);color:var(--
  .precision-detail-values{min-width:92px;max-width:54%}
  .precision-unverified,.precision-observed{font-size:10px}
 }
+
+
+/* ================================================================
+   ACFH 2.0 / Cinematic Art Direction — Stage One
+   The asset is intentionally a static illustration, not a fake PBR
+   configurator. All 3D remains explicitly opt-in.
+   ================================================================ */
+:root{
+ --cinema-ink:#070a0b;
+ --cinema-amber:#d7b783;
+ --cinema-ice:#e7f0e5;
+ --cinema-green:#b5ceb5;
+ --cinema-outline:rgba(190,212,190,.15);
+}
+html{scroll-behavior:smooth}
+body{
+ background-color:var(--cinema-ink);
+ background-image:radial-gradient(ellipse 67% 26% at 67% 8%,#26383247,transparent 80%),
+ linear-gradient(180deg,#080d0e 0%,#0e1715 44%,#070a0b 100%);
+}
+.page-shell{max-width:1600px;padding-inline:clamp(16px,2.8vw,52px)}
+.site-header{
+ position:relative;z-index:20;height:79px;
+ background:linear-gradient(90deg,#0b1211 0%,#0b1211d9 60%,#18221e70 100%);
+ border-bottom:1px solid #b6c9a824;
+}
+.brand{letter-spacing:.21em;font-weight:760}
+.brand-symbol{font-weight:300;color:var(--cinema-amber)}
+.brand-accent{color:var(--cinema-amber)}
+.site-header .beta-pill{color:#b7c9b1}
+.breadcrumb{padding-block:17px 10px;font:600 10px/1.4 monospace;color:#8a998e;letter-spacing:.15em}
+.armory-experience{
+ margin-bottom:72px;isolation:isolate;
+ background:none;border-bottom:1px solid var(--cinema-outline);
+}
+.armory-experience::before{display:none}
+.hero.hero-editorial{
+ --cinema-x:0px;--cinema-y:0px;
+ position:relative;display:flex;align-items:flex-start;
+ padding:clamp(74px,11vh,145px) clamp(25px,5vw,88px) 105px;
+ min-height:clamp(610px,78svh,810px);
+ isolation:isolate;overflow:hidden;
+ border:1px solid rgba(187,207,184,.15);
+ background:
+  radial-gradient(ellipse 65% 80% at 72% 52%,rgba(66,87,76,.2),transparent 68%),
+  linear-gradient(115deg,#0a1010 8%,#111b1a 47%,#0a1012 92%);
+}
+.hero.hero-editorial::before{
+ content:"";display:block;position:absolute;inset:0;
+ pointer-events:none;z-index:2;
+ background:linear-gradient(90deg,#080e0ff5 0%,#0b1312e6 19%,#0c15139d 37%,transparent 61%),
+ linear-gradient(0deg,#080e0ee6 0%,transparent 27%,transparent 80%,#0a1010a0 100%);
+}
+.hero.hero-editorial::after{
+ content:"";display:block;position:absolute;
+ inset:17px;z-index:6;pointer-events:none;
+ border:1px solid rgba(204,223,203,.085);
+ box-shadow:inset 0 0 0 1px #050b0b22;
+}
+.hero-cinema,.hero-cinema>div{position:absolute;inset:0;pointer-events:none}
+.hero-cinema{z-index:0;isolation:isolate;overflow:hidden}
+.hero-cinema-environment{
+ background-image:url("./armory-environment.svg");
+ background-position:center 48%;background-size:cover;
+ opacity:.78;filter:contrast(1.12) saturate(.62);
+ transform:translate3d(calc(var(--cinema-x) * -.28),calc(var(--cinema-y) * -.25),0) scale(1.06);
+}
+.hero-cinema-beam{
+ z-index:1;
+ background:linear-gradient(113deg,transparent 30%,#c1dfb512 40%,#f1e2bd22 47%,#9db6a00b 55%,transparent 66%),
+ radial-gradient(ellipse 23% 38% at 75% 26%,#dbdfc147,transparent 100%);
+ mix-blend-mode:screen;
+ transform:translate3d(calc(var(--cinema-x) * .7),calc(var(--cinema-y) * .3),0);
+}
+.hero-cinema-floor{
+ z-index:1;top:52%!important;inset-inline:-5%!important;
+ background:
+ linear-gradient(0deg,#080b0bef,transparent 95%),
+ repeating-linear-gradient(90deg,transparent 0 22%,#c7d5ba08 22.1% 22.17%,transparent 22.2% 44%);
+ transform:perspective(350px) rotateX(66deg) translateY(10%);
+ transform-origin:bottom center;opacity:.48;
+}
+.hero-cinema-rings{
+ z-index:2;
+ background:radial-gradient(ellipse 36% 39% at 69% 60%,transparent 57%,#c2dbac17 58%,transparent 59%),
+ radial-gradient(ellipse 42% 54% at 70% 58%,#8c9f8020,transparent 75%);
+ opacity:.7;
+}
+.hero-cinema-weapon{
+ z-index:3;inset:auto 1.5% 15% 24%!important;
+ height:63%;min-height:260px;
+ transform:translate3d(var(--cinema-x),var(--cinema-y),0);
+ will-change:auto;
+}
+.hero-cinema-weapon img{
+ display:block;width:100%;height:100%;object-fit:contain;object-position:center;
+ filter:contrast(1.13) saturate(.74) brightness(1.08) drop-shadow(0 28px 35px #000b);
+ mix-blend-mode:lighten;
+ -webkit-mask-image:linear-gradient(90deg,transparent 0%,#000 12%,#000 91%,transparent 100%);
+ mask-image:linear-gradient(90deg,transparent 0%,#000 12%,#000 91%,transparent 100%);
+}
+.hero-cinema-grain{
+ z-index:4;opacity:.11;
+ background:repeating-linear-gradient(0deg,transparent 0 2px,#e9f2e408 2px 3px,transparent 3px 5px);
+}
+.hero-cinema-index,.hero-cinema-axis{
+ position:absolute;z-index:5;color:#b5c6b6;font:600 10px/1.8 monospace;
+ letter-spacing:.22em;text-shadow:0 2px 9px #000;
+}
+.hero-cinema-index{left:37px;bottom:35px}
+.hero-cinema-axis{right:40px;top:35px;text-align:right;color:#9eae9e}
+.hero-content{
+ position:relative;z-index:7;max-width:590px;width:57%;
+ padding:0!important;transform:translateZ(0);
+}
+.hero .overline{color:#bfd1bf;letter-spacing:.27em;font-size:10px}
+.hero .hero-eyebrow-row{margin:20px 0 14px;color:var(--cinema-amber)}
+.hero .hero-status{font-size:9px;background:#101d1b99}
+.hero h1{
+ font-size:clamp(105px,12.1vw,185px);
+ font-weight:650;line-height:.75;letter-spacing:-.115em;
+ margin:25px 0 27px;color:#f5f7ef;
+ text-shadow:0 9px 70px #0008;
+}
+.hero h1 em{
+ display:block;margin:26px 0 0;
+ font-size:clamp(19px,2.1vw,32px);
+ line-height:1.35;font-weight:470;letter-spacing:.08em;
+ color:#d4e1cf;text-shadow:0 4px 23px #000b;
+}
+.hero-sub{
+ font:600 11px/1.8 monospace!important;
+ color:var(--cinema-amber)!important;
+ letter-spacing:.22em!important;margin:0 0 18px!important;
+}
+.hero-description{
+ font-size:clamp(12px,1vw,14px);
+ line-height:1.9;max-width:430px;color:#bbcabf;
+ text-shadow:0 1px 10px #000b;
+}
+.hero-cta-line{
+ display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+ margin-top:32px;
+}
+.hero-action{
+ display:inline-flex;align-items:center;justify-content:center;gap:28px;
+ min-height:53px;padding:13px 22px;
+ border:1px solid #dce8c7!important;border-radius:0;
+ background:#d4e5c1!important;
+ color:#122018!important;font-weight:700;font-size:12px;
+ letter-spacing:.07em;text-decoration:none!important;
+ box-shadow:0 9px 25px #0008;
+ transition:transform .24s ease,background-color .24s ease,box-shadow .24s ease;
+}
+.hero-action:hover{transform:translateY(-3px);background:#f1f5df!important;box-shadow:0 13px 36px #0009}
+.hero-secondary-action{
+ display:inline-flex;align-items:center;justify-content:center;gap:16px;
+ min-height:53px;padding:12px 18px;
+ border:1px solid #c1d3bc55;text-decoration:none;
+ color:#e2ebdc;font-size:12px;letter-spacing:.04em;
+ transition:border-color .2s,background-color .2s;
+}
+.hero-secondary-action:hover{border-color:#c1d3bc;background:#d4e5c10b}
+.hero-action:focus-visible,.hero-secondary-action:focus-visible{outline:2px solid #fff;outline-offset:4px}
+.hero-data-status{
+ display:block;margin-top:22px;max-width:495px;
+ font:10px/1.65 monospace;color:#8fa796;
+}
+.hero-metadata{
+ position:absolute;z-index:7;inset:auto 35px 0;display:grid;
+ grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;
+ border-top:1px solid #c3d8bc38;
+ padding:13px 0 12px;letter-spacing:.13em;
+ font:600 9px/1.4 monospace;color:#a2b6a7;
+}
+.hero-metadata span{min-width:0}
+.hero-metadata span:last-child{text-align:right}
+.hero-metadata i{display:inline-block;width:5px;height:5px;margin-right:5px;background:#b6dba7;border-radius:50%}
+.armory-workbench-layout{
+ grid-template-columns:minmax(252px,305px) minmax(0,1fr);
+ gap:clamp(14px,1.8vw,30px);align-items:stretch;
+ border-top:0;padding:clamp(24px,3vw,44px) 0 0;
+}
+.armory-metrics{
+ background:linear-gradient(162deg,#182825d1,#0b1716cf 72%)!important;
+ border:1px solid #acc5aa30!important;border-right:1px solid #acc5aa30!important;
+ box-shadow:0 20px 60px #02090961,inset 0 1px #d1e8c511;
+ padding:24px 21px 20px!important;max-height:665px;
+}
+.armory-metrics .panel-heading h2{font-size:23px}
+.armory-metrics .stat-current{color:#e7f2df}
+.armory-metrics .stat-bar{background:linear-gradient(90deg,#66816b,#c3deb1)}
+.armory-workbench-layout .gunsmith-section{padding:0!important}
+.gunsmith-intro{
+ border-top:0!important;padding:9px 0 20px;
+ min-height:69px;align-items:center;
+}
+.gunsmith-heading h2{font-size:clamp(24px,2.2vw,32px)}
+.gunsmith-heading p{color:#a7b8a9}
+.bench-scroll{
+ border:1px solid #b3c7ac34;background:#0a1011;
+ box-shadow:0 18px 80px #03090980,inset 0 0 0 1px #c0d3c108;
+}
+.bench-mount{height:595px}
+.bench-canvas{
+ background-color:#101818;
+ background-image:
+  radial-gradient(ellipse 63% 48% at 41% 34%,#b8c5a41b,transparent 73%),
+  linear-gradient(180deg,#09111264 0%,#07101070 62%,#060b0beb 100%),
+  url("./armory-environment.svg");
+ background-size:cover,cover,cover;background-position:center;
+}
+.bench-canvas.is-art-preview{
+ background-color:#131b1a;
+ background-image:
+ radial-gradient(ellipse 65% 45% at 43% 46%,#b1ccb03a,transparent 78%),
+ linear-gradient(0deg,#040909ee,transparent 36%,#0509099b),
+ url("./armory-environment.svg");
+}
+.bench-canvas.is-art-preview::before,.bench-canvas.is-art-preview::after{display:block}
+.bench-canvas.is-art-preview::before{
+ background:linear-gradient(112deg,transparent 11%,#d1dfb412 36%,#f1e4c91a 43%,transparent 59%);
+}
+.bench-canvas.is-art-preview::after{
+ background:linear-gradient(90deg,#060a0b75,transparent 15%,transparent 62%,#040a0bdc 78%);
+}
+.bench-illustration{
+ left:1%;top:13%;
+ width:calc(98% - var(--arm-rail));height:74%;
+ object-fit:contain;object-position:center;filter:contrast(1.08) brightness(1.05);
+}
+.bench-art-toggle{
+ top:69px;left:17px;border-color:#9cb69979;
+ background:#101a19e8;letter-spacing:.055em;
+}
+.bench-art-toggle:hover{border-color:#d0e4c0}
+.bench-art-note{left:18px;bottom:19px;background:#071110da;color:#c0cfbc}
+.bench-slot-rail{background:linear-gradient(178deg,#101c1bfa,#071010f8);border-left:1px solid #b4cdbb24}
+.bench-slot-rail .bench-slot{transition:color .17s ease,background-color .17s ease,border-color .17s ease}
+.bench-slot-rail .bench-slot:hover{background:#b0c8a413}
+.bench-footer{padding:15px 4px 19px;font-size:10px}
+.section-ribbon{margin-top:39px}
+.summary-card strong{color:#ecf2e4}
+.summary-card:hover{transform:none}
+@media(max-width:1180px){
+ .hero.hero-editorial{min-height:680px}
+ .hero-cinema-weapon{left:19%!important;right:1%!important;bottom:16%!important}
+ .armory-workbench-layout{display:flex;flex-direction:column;gap:23px;padding-top:28px}
+ .armory-workbench-layout .gunsmith-section{order:1;padding:0!important}
+ .armory-metrics{
+  order:2;max-height:none;overflow:visible;
+  border:1px solid #acc5aa30!important;padding:24px!important;
+ }
+ .armory-metrics .stats{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media(max-width:1000px){
+ .hero.hero-editorial{
+  display:flex;min-height:690px;
+  padding:80px 31px 86px;
+ }
+ .hero-content{width:72%;max-width:590px}
+ .hero h1{font-size:clamp(102px,13.5vw,140px)}
+ .hero-cinema-weapon{left:13%!important;bottom:11%!important;height:56%}
+ .hero-metadata{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));row-gap:7px;bottom:3px}
+ .hero-metadata span:last-child{text-align:left}
+ .bench-mount{height:auto}
+ .armory-metrics .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .bench-illustration{left:2%;top:39px;width:96%;height:220px}
+ .bench-canvas.is-art-preview::before,.bench-canvas.is-art-preview::after{height:275px}
+ .bench-art-toggle{left:11px;top:244px}
+ .bench-art-note{left:auto;right:8px;top:253px;bottom:auto}
+}
+@media(max-width:620px){
+ .site-header{height:66px}
+ .page-shell{padding-inline:13px}
+ .brand{font-size:15px;letter-spacing:.13em}
+ .header-right{gap:9px}
+ .github-link{font-size:11px}
+ .breadcrumb{padding-block:13px 9px;letter-spacing:.04em}
+ .hero.hero-editorial{min-height:675px;padding:46px 22px 94px}
+ .hero.hero-editorial::after{inset:8px}
+ .hero.hero-editorial::before{
+  background:linear-gradient(180deg,#07100fee 0%,#0c1413cb 18%,transparent 51%,#070d0de0 94%);
+ }
+ .hero-content{width:100%;max-width:none}
+ .hero .overline{font-size:8px;letter-spacing:.13em}
+ .hero .hero-eyebrow-row{margin:13px 0 13px;font-size:8px}
+ .hero h1{
+  font-size:clamp(83px,21vw,125px);margin:19px 0 22px;letter-spacing:-.12em;
+ }
+ .hero h1 em{font-size:18px;margin-top:22px;letter-spacing:.035em}
+ .hero-sub{font-size:10px!important;letter-spacing:.11em!important}
+ .hero-description{font-size:11px;line-height:1.7;max-width:310px}
+ .hero-description br{display:none}
+ .hero-cinema-weapon{
+  left:-16%!important;right:-13%!important;
+  top:252px!important;bottom:auto!important;
+  height:240px;min-height:0;
+ }
+ .hero-cinema-beam{opacity:.54}
+ .hero-cinema-index{left:21px;bottom:94px;font-size:8px}
+ .hero-cinema-axis{top:16px;right:19px;font-size:7px;opacity:.6}
+ .hero-cta-line{margin-top:254px;gap:9px;flex-wrap:nowrap}
+ .hero-action,.hero-secondary-action{
+  min-height:45px;font-size:10px;gap:7px;padding:9px 11px;white-space:nowrap;
+ }
+ .hero-data-status{font-size:9px;margin-top:13px}
+ .hero-metadata{inset:auto 19px 8px;gap:4px;padding:9px 0 0}
+ .hero-metadata span{font-size:8px}
+ .armory-experience{margin-bottom:46px}
+ .armory-workbench-layout{padding-top:22px;gap:16px}
+ .armory-metrics{padding:16px!important}
+ .armory-metrics .stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:17px 10px}
+ .gunsmith-intro{padding:6px 0 15px}
+ .gunsmith-heading h2{font-size:21px}
+ .bench-canvas.is-art-preview::before,.bench-canvas.is-art-preview::after{height:210px}
+ .bench-illustration{left:0;top:28px;width:100%;height:177px}
+ .bench-art-toggle{left:7px;top:191px}
+ .bench-art-note{right:7px;top:201px;font-size:7px}
+}
+@media(max-width:380px){
+ .hero.hero-editorial{padding-inline:17px;min-height:677px}
+ .hero h1{font-size:83px}
+ .hero-cta-line{gap:5px}
+ .hero-action,.hero-secondary-action{font-size:9px;padding-inline:8px}
+ .hero-metadata span{font-size:7px}
+}
+@media(prefers-reduced-motion:reduce){
+ html{scroll-behavior:auto}
+ .hero-cinema-environment,.hero-cinema-weapon,.hero-cinema-beam{
+  transform:none!important;transition:none!important
+ }
+ .hero-action,.hero-secondary-action{transition:none!important}
+ .hero-action:hover{transform:none}
+}
+@media(prefers-contrast:more){
+ .hero-description,.hero-data-status,.hero-metadata{color:#f3f7ed}
+ .hero-secondary-action{border-color:#eaf4dc}
+ .hero-cinema-weapon img{filter:contrast(1.15);mix-blend-mode:normal}
+}
