@@ -12,8 +12,8 @@ test("ACFH V1 is 2D-first with a local static armory asset",()=>{
  assert.doesNotMatch(svg,/<script\b|<foreignObject\b|(?:href|src)\s*=\s*["\x27]https?:|javascript:/i);
  assert.match(css,/url\("\.\/armory-environment\.svg"\)/);
  assert.match(css,/@media\(max-width:530px\)/);
- assert.match(html,/ACFH \/ V1/);
- assert.match(html,/2D WORKSPACE/);
+ assert.match(html,/ACFH \/ 2\.0/);
+ assert.match(html,/INTERACTIVE ARMORY/);
  assert.equal((html.match(/rel="stylesheet"/g)||[]).length,1);
 });
 test("ACFH scene does not alter SVG AKM coordinate proportions",()=>{

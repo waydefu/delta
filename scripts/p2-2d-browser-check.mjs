@@ -53,6 +53,36 @@ try{
    page.on("request",req=>requests.push(req.url()));
    await page.goto("http://127.0.0.1:8765/",{waitUntil:"networkidle",timeout:40000});
    await page.locator("#recoil-summary").waitFor({state:"visible",timeout:12000});
+   // ACFH 2.0: verify first-paint cinematic scene independently of the workbench.
+   const cinema=await page.evaluate(()=>{
+    const h=document.querySelector(".hero.hero-editorial");
+    const image=document.querySelector(".hero-cinema-weapon img");
+    const cta=document.querySelector(".hero-action");
+    const secondary=document.querySelector(".hero-secondary-action");
+    const hr=h?.getBoundingClientRect(),ctaRect=cta?.getBoundingClientRect();
+    return {height:hr?.height,width:hr?.width,
+      imageLoaded:image?.complete&&image?.naturalWidth>=800,
+      ctaHeight:ctaRect?.height,secondaryHref:secondary?.getAttribute("href"),
+      overflow:document.documentElement.scrollWidth-innerWidth};
+   });
+   assert.ok(cinema.height>=600,"Cinematic hero unexpectedly collapsed");
+   assert.ok(cinema.imageLoaded,"Local cinematic AKM illustration failed to load");
+   assert.equal(cinema.secondaryHref,"#detail-explorer","Detailed data navigation lost");
+   assert.ok(cinema.ctaHeight>=44,"Hero primary action too small for touch");
+   if(config.mobile)assert.ok(cinema.overflow<=2,"Mobile cinematic scene introduced horizontal overflow");
+   if(config.name==="desktop"){
+    const box=await page.locator(".hero.hero-editorial").boundingBox();
+    await page.mouse.move(box.x+box.width*.65,box.y+box.height*.43);
+    await page.waitForTimeout(80);
+    const x=await page.locator(".hero.hero-editorial").evaluate(el=>el.style.getPropertyValue("--cinema-x"));
+    assert.ok(x&&x!=="0px","Cinematic desktop pointer parallax never activated");
+    await page.mouse.move(2,2);
+   }
+   if(config.reduced||config.mobile){
+    const value=await page.locator(".hero.hero-editorial").evaluate(el=>el.style.getPropertyValue("--cinema-x"));
+    assert.ok(!value||value==="0px","Touch/reduced-motion scene must stay static");
+   }
+   record.cinematicHeroVerified=true;
    await page.locator(".bench-canvas").scrollIntoViewIfNeeded();
    await page.waitForTimeout(150);
    const preview=page.locator(".bench-illustration");
