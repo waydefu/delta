@@ -4,10 +4,10 @@ import {readFileSync} from "node:fs";
 const file=path=>readFileSync(new URL(path,import.meta.url),"utf8");
 const html=file("../index.html"),css=file("../assets/main.css"),gun=file("../src/gunsmith.mjs");
 const art=css.split("/* === ACFH V1.4")[1];
-test("V1.4 uses one integrated art direction",()=>{
+test("Legacy V1.4 primitives remain grounded inside the ACFH 2.0 scene",()=>{
  assert.ok(art);
  assert.equal((css.match(/\/\* === ACFH V1/g)||[]).length,1);
- assert.match(html,/ACFH \/ V1\.4/);
+ assert.match(html,/ACFH \/ 2\.0/);
  assert.match(html,/class="armory-experience"/);
  assert.match(art,/--arm-rail:262px/);
  assert.match(art,/\.bench-slot:before\{display:none\}/);
