@@ -1535,3 +1535,19 @@ body{
  .hero-secondary-action{border-color:#eaf4dc}
  .hero-cinema-weapon img{filter:contrast(1.15);mix-blend-mode:normal}
 }
+
+
+/* Far and near planes move in opposite directions, never repaint a WebGL scene. */
+.hero-cinema-environment{
+ transform:translate3d(var(--cinema-far-x,0px),var(--cinema-far-y,0px),0) scale(1.06);
+}
+.hero-cinema-beam{
+ transform:translate3d(var(--cinema-far-x,0px),var(--cinema-far-y,0px),0);
+}
+.hero-cinema-weapon img.is-fallback{
+ object-fit:contain;mix-blend-mode:normal;opacity:.78;
+ filter:drop-shadow(0 26px 35px #000a);
+}
+@media(prefers-reduced-motion:reduce){
+ .hero-cinema-environment,.hero-cinema-beam{transform:none}
+}
