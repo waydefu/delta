@@ -1234,8 +1234,8 @@ body{
 .hero.hero-editorial{
  --cinema-x:0px;--cinema-y:0px;
  position:relative;display:flex;align-items:flex-start;
- padding:clamp(74px,11vh,145px) clamp(25px,5vw,88px) 105px;
- min-height:clamp(610px,78svh,810px);
+ padding:clamp(74px,11vh,145px) clamp(25px,5vw,88px) 105px!important;
+ min-height:clamp(610px,78svh,810px)!important;
  isolation:isolate;overflow:hidden;
  border:1px solid rgba(187,207,184,.15);
  background:
@@ -1440,7 +1440,7 @@ body{
 .summary-card strong{color:#ecf2e4}
 .summary-card:hover{transform:none}
 @media(max-width:1180px){
- .hero.hero-editorial{min-height:680px}
+ .hero.hero-editorial{min-height:680px!important}
  .hero-cinema-weapon{left:19%!important;right:1%!important;bottom:16%!important}
  .armory-workbench-layout{display:flex;flex-direction:column;gap:23px;padding-top:28px}
  .armory-workbench-layout .gunsmith-section{order:1;padding:0!important}
@@ -1452,8 +1452,8 @@ body{
 }
 @media(max-width:1000px){
  .hero.hero-editorial{
-  display:flex;min-height:690px;
-  padding:80px 31px 86px;
+  display:flex;min-height:690px!important;
+  padding:80px 31px 86px!important;
  }
  .hero-content{width:72%;max-width:590px}
  .hero h1{font-size:clamp(102px,13.5vw,140px)}
@@ -1474,7 +1474,7 @@ body{
  .header-right{gap:9px}
  .github-link{font-size:11px}
  .breadcrumb{padding-block:13px 9px;letter-spacing:.04em}
- .hero.hero-editorial{min-height:675px;padding:46px 22px 94px}
+ .hero.hero-editorial{min-height:675px!important;padding:46px 22px 94px!important}
  .hero.hero-editorial::after{inset:8px}
  .hero.hero-editorial::before{
   background:linear-gradient(180deg,#07100fee 0%,#0c1413cb 18%,transparent 51%,#070d0de0 94%);
@@ -1516,7 +1516,7 @@ body{
  .bench-art-note{right:7px;top:201px;font-size:7px}
 }
 @media(max-width:380px){
- .hero.hero-editorial{padding-inline:17px;min-height:677px}
+ .hero.hero-editorial{padding-inline:17px!important;min-height:677px!important}
  .hero h1{font-size:83px}
  .hero-cta-line{gap:5px}
  .hero-action,.hero-secondary-action{font-size:9px;padding-inline:8px}
