@@ -65,6 +65,31 @@ try{
        errors.push("3D viewport is collapsed or too small in "+config.name+" mode");
      await page.getByRole("button",{name:"查看網格"}).click();
      await page.getByRole("button",{name:"查看材質"}).click();
+     // ACFH 2.2: mesh inspection shows actual GLB topology, never inferred gun accessories.
+     const inspectModel=page.getByRole("button",{name:"檢查 3D 分件"});
+     await inspectModel.click();
+     const auditPanel=page.locator(".local-geometry-audit");
+     await auditPanel.waitFor({state:"visible"});
+     const auditText=await auditPanel.innerText();
+     if(!auditText.includes("網格：2")||!auditText.includes("材質：1")||
+        !auditText.includes("槍口：未分件")||!auditText.includes("槍托：未分件")||
+        !auditText.includes("可真正替換的配件型號：0"))
+      errors.push("False geometry coverage claim: "+auditText.slice(0,300));
+     await inspectModel.click();
+     await auditPanel.waitFor({state:"hidden"});
+     const meshOnly=page.getByRole("button",{name:"單看彈匣幾何"});
+     if(!(await meshOnly.isVisible()))errors.push("Reviewed independent magazine inspect action missing");
+     else{
+      await meshOnly.click();
+      if(await canvas.getAttribute("data-mesh-isolation")!=="magazine")
+       errors.push("Actual independent magazine isolation not applied");
+      const restore=page.getByRole("button",{name:"還原全槍幾何"});
+      await restore.click();
+      if(await canvas.getAttribute("data-mesh-isolation")!=="none")
+       errors.push("Complete body geometry not restored");
+      else result.verifiedGeometryIsolation=true;
+     }
+     result.modelTopologyAuditVisible=true;
      // ACFH 2.1: real Three.js light presets, never CSS-only recoloring.
      for(const [label,mode] of [["材質比對","neutral"],["細節檢視","inspection"],["電影光影","cinematic"]]){
       const preset=page.getByRole("button",{name:label});
