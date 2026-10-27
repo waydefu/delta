@@ -147,6 +147,39 @@ export function initModelReference(stage){
     focus.addEventListener("click",()=>instance.focusPart("magazine"));
     controls.append(focus);
    }
+   // Present actual loaded-mesh evidence, not an inferred 3D attachment catalog.
+   const meshReview=el("button","local-viewer-action local-mesh-review-trigger","檢查 3D 分件");
+   meshReview.type="button";meshReview.setAttribute("aria-expanded","false");
+   const auditPanel=el("section","local-geometry-audit");
+   auditPanel.hidden=true;auditPanel.setAttribute("aria-label","GLB 實際分件驗證");
+   auditPanel.append(el("strong","","真實模型結構 · GLB"),
+    el("p","","網格："+instance.meshCount+" · 材質："+instance.materialCount+
+      " · 節點名稱："+instance.topology.nodeNames.join("／")),
+    el("p","",instance.topology.reason),
+    el("p","","彈匣："+(instance.topology.parts.magazine?.independent?"獨立網格已確認":"未確認")+
+      "｜槍口：未分件｜槍托：未分件｜護木：未分件"),
+    el("p","","可真正替換的配件型號："+instance.topology.swappableSlots.length+
+      "。此資料不代表遊戲裝配相容性。"));
+   const proof=el("a","local-geometry-source","原始 3D 作者與 CC0 授權 ↗");
+   proof.href="https://opengameart.org/content/weathered-akm-rifle";
+   proof.target="_blank";proof.rel="noopener noreferrer";auditPanel.append(proof);
+   meshReview.addEventListener("click",()=>{
+    const expanded=meshReview.getAttribute("aria-expanded")==="true";
+    meshReview.setAttribute("aria-expanded",String(!expanded));
+    auditPanel.hidden=expanded;
+   });
+   controls.append(meshReview,auditPanel);
+   if(instance.topology.parts.magazine?.independent){
+    const isolate=el("button","local-viewer-action local-mesh-isolate","單看彈匣幾何");
+    isolate.type="button";isolate.setAttribute("aria-pressed","false");
+    isolate.addEventListener("click",()=>{
+     const active=isolate.getAttribute("aria-pressed")==="true";
+     if(!instance.isolatePart("magazine",!active))return;
+     isolate.setAttribute("aria-pressed",String(!active));
+     isolate.textContent=active?"單看彈匣幾何":"還原全槍幾何";
+    });
+    controls.append(isolate);
+   }
    configurationText=el("p","local-viewer-configuration");
    configurationText.setAttribute("aria-live","polite");
    setConfiguration(configuredParts);
