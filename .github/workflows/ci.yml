@@ -26,8 +26,12 @@ jobs:
           node --check src/model-reference.mjs
           node --check src/research-catalog.mjs
           node --check src/local-viewer.mjs
+          node --check src/model-topology.mjs
+          node --check scripts/audit-segmented-glb.mjs
       - name: Verify shipped CC0 GLB, textures and SHA256
         run: node scripts/check-akm-model.mjs
+      - name: Audit both GLB topologies and ensure independent mesh evidence
+        run: node scripts/audit-segmented-glb.mjs
       - name: Workflow governance policy
         run: node scripts/governance-check.mjs
       - name: Unit tests
