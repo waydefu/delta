@@ -1,4 +1,5 @@
 import {shouldAnimate} from "./motion.mjs";
+import {inspectRenderableTopology,canIsolateMesh} from "./model-topology.mjs";
 /**
  * Lighting changes affect the renderer, not the authored AKM material.
  * All presets use the same real GLB geometry and RoomEnvironment IBL.
@@ -143,7 +144,19 @@ export async function mountLocalGLB(host,{url="./assets/models/akm.glb",onStatus
    }
   });
   const parts=findPartNodes(names);
+  const topology=inspectRenderableTopology(meshes);
   const magMesh=meshes.find(obj=>obj.name==="AKM_Magazine");
+  let isolatedMagazine=false;
+  function isolatePart(slot,isolated){
+   if(!canIsolateMesh(topology,slot)||magazineAnimating||disposed)return false;
+   const body=meshes.find(mesh=>mesh.name==="AKM_Body");
+   if(!body||!magMesh)return false;
+   isolatedMagazine=Boolean(isolated);
+   body.visible=!isolatedMagazine;
+   magMesh.visible=true;
+   canvas.dataset.meshIsolation=isolatedMagazine?"magazine":"none";
+   render();return true;
+  }
   const canMoveCamera=()=>!disposed&&shouldAnimate()&&
    !documentWindow.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
   function stopCameraMotion(){
@@ -285,8 +298,8 @@ export async function mountLocalGLB(host,{url="./assets/models/akm.glb",onStatus
   resize();
   onStatus("載入完成："+meshes.length+" 個網格、"+materials.size+" 種材質。已辨識彈匣節點："+parts.magazine.length+" 個；無法僅依名稱保證可拆件。");
   return {
-   root:rootGroup,parts,meshCount:meshes.length,materialCount:materials.size,
-   setPartVisible,animateMagazine,setWireframe,resetCamera,focusPart,
+   root:rootGroup,parts,topology,meshCount:meshes.length,materialCount:materials.size,
+   setPartVisible,isolatePart,animateMagazine,setWireframe,resetCamera,focusPart,
    setLightingPreset,render,resize,
    dispose(){
     cancelMagazine?.();cancelCameraMotion?.();stopCameraMotion();
