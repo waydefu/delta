@@ -426,10 +426,10 @@ test("P1：實測後座資料與空白狀態不可偽造精準軌跡",async()=>{
  assert.match(app,/details\.update\(stats,result\)/);
 });
 
-test("P1：真實單網格 GLB 檢視支持材質與線框檢查，不偽裝成可拆件",()=>{
+test("P1：本機雙網格 GLB 保持材質與線框檢查，且僅允許已分件彈匣聚焦",()=>{
  const viewer=readFileSync(new URL("../src/local-viewer.mjs",import.meta.url),"utf8");
  const ui=readFileSync(new URL("../src/model-reference.mjs",import.meta.url),"utf8");
- for(const fragment of ["setWireframe,resetCamera,render,resize","longestX=dims.x","renderer.setPixelRatio(Math.max(.5,ratio))"])
+ for(const fragment of ["setWireframe,resetCamera,focusPart","longestX=dims.x","renderer.setPixelRatio(Math.max(.5,ratio))"])
   assert.ok(viewer.includes(fragment),fragment);
  for(const fragment of ["instance.setWireframe","instance.resetCamera","不支援 3D 配件替換"])
   assert.ok(ui.includes(fragment),fragment);

@@ -89,7 +89,7 @@ export function initGunsmith(mount,selections,attachments,onPick,weapon,options=
  const overlay=node("div","bench-overlay");
  overlay.append(node("span","bench-model-kind","AKM / VECTOR STRUCTURE"),node("span","bench-model-measure","RESEARCH SCHEMATIC ONLY"));
  stage.append(overlay,node("span","bench-watermark","AKM / CALIBRATED PROFILE"));
- initModelReference(stage);
+ const modelReference=initModelReference(stage);
  const shade=node("button","bench-shade");shade.type="button";shade.hidden=true;shade.setAttribute("aria-label","關閉配件選單");
  const drawer=node("aside","bench-drawer");drawer.hidden=true;drawer.setAttribute("aria-label","配件選單");
  mount.append(stage,shade,drawer);
@@ -239,6 +239,11 @@ export function initGunsmith(mount,selections,attachments,onPick,weapon,options=
   drawer.append(wrap);
  }
  function refresh(){
+  // 3D is a fixed licensed preview, so communicate the real research build
+  // without pretending that an absent stock/muzzle mesh has been swapped.
+  modelReference.setConfiguration(
+   attachments.filter(part=>Object.values(selections).includes(part.id))
+  );
   railCaption.textContent=active?SLOTS.find(s=>s[0]===active)?.[1]+" / 目前選取":"選取部位以檢視可用配件";
   const open=getAvailableSlots(weapon,attachments,selections);
   for(const [id,label] of SLOTS){

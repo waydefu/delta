@@ -28,6 +28,15 @@ export function initModelReference(stage){
  bar.append(schematic,modelButton,nativeButton);stage.append(bar);
  const layer=el("div","model-reference-layer");layer.hidden=true;stage.append(layer);
  let showing=false,mode="2d",choice=MODELS[0],localViewer=null,loadGeneration=0;
+ let configuredParts=[],configurationText=null;
+ function setConfiguration(parts){
+  configuredParts=Array.isArray(parts)?parts.filter(p=>p&&typeof p.name==="string")
+   .map(p=>({name:p.name,slot:p.slot})): [];
+  if(configurationText)configurationText.textContent=configuredParts.length?
+   "研究配置："+configuredParts.map(p=>p.name).join(" / ")+
+   "。3D 模型未隨配件更換。":
+   "目前未選配件 · 3D 為獨立展示模型";
+ }
  const assetUrl="./assets/models/akm-parts-candidate.glb"; // mesh separation visually confirmed, game fitment still unverified
  function sync(){
   schematic.classList.toggle("selected",!showing);
@@ -69,7 +78,7 @@ export function initModelReference(stage){
  }
  function clearLocal(){
   loadGeneration++;
-  localViewer?.dispose();localViewer=null;
+  localViewer?.dispose();localViewer=null;configurationText=null;
  }
  function show3D(){
   if(showing&&mode==="remote")return;
@@ -85,6 +94,12 @@ export function initModelReference(stage){
   const viewport=el("div","local-glb-viewport");
   const status=el("p","local-glb-status","正在載入已審核的本機模型…");
   status.setAttribute("role","status");status.setAttribute("aria-live","polite");
+  const hud=el("div","local-3d-cinematic-hud");
+  hud.setAttribute("aria-hidden","true");
+  hud.append(el("strong","","AKM / MATERIAL STUDIO"),
+    el("small","","GEOMETRY STUDY · 7.62 × 39"),
+    el("span","","PBR / ON-DEMAND RENDER"));
+  viewport.append(hud);
   layer.append(viewport,status);sync();
   const generation=loadGeneration;
   try{
@@ -108,7 +123,34 @@ export function initModelReference(stage){
    const warning=el("p","local-viewer-caveat",
     "CC0 真實 3D · "+instance.meshCount+" 個網格 · "+instance.materialCount+
     " 種材質 · 不支援 3D 配件替換，遊戲內比例仍需對照");
-   controls.append(reset,wireframe,warning);
+   const lighting=el("div","local-viewer-lighting");
+   lighting.setAttribute("role","group");
+   lighting.setAttribute("aria-label","3D 棚拍燈光場景");
+   const presets=[
+    ["cinematic","電影光影"],["neutral","材質比對"],["inspection","細節檢視"]
+   ];
+   const presetButtons=[];
+   for(const [preset,label] of presets){
+    const button=el("button","local-viewer-action local-viewer-preset",label);
+    button.type="button";button.setAttribute("aria-pressed",String(preset==="cinematic"));
+    button.addEventListener("click",()=>{
+     const applied=instance.setLightingPreset(preset);
+     for(const b of presetButtons)b.setAttribute("aria-pressed",String(b.dataset.preset===applied));
+    });
+    button.dataset.preset=preset;presetButtons.push(button);lighting.append(button);
+   }
+   controls.append(reset,wireframe,lighting);
+   if(instance.parts.magazine.includes("AKM_Magazine")){
+    const focus=el("button","local-viewer-action local-viewer-focus","聚焦彈匣");
+    focus.type="button";
+    focus.title="只聚焦已確認的獨立彈匣網格，不執行配件替換";
+    focus.addEventListener("click",()=>instance.focusPart("magazine"));
+    controls.append(focus);
+   }
+   configurationText=el("p","local-viewer-configuration");
+   configurationText.setAttribute("aria-live","polite");
+   setConfiguration(configuredParts);
+   controls.append(configurationText,warning);
    if(instance.meshCount===2&&instance.parts.magazine.includes("AKM_Magazine")){
       const inspect=el("button","local-viewer-action","3D 彈匣裝卸示範");
       inspect.type="button";
@@ -150,5 +192,6 @@ export function initModelReference(stage){
  // GLB presence is covered by CI integrity checks; avoid an eager network probe in 2D.
  // On-demand 3D load already exposes a recoverable failure state.
  sync();
- return {show3D,show2D,showNative,get is3D(){return showing;},get isNative(){return mode==="native";}};
+ return {show3D,show2D,showNative,setConfiguration,
+  get is3D(){return showing;},get isNative(){return mode==="native";}};
 }
