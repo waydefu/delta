@@ -39,6 +39,15 @@ try{
   const native=page.getByRole("button",{name:config.draft?"分件測試 3D":"真實 AKM 3D"});
   await native.waitFor({state:"visible",timeout:12000});
   result.nativeButtonVisible=true;
+  if(config.name==="desktop"){
+   const stock=page.locator('.bench-slot[data-slot="stock"]');
+   await stock.click();
+   const drawer=page.locator(".bench-drawer");
+   await drawer.waitFor({state:"visible"});
+   await drawer.getByRole("searchbox",{name:"搜尋槍托配件"}).fill("PT1 特種槍托");
+   await drawer.locator(".bench-option:visible").click();
+   await drawer.waitFor({state:"hidden"});
+  }
   if(result.webgl2){
    await native.click();
    try{
@@ -56,7 +65,34 @@ try{
        errors.push("3D viewport is collapsed or too small in "+config.name+" mode");
      await page.getByRole("button",{name:"查看網格"}).click();
      await page.getByRole("button",{name:"查看材質"}).click();
+     // ACFH 2.1: real Three.js light presets, never CSS-only recoloring.
+     for(const [label,mode] of [["材質比對","neutral"],["細節檢視","inspection"],["電影光影","cinematic"]]){
+      const preset=page.getByRole("button",{name:label});
+      await preset.click();
+      if(await preset.getAttribute("aria-pressed")!=="true")errors.push("Lighting button not pressed: "+label);
+      const actual=await canvas.getAttribute("data-lighting-preset");
+      if(actual!==mode)errors.push("Three.js scene did not switch to "+mode+": "+actual);
+     }
+     const partFocus=page.getByRole("button",{name:"聚焦彈匣"});
+     if(!(await partFocus.isVisible()))errors.push("Independent magazine focus button missing");
+     else{
+      await partFocus.click();
+      await page.waitForFunction(()=>
+       document.querySelector(".local-glb-canvas")?.dataset?.cameraFocus==="magazine",null,{timeout:7000});
+      await page.waitForFunction(()=>
+       document.querySelector(".local-glb-canvas")?.dataset?.cameraMoving==="false",null,{timeout:7000});
+      result.magazineCameraFocus=true;
+     }
      await page.getByRole("button",{name:"重設視角"}).click();
+     await page.waitForFunction(()=>
+       document.querySelector(".local-glb-canvas")?.dataset?.cameraFocus==="overview",null,{timeout:7000});
+     result.lightPresetsVerified=true;
+     if(config.name==="desktop"){
+      const configText=await page.locator(".local-viewer-configuration").innerText();
+      if(!configText.includes("PT1 特種槍托")||!configText.includes("3D 模型未隨配件更換"))
+       errors.push("3D build annotation lost selection truthfulness: "+configText);
+      else result.researchBuildHudVerified=true;
+     }
      const animate=page.getByRole("button",{name:"3D 彈匣裝卸示範"});
      await animate.click();
      await page.waitForFunction(()=>{
