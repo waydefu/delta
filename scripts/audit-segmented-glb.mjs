@@ -67,9 +67,14 @@ export function auditShippedAssets(dir=resolve(dirname(fileURLToPath(import.meta
      proof.license!=="CC0 1.0 Universal")throw new Error(item.file+": unreviewed provenance");
   const topology=parseGLBTopology(contents);
   if(topology.meshCount!==proof.meshCount)throw new Error(item.file+": inconsistent mesh count");
-  if(item.role==="two-mesh-inspection"&&
-     (!topology.meshNames.includes("AKM_Body")||!topology.meshNames.includes("AKM_Magazine")))
-   throw new Error(item.file+": reviewed mesh names not present");
+  if(item.role==="two-mesh-inspection"){
+   // Three.js exposes scene NODE names; glTF's mesh-array names are separate.
+   const byName=new Map(topology.meshNodes.map(n=>[n.name,n.mesh]));
+   const body=byName.get("AKM_Body"),magazine=byName.get("AKM_Magazine");
+   if(!Number.isInteger(body)||!Number.isInteger(magazine)||body===magazine||
+      !topology.meshNames[body]||!topology.meshNames[magazine])
+    throw new Error(item.file+": independent named SCENE nodes absent; "+JSON.stringify(topology.meshNodes));
+  }
   return {file:item.file,role:item.role,sha256,license:proof.license,
    ...topology,
    stockIndependent:false,muzzleIndependent:false,
