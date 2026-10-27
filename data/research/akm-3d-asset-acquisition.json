@@ -1,0 +1,89 @@
+{
+  "reviewedAt": "2026-10-27",
+  "policy": "Only assets downloaded through legitimate permitted methods may be shipped. Online claims alone never prove mesh segmentation or game fitment.",
+  "liveAsset": {
+    "url": "./assets/models/akm-parts-candidate.glb",
+    "author": "LonesomeDucky",
+    "license": "CC0 1.0 Universal",
+    "originalSource": "https://opengameart.org/content/weathered-akm-rifle",
+    "status": "verified-body-and-magazine-mesh-separation-only",
+    "meshCount": 2,
+    "materialCount": 1,
+    "inspectedSlots": [
+      "magazine"
+    ],
+    "interchangeableVariantCount": 0,
+    "notPresent": [
+      "muzzle",
+      "stock",
+      "handguard",
+      "barrel",
+      "reargrip"
+    ],
+    "readyForGameAccurateSwapping": false
+  },
+  "acquisitionCandidates": [
+    {
+      "id": "gamico-akm",
+      "name": "GAMICO AKM Assault Rifle High-Quality 3D Game Asset",
+      "url": "https://sketchfab.com/3d-models/akm-assault-rifle-high-quality-3d-game-asset-4de981b588194d42bdea5ff8a2b80d0e",
+      "publisher": "GAMICO",
+      "licenseListing": "CC BY",
+      "reportedTriangles": 10100,
+      "claims": "作者列出 trigger/safety lever/magazine/bolt 等獨立零件；沒有證明可替換槍口、槍托",
+      "localFileObtained": false,
+      "sourceLicenseReviewed": true,
+      "exactFileReviewed": false,
+      "readyToPublish": false,
+      "blocker": "downloadable original required, credit text and per-node GLB geometry audit pending"
+    },
+    {
+      "id": "fab-ag72",
+      "name": "AKM Assault Rifle 3D model realistic",
+      "url": "https://www.fab.com/listings/54921e31-5077-4ad8-9d5a-7b8bdd6ac7d3",
+      "publisher": "Ag72",
+      "licenseListing": "Fab listing states Free, but exact applicable license terms not verified",
+      "claims": "Listing claims split model parts and 4K textures, GLB conversion available",
+      "localFileObtained": false,
+      "sourceLicenseReviewed": false,
+      "exactFileReviewed": false,
+      "readyToPublish": false,
+      "blocker": "account-based acquisition, applicable terms and actual GLB node hierarchy"
+    },
+    {
+      "id": "turbobyte-akm",
+      "name": "AKM modular PBR stock/mag model",
+      "url": "https://www.artstation.com/marketplace/p/8Gzj0/akm-assault-rifle-3d-model-game-ready-lowpoly-pbr-fbx-obj-blend-low-poly-3d-model",
+      "publisher": "Gaurav Verma",
+      "licenseListing": "Paid ArtStation Standard License",
+      "claims": "Independent stock/mag plus named weapon meshes, multiple PBR texture resolutions",
+      "localFileObtained": false,
+      "sourceLicenseReviewed": false,
+      "exactFileReviewed": false,
+      "readyToPublish": false,
+      "blocker": "paid license and user purchase required; do not fetch or commit"
+    },
+    {
+      "id": "opengameart-akm",
+      "name": "Weathered AKM current baseline",
+      "url": "https://opengameart.org/content/weathered-akm-rifle",
+      "publisher": "LonesomeDucky",
+      "licenseListing": "CC0",
+      "claims": "Verified as single mesh in original processed GLB; local derived candidate has 2 meshes",
+      "localFileObtained": true,
+      "sourceLicenseReviewed": true,
+      "exactFileReviewed": true,
+      "readyToPublish": true,
+      "blocker": "not suitable for high-fidelity multi-slot swaps, requires true independent replacements"
+    }
+  ],
+  "requiredBeforeSwap": [
+    "Explicit license for distribution of exact model",
+    "Local GLB/GLTF bytes and immutable checksum",
+    "Actual node and mesh list, not names from a web listing",
+    "Multiple authored mesh variants per specific slot and verified attachment anchor transforms",
+    "Source platform/mode/season-specific fitment evidence",
+    "Visual review at mobile widths and performance regression",
+    "Real game fitting must never be inferred from generic mesh or part name"
+  ]
+}

@@ -1623,3 +1623,25 @@ body{
 @media(prefers-reduced-motion:reduce){
  .local-viewer-action{transition:none!important}
 }
+
+
+/* ACFH 2.2: audited real GLB parts, not a simulated weapon attachment mesh. */
+.local-mesh-review-trigger[aria-expanded="true"],
+.local-mesh-isolate[aria-pressed="true"]{
+ border-color:#d2e7bc;background:#34483c;color:#edf6e4
+}
+.local-geometry-audit{
+ pointer-events:auto;flex-basis:100%;display:grid;gap:6px;
+ max-width:710px;background:#0c1716f5;border:1px solid #b5cdb250;
+ border-left:3px solid #becda2;padding:12px 15px;
+ box-shadow:0 10px 32px #0009
+}
+.local-geometry-audit[hidden]{display:none!important}
+.local-geometry-audit strong{font-size:12px;color:#e5f1dc;letter-spacing:.08em}
+.local-geometry-audit p{margin:0;font-size:11px;color:#bed2c2;line-height:1.65;overflow-wrap:anywhere}
+.local-geometry-source{font-size:11px;color:#e3d5af;text-decoration:underline;text-underline-offset:3px;max-width:max-content}
+.local-geometry-source:focus-visible{outline:2px solid #e7e4c6;outline-offset:3px}
+@media(max-width:760px){
+ .local-geometry-audit{min-width:100%;padding:9px}
+ .local-geometry-audit p{font-size:10px}
+}
