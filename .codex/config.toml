@@ -1,0 +1,4 @@
+# DELTA LAB repository-scoped Codex plugin. Loaded only in trusted projects.
+# Does not alter global Hermes profiles, agent concurrency, or permissions.
+[plugins."egm@delta-egm"]
+enabled = true
