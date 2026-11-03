@@ -87,6 +87,7 @@ export async function initBenefitExplorer(mount) {
   summary.setAttribute("aria-live","polite");
   const notice=node("p","yield-evidence-warning");
   const chart=node("div","yield-chart");
+  chart.id="yield-chart";
   const scroll=node("div","yield-table-scroll");
   scroll.tabIndex=0;
   scroll.setAttribute("aria-label","0 到 100 各分數的實測收益表，可捲動");
