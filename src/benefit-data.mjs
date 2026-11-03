@@ -25,7 +25,7 @@ const HIGHER_IS_BETTER = new Set([
 
 export function parseDetailNumber(value) {
   if(typeof value !== "string") return null;
-  const match = value.trim().match(/^(-?\\d+(?:\\.\\d+)?)\\s*(.*)$/);
+  const match = value.trim().match(/^(-?\d+(?:\.\d+)?)\s*(.*)$/);
   if(!match) return null;
   const number = Number(match[1]);
   return Number.isFinite(number) ? {value:number,unit:match[2].trim()} : null;
