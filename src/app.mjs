@@ -5,6 +5,7 @@ import {auditAttachments,assessAttachment} from "./data-governance.mjs";
 import { initGunsmith } from "./gunsmith.mjs";
 import { renderMountGraph, renderContributions, renderFlightChart } from "./visualizations.mjs";
 import { initDetails } from "./details.mjs";
+import { initBenefitExplorer } from "./benefit-explorer.mjs";
 import { resolveBuild, idealFlightTimeMs, idealUnarmoredTtkMs, SLOTS } from "./engine.mjs";
 const $ = id => document.getElementById(id);
 const slotNames = {muzzle:"槍口",barrel:"槍管",optic:"瞄具",canted:"側瞄",foregrip:"前握把",magazine:"彈匣",magwell:"彈匣座",stock:"槍托",buttpad:"槍托墊",reargrip:"後握把",charging:"拉機柄"};
@@ -115,6 +116,7 @@ async function main() {
       initialMode:calibrationView,
       onModeChange(mode){calibrationView=mode;update();}
     });
+    const benefits=await initBenefitExplorer($("yield-explorer"));
     $("distance").value = distance;
     $("distance").addEventListener("input", event => { distance = Number(event.target.value); update(false); });
     $("reset").addEventListener("click", () => {
@@ -148,6 +150,7 @@ async function main() {
       setText("metrics-current-part",recentPart?"已選： "+recentPart.name:
         result.equipped.length?result.equipped.length+" 件研究配件 · 即時試算":"裸槍基準 · 尚未選擇配件");
       details.update(stats,result);
+      benefits.update(stats,result);
       setText("distance-label", distance + " m");
       setText("flight-time", format(idealFlightTimeMs(distance,stats.muzzleVelocityMps)) + " ms");
       setText("flight-velocity", format(stats.muzzleVelocityMps) + " m/s");
