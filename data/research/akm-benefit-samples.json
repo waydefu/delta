@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "policy": "僅紀錄有明確來源、平台/模式/日期標記的觀測；不把 2025 全面戰場倍率套入 2026 手機烽火；不得用圖表插值補數據。",
+  "reference": {
+    "weapon": "AKM",
+    "current": {
+      "platform": "mobile",
+      "gameMode": "operations",
+      "baseline": "data/weapons/akm-details.json",
+      "observations": "Only baseline screenshot available",
+      "validatedPerScore": "2026-10-23 baseline only"
+    },
+    "historical": {
+      "id": "2025-taptap-warfare-recoil",
+      "group": "recoil",
+      "platform": "not-confirmed-by-article",
+      "gameMode": "warfare",
+      "gameVersion": "2025-02-12 article; precise build not supplied",
+      "publishedAt": "2025-02-12",
+      "source": "https://www.taptap.cn/moment/638827554823737272",
+      "caution": "非現行手機烽火；只有可明確讀到的兩個點，不以文字提到的每點趨勢補出其他值。",
+      "samples": [
+        {
+          "score": 39,
+          "metrics": {
+            "autoVerticalRecoilMultiplier": 1,
+            "autoHorizontalRecoilMultiplier": 1,
+            "burstVerticalRecoilMultiplier": 1,
+            "burstHorizontalRecoilMultiplier": 1,
+            "weaponFiringStability": 1
+          }
+        },
+        {
+          "score": 40,
+          "metrics": {
+            "autoVerticalRecoilMultiplier": 0.98,
+            "autoHorizontalRecoilMultiplier": 0.98,
+            "burstVerticalRecoilMultiplier": 0.98,
+            "burstHorizontalRecoilMultiplier": 0.98,
+            "weaponFiringStability": 0.99
+          }
+        }
+      ]
+    }
+  }
+}
