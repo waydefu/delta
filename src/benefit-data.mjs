@@ -32,7 +32,9 @@ export function parseDetailNumber(value) {
 }
 
 export function benefitPercent(baseline,current,direction) {
-  if(!Number.isFinite(baseline)||!Number.isFinite(current)||baseline<=0) return null;
+  if(!Number.isFinite(baseline)||!Number.isFinite(current)) return null;
+  if(baseline===current)return 0;
+  if(baseline<=0) return null;
   if(direction==="lower") return (baseline-current)/baseline*100;
   if(direction==="higher") return (current-baseline)/baseline*100;
   return null; // Direction not established; unchanged values are not assumed to be a benefit.
