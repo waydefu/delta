@@ -53,6 +53,24 @@ try{
    page.on("request",req=>requests.push(req.url()));
    await page.goto("http://127.0.0.1:8765/",{waitUntil:"networkidle",timeout:40000});
    await page.locator("#recoil-summary").waitFor({state:"visible",timeout:12000});
+   // Evidence-first yield explorer: actual points only, not a score-to-recoil formula.
+   const yieldRows=page.locator("#yield-explorer .yield-table tbody tr");
+   assert.equal(await yieldRows.count(),101,"Yield table must cover 0–100 with explicit unknown rows");
+   assert.match(await yieldRows.nth(39).innerText(),/1\.00.*0%/,"Verified 39-point baseline should show zero relative gain");
+   assert.match(await yieldRows.nth(49).innerText(),/沒有相同模式|無法計算/,"No fabricated 49-point recoil multiplier");
+   assert.equal(await page.locator("#yield-chart circle").count(),1,"Current mobile chart must only show baseline dot");
+   await page.locator("#yield-evidence-source").selectOption("historical");
+   assert.match(await yieldRows.nth(40).innerText(),/0\.98.*2%/,"2025 Warfare 39→40 must be isolated and show 2%");
+   assert.equal(await page.locator("#yield-chart circle").count(),2,"Historical chart must only show two documented dots");
+   assert.match(await yieldRows.nth(49).innerText(),/沒有相同模式/,"Historical gaps cannot be interpolated");
+   await page.locator("#yield-score-group").selectOption("handling");
+   assert.equal(await page.locator("#yield-evidence-source").inputValue(),"mobile","Historical mode must reset when switching away from recoil");
+   await page.locator("#yield-detail-metric").selectOption("adsTime");
+   assert.match(await yieldRows.nth(54).innerText(),/327.*0%/,"Handling baseline should use in-game 327 ms, not a guessed 0–100 formula");
+   assert.equal(await page.locator("#yield-chart circle").count(),1,"Other stats must not inherit historical recoil points");
+   await page.locator("#yield-score-group").selectOption("recoil");
+   assert.equal(await page.locator("#yield-detail-metric").inputValue(),"autoVerticalRecoilMultiplier");
+   record.yieldEvidenceVerified=true;
    // ACFH 2.0: verify first-paint cinematic scene independently of the workbench.
    const cinema=await page.evaluate(()=>{
     const h=document.querySelector(".hero.hero-editorial");
